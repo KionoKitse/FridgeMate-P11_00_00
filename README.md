@@ -30,6 +30,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
  * 2020-11-11 Started the GitHub repository
  * 2020-11-11 Working on sample database
  * 2020-11-12 Looking for ways to read a barcode from a web app
+ * 2020-11-12 Adding more sample data
 ### Notebook
  * Reading barcodes from a web app
 	* Dynamsoft’s JavaScript barcode scanner SDK ($$)
