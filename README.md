@@ -56,14 +56,14 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 <details>
 	<summary>Research relating to barcode scanning</summary>
 	
-	**Results**
+	Results
 	* Dynamsoft’s JavaScript barcode scanner SDK ($$)
 	* QuaggaJS (free)
 	* ZXing (?)
 	* Shape Detection API (New partial support maybe not iOS)
 		* chrome://flags -> Experimental Web Platform features -> enable
 	
-	**Research**
+	Research
 	* [Scanning barcodes with built-in mobile camera and HTML5](https://a.kabachnik.info/reading-barcodes-with-built-in-camera-with-html5.html#fileapi)
 		* Pure JavaScript alternatives utilizing the library QuaggaJS
 			* only library supporting live-detection of barcodes in the camera's live stream
