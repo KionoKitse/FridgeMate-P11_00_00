@@ -1,29 +1,48 @@
 ### Description  
-P11_00_00 FridgeMate
 A useful tool for deciding what to cook next, what to buy and keeping track of what you already have
+ * Digital recipe box
+ * Pantry inventory monitoring
+ * Recipe suggestions based on:
+	* Available ingredients
+	* Specific ingredient
+	* Tag filtering
+ * Shopping list generator 
  * Barcode reading
+ * Receipt reading
  * Runs on PC, Android and iOS
- * Battery powered
- * Charge level monitoring
 
 ### Notes to user
- * Project documented at https://kionokitse.wordpress.com/tiny-hydrobeacon/
+ * Project documented at https://kionokitse.wordpress.com/FridgeMate/
+
+### What's next
+ * Update blog content before it goes too far off
+ * Format the README.md files for the tutorials 
+ * Barcode reading tutorial with QuaggaJS
+ * Try a shape detection API tutorial
+ * Some way to check if a database exists else create it and add data
+ * MySQL database backup
+ * JSON generator for recipe info
  
+
 #### Folders
- * P08_00_00-VirtualWireTest
-	* Testing using VirtualWire with ATtiny85 using example sketch
-	* Working
- * P08_00_00-MessageTest
-	* Format sample sensor values
-	* Transmit using VirtualWire library
-	* Receive message and print as char array
-	* Working
- * P08_00_00-BatteryTest
-	* Use SystemStatus library to read VCC voltage without additional pins
-	* Format sample sensor values
-	* Transmit using VirtualWire library
-	* Receive message and print as char array
-	* Working
+<details>
+  <summary>Project folder structure</summary>
+  
+ * Database
+	* Sample data for the database
+ * Receipts
+	* Images testing receipt reading
+ * Tutorials
+	* MySQL: Complete
+		* Simple tutorial for how to interact with MySQL database in JavaScript
+		* .env file should be kept secret 
+		* to build the project run "npm install"
+	* QuaggaJS: In progress
+		* Barcode scanning tutorial
+</details>
+
+
+
 
  
 ### Progress log 
@@ -31,6 +50,10 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
  * 2020-11-11 Working on sample database
  * 2020-11-12 Looking for ways to read a barcode from a web app
  * 2020-11-12 Adding more sample data
+ * 2020-11-15 Working on MySQL database tutorial
+ * 2020-11-16 Finished MySQL tutorial
+ * 2020-11-17 Writing content for blog 
+
 ### Notebook
  * Reading barcodes from a web app
 	* Dynamsoft’s JavaScript barcode scanner SDK ($$)
@@ -38,8 +61,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 	* ZXing (?)
 	* Shape Detection API (New partial support maybe not iOS)
 		* chrome://flags -> Experimental Web Platform features -> enable
-	* 
-	
+		
 	* Research
 		* [Scanning barcodes with built-in mobile camera and HTML5](https://a.kabachnik.info/reading-barcodes-with-built-in-camera-with-html5.html#fileapi)
 			* pure JavaScript alternatives utilizing the library QuaggaJS
@@ -100,6 +122,4 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 		* [Using Shape Detection API in Chrome to Detect if anyone is Watching the Video](https://medium.com/@eyevinntechnology/using-shape-detection-api-in-chrome-to-detect-if-anyone-is-watching-the-video-f3f898d2912)
 			*Another use case for the API
 ### Next Blog Post
-Barcode scanning
-One of the features of this software will be some way to keep track of what ingredients are available in the pantry. For this I was thinking that it would be useful to have some sort of way to quickly update the pantry without manually inputing in each value. For this, I'm thinking it would be nice to be able to scan barcodes. The barcodes would be useful when I don't have a receipt and would be an easy way to quickly update the pantry since a lot of products have the same UPC code regardless of the retailer. 
-There are a lot of functions in this app that will be difficult but this is the one that I have the least amount of understanding around and would be highly specific. I'm focusing on this aspect first since it will make my life much easier if I start from a platform that I know already supports barcode reading. In deciding what method to implement I started by looking for tutorials for how to do barcode reading in a web app. What I've found is that there are some pretty good tutorials and examples out there so it's not going to be groundbreaking new stuff. I have a full list of notes and links in the <a href="https://github.com/KionoKitse/FridgeMate-P11_00_00/blob/main/README.md">"GitHub README"</a> file under the Notebook section. The summary from my research is that there are two-ish options that I'm considering. The first option is using QuaggaJS or ZXing for a fairly capable standard barcode reading option. It will work on pretty much any modern browser and seems to be well loved by the community. The other option is making use of the Shape Detection API. This is fairly new so it is only supported in Chrome and requires enabling the Experimental Web Platform features. It seems to be fast and works well but it doesn't have widespread adoption yet and I'm not sure if it will work with iOS. For now I'm thinking that it would be best to start with QuaggaJS first and if that doesn't work move to the Shape Detection API.
+

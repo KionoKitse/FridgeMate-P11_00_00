@@ -1,6 +1,9 @@
 Tutorial:
 https://www.sitepoint.com/using-node-mysql-javascript-client/
 
+To install dependencies:
+npm install
+
 Hiding connection info:
 https://stackoverflow.com/questions/57470659/how-to-hide-connection-details-for-mysql-database-in-node-js
 
