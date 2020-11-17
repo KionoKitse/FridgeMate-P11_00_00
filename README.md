@@ -70,7 +70,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 		<summary>Source links and comments </summary>
 
 * [Scanning barcodes with built-in mobile camera and HTML5](https://a.kabachnik.info/reading-barcodes-with-built-in-camera-with-html5.html#fileapi)
-<details>	
+	<details>	
 
 	* Pure JavaScript alternatives utilizing the library QuaggaJS
 		* only library supporting live-detection of barcodes in the camera's live stream
@@ -86,10 +86,10 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 		* Without autofocus the barcode will always appear blurred because it is much closer
 	* [Example and GitHub link](https://serratus.github.io/quaggaJS/examples/file_input.html)
 	* [Another example](https://a.kabachnik.info/a-javascript-barcode-reader-with-bootstrap-3-and-quaggajs.html)
-	* [How to Read Barcodes Online from a Web Application](https://medium.com/@beirikui1985/how-to-read-barcodes-online-from-a-web-application-6be5c7cec860)
-	* Tutorial using Dynamsoft’s JavaScript barcode scanner SDK (costs money)
-</details>
-		
+	</details>
+	
+* [How to Read Barcodes Online from a Web Application](https://medium.com/@beirikui1985/how-to-read-barcodes-online-from-a-web-application-6be5c7cec860)
+	* Tutorial using Dynamsoft’s JavaScript barcode scanner SDK (costs money)	
 * [How to create a live Barcode scanner using the webcam in JavaScript](https://ourcodeworld.com/articles/read/460/how-to-create-a-live-barcode-scanner-using-the-webcam-in-javascript)
 	* Detailed description of how to use QuaggaJS
 	* QuaggaJS is an extension of zxing
@@ -99,6 +99,8 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 	* Shopping apps can allow their users to scan EAN or UPC barcodes of items in a physical store to compare prices online.
 	* Web applications can use text detection to translate texts such as, for example, restaurant menus.
 * [Zxing Vs Google Vision](https://medium.com/@lkumar.sakare/zxing-vs-google-vision-fc3be8d83ace) 
+	<details>
+	
 	* Zxing library and google vision library in your project to scan the QR code and Barcode
 	* ZXing 
 		* “zebra crossing” is a barcode image processing library implemented in Java
@@ -111,6 +113,8 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 		* detect multiple barcodes at once and work in any orientation
 		* Google vision library is more faster, accurate and flexible than any other scanner library.
 		* Google vision depends on native library downloaded post-install to perform scanning.
+	</details>
+	
 * [qrcode-react vs react-barcode vs react-qr-code vs react-qr-reader vs quagga vs qrcode-generator](https://www.npmtrends.com/qrcode-react-vs-react-barcode-vs-react-qr-code-vs-react-qr-reader-vs-quagga-vs-qrcode-generator)
 	* Interesting comparison of which libraries are being used most
 * [Looking for a barcode scanner](https://www.reddit.com/r/PHPhelp/comments/8vr7ac/looking_for_a_barcode_scanner/)
