@@ -24,9 +24,8 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
  * JSON generator for recipe info
  
 
-#### Folders
+### Folders
 <details>
-  <summary>Project folder structure</summary>
   
  * Database
 	* Sample data for the database
