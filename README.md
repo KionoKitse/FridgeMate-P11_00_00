@@ -2,13 +2,16 @@
 A useful tool for deciding what to cook next, what to buy and keeping track of what you already have
  * Digital recipe box
  * Pantry inventory monitoring
+ * Adding ingredients to the inventory via:
+	 * Barcode reading
+	 * Receipt reading
+	 * Manual entry
  * Recipe suggestions based on:
 	* Available ingredients
 	* Specific ingredient
 	* Tag filtering
+ * Ingredient substitutes and recipes
  * Shopping list generator 
- * Barcode reading
- * Receipt reading
  * Runs on PC, Android and iOS
 
 ### Notes to user
@@ -136,21 +139,4 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 	
 </details>
 
-	
-
-	
-	
-
-
-
-
-			
-		
-		
-		
-		
-		
-		
-		
-### Next Blog Post
 
