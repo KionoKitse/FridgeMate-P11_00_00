@@ -43,7 +43,8 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 
 ### Progress log 
 <details>
-
+	<summary>Details of the project history</summary>
+	
 * 2020-11-11 Started the GitHub repository
 * 2020-11-11 Working on sample database
 * 2020-11-12 Looking for ways to read a barcode from a web app
@@ -65,8 +66,10 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 	* chrome://flags -> Experimental Web Platform features -> enable
 
 **Research**
-* [Scanning barcodes with built-in mobile camera and HTML5](https://a.kabachnik.info/reading-barcodes-with-built-in-camera-with-html5.html#fileapi)
 	<details>
+		<summary>Source links and comments </summary>
+
+* [Scanning barcodes with built-in mobile camera and HTML5](https://a.kabachnik.info/reading-barcodes-with-built-in-camera-with-html5.html#fileapi)
 	* Pure JavaScript alternatives utilizing the library QuaggaJS
 		* only library supporting live-detection of barcodes in the camera's live stream
 	* HTML5 File API
@@ -83,8 +86,6 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 	* [Another example](https://a.kabachnik.info/a-javascript-barcode-reader-with-bootstrap-3-and-quaggajs.html)
 	* [How to Read Barcodes Online from a Web Application](https://medium.com/@beirikui1985/how-to-read-barcodes-online-from-a-web-application-6be5c7cec860)
 	* Tutorial using Dynamsoft’s JavaScript barcode scanner SDK (costs money)
-	</details>
-
 * [How to create a live Barcode scanner using the webcam in JavaScript](https://ourcodeworld.com/articles/read/460/how-to-create-a-live-barcode-scanner-using-the-webcam-in-javascript)
 	* Detailed description of how to use QuaggaJS
 	* QuaggaJS is an extension of zxing
@@ -123,7 +124,8 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 	* [Demo](https://shape-detection-api.arnelle.me/)
 * [Using Shape Detection API in Chrome to Detect if anyone is Watching the Video](https://medium.com/@eyevinntechnology/using-shape-detection-api-in-chrome-to-detect-if-anyone-is-watching-the-video-f3f898d2912)
 	*Another use case for the API
-
+	</details>
+	
 </details>
 
 	
