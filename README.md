@@ -55,6 +55,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 ### Notebook
 <details>
 	<summary>Research relating to barcode scanning</summary>
+	
 	**Results**
 	* Dynamsoft’s JavaScript barcode scanner SDK ($$)
 	* QuaggaJS (free)
