@@ -28,17 +28,17 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 <details>
 	<summary>Project folder structure</summary>
   
-	* Database
-		* Sample data for the database
-	* Receipts
-		* Images testing receipt reading
-	* Tutorials
-		* MySQL: Complete
-			* Simple tutorial for how to interact with MySQL database in JavaScript
-			* .env file should be kept secret 
-			* to build the project run "npm install"
-		* QuaggaJS: In progress
-			* Barcode scanning tutorial
+* Database
+	* Sample data for the database
+* Receipts
+	* Images testing receipt reading
+* Tutorials
+	* MySQL: Complete
+		* Simple tutorial for how to interact with MySQL database in JavaScript
+		* .env file should be kept secret 
+		* to build the project run "npm install"
+	* QuaggaJS: In progress
+		* Barcode scanning tutorial
 </details>
 
 ### Progress log 
@@ -56,6 +56,10 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 <details>
 	<summary>Research relating to barcode scanning</summary>
 	
+
+
+</details>
+
 	Results
 	* Dynamsoft’s JavaScript barcode scanner SDK ($$)
 	* QuaggaJS (free)
@@ -120,10 +124,6 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 		* [Demo](https://shape-detection-api.arnelle.me/)
 	* [Using Shape Detection API in Chrome to Detect if anyone is Watching the Video](https://medium.com/@eyevinntechnology/using-shape-detection-api-in-chrome-to-detect-if-anyone-is-watching-the-video-f3f898d2912)
 		*Another use case for the API	
-
-</details>
-
-
 
 
 	
