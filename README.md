@@ -70,8 +70,8 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 		<summary>Source links and comments </summary>
 
 * [Scanning barcodes with built-in mobile camera and HTML5](https://a.kabachnik.info/reading-barcodes-with-built-in-camera-with-html5.html#fileapi)
-		<details>
-		
+<details>	
+
 	* Pure JavaScript alternatives utilizing the library QuaggaJS
 		* only library supporting live-detection of barcodes in the camera's live stream
 	* HTML5 File API
@@ -88,7 +88,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 	* [Another example](https://a.kabachnik.info/a-javascript-barcode-reader-with-bootstrap-3-and-quaggajs.html)
 	* [How to Read Barcodes Online from a Web Application](https://medium.com/@beirikui1985/how-to-read-barcodes-online-from-a-web-application-6be5c7cec860)
 	* Tutorial using Dynamsoft’s JavaScript barcode scanner SDK (costs money)
-		</details>
+</details>
 		
 * [How to create a live Barcode scanner using the webcam in JavaScript](https://ourcodeworld.com/articles/read/460/how-to-create-a-live-barcode-scanner-using-the-webcam-in-javascript)
 	* Detailed description of how to use QuaggaJS
