@@ -55,6 +55,8 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2020-11-15 Working on MySQL database tutorial
 * 2020-11-16 Finished MySQL tutorial
 * 2020-11-17 Writing content for blog 
+* 2020-11-18 Writing content for blog
+* 2020-11-19 Read/Write JSON files into objects NoSQL database
 </details>
 
 ### Notebook
