@@ -18,13 +18,12 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
  * Project documented at https://kionokitse.wordpress.com/FridgeMate/
 
 ### What's next
- * Update blog content before it goes too far off
+ * Write blog post for updating percentage
  * Format the README.md files for the tutorials 
  * Barcode reading tutorial with QuaggaJS
  * Try a shape detection API tutorial
  * Some way to check if a database exists else create it and add data
  * MySQL database backup
- * JSON generator for recipe info
  
 
 ### Folders
@@ -57,6 +56,9 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2020-11-17 Writing content for blog 
 * 2020-11-18 Writing content for blog
 * 2020-11-19 Read/Write JSON files into objects NoSQL database
+* 2020-11-20 Working on MySQL functions for updating the percentage
+* 2020-11-23 Finished the MySQL functions
+
 </details>
 
 ### Notebook
@@ -141,4 +143,11 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 	
 </details>
 
-
+### Web content 
+<details>
+	<summary>Expand web content list</summary>
+	
+* P11_00_00C001 Example JSON format for recipe
+* P11_00_00C002 Code for creating JSON data 
+* P11_00_00C003 Code for calculating recipe buildability score
+</details>

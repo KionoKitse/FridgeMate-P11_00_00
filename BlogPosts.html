@@ -1,6 +1,8 @@
 
 APPROVED: Barcode reading
+<div>
 &nbsp;&nbsp;&nbsp;&nbsp;There are a lot of functions in this app that will be difficult but this is the one that I have the least amount of understanding around and would be highly specific. I'm focusing on this aspect first since it will make my life much easier if I start from a platform that I know already supports barcode reading. In deciding what method to implement I started by looking for tutorials for how to do barcode reading in a web app. What I've found is that there are some pretty good tutorials and examples out there so it's not going to be groundbreaking new stuff. I have a full list of notes and links in the <a href="https://github.com/KionoKitse/FridgeMate-P11_00_00/blob/main/README.md">"GitHub README"</a> file under the Notebook section. The summary from my research is that there are two-ish options that I'm considering. The first option is using QuaggaJS or ZXing for a fairly capable standard barcode reading option. It will work on pretty much any modern browser and seems to be well loved by the community. The other option is making use of the Shape Detection API. This is fairly new so it is only supported in Chrome and requires enabling the Experimental Web Platform features. It seems to be fast and works well but it doesn't have widespread adoption yet and I'm not sure if it will work with iOS. For now I'm thinking that it would be best to start with QuaggaJS first and if that doesn't work move to the Shape Detection API.
+</div>
 
 Receipt scanning
 Database structure
@@ -8,8 +10,56 @@ Database structure
 <script src="https://gist.github.com/KionoKitse/7c10e13951ba97ebb80b189f5ba7c051.js"></script> Code for JSON
 
 APPROVED: MySQL with JavaScript
-One of the critical components of this app is going to be the database. I've already decided on the database structure and that I'll be using MySQL to manage that database. This week I just finished doing a MySQL and JavaScript tutorial found <a href="https://www.sitepoint.com/using-node-mysql-javascript-client/">here</a>. I found the tutorial to be really easy to follow and cover the basics of connecting to a database, submitting a query, inserting data, updating data and removing data. It also has a section on how to do stored procedures that might be helpful later-on for queries that get called often and can be offloaded to the server. Additionally it covers escaping user inputs that I would like to do at some point. Speaking of security, one thing that I didn't find was some method to protect the connection details. Having the username and password sitting around in a file isn't the safest. There is quite a lot that I don't know about security and I'm very interested in getting updated before this app goes online. What I was able to do though, was to lock down the login credentials in a .env file. I came across this solution from Stack Overflow <a href="https://stackoverflow.com/questions/57470659/how-to-hide-connection-details-for-mysql-database-in-node-js">How to hide connection details for mysql database in node.js?</a>. Additional details for implementation were found on the <a href="https://github.com/motdotla/dotenv">dotenv GitHub page</a>. The completed tutorial is posted to my GitHub project <a href="https://github.com/KionoKitse/FridgeMate-P11_00_00/tree/main/Tutorials/MySQL">here</a>.
+<div>
+&nbsp;&nbsp;&nbsp;&nbsp;One of the critical components of this app is going to be the database. I've already decided on the database structure and that I'll be using MySQL to manage that database. This week I just finished doing a MySQL and JavaScript tutorial found <a href="https://www.sitepoint.com/using-node-mysql-javascript-client/">here</a>. I found the tutorial to be really easy to follow and cover the basics of connecting to a database, submitting a query, inserting data, updating data and removing data. It also has a section on how to do stored procedures that might be helpful later-on for queries that get called often and can be offloaded to the server. Additionally it covers escaping user inputs that I would like to do at some point. Speaking of security, one thing that I didn't find was some method to protect the connection details. Having the username and password sitting around in a file isn't the safest. There is quite a lot that I don't know about security and I'm very interested in getting updated before this app goes online. What I was able to do though, was to lock down the login credentials in a .env file. I came across this solution from Stack Overflow <a href="https://stackoverflow.com/questions/57470659/how-to-hide-connection-details-for-mysql-database-in-node-js">How to hide connection details for mysql database in node.js?</a>. Additional details for implementation were found on the <a href="https://github.com/motdotla/dotenv">dotenv GitHub page</a>. The completed tutorial is posted to my GitHub project <a href="https://github.com/KionoKitse/FridgeMate-P11_00_00/tree/main/Tutorials/MySQL">here</a>.
+</div>
 
+APPROVED: Calculating recipe buildability score
+<div>
+&nbsp;&nbsp;&nbsp;&nbsp;One of the more confusing logic components for this app is the calculation needed to determine which recipes can be made. For example, let's say you want to make a diy macaroni and cheese recipe. The recipe calls for:
+<ul>
+	<li>Cheddar cheese</li>
+	<li>Macaroni</li>
+	<li>Soy milk</li>
+	<li>Butter</li>
+	<li>Flour</li>
+	<li>Salt</li>
+	<li>Black pepper</li>
+	<li>Yellow onions</li>
+	<li>Garlic</li>
+	<li>Parmesan</li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;I'll admit this isn't the normal macaroni can cheese. One could easily get away with making this without some of the ingredients. If I had all the ingredients in the pantry it would be easy to say that I can make this recipe but what if I am missing black pepper, Parmesan, onion and soy milk? Clearly some ingredients are not as important as other ingredients. To address this case, I've divided the ingredients into four categories; main, support, spices, and garnish. A main ingredient is far more important than a garnish, so I've given each category a weight. 
+Category: Main 75%
+<ul>
+	<li>Cheddar cheese (available)</li>
+	<li>Macaroni (available)</li>
+	<li>Soy milk (unavailable)</li>
+</ul>
+Category: Support 20%
+<ul>
+	<li>Butter (available)</li>
+	<li>Flour (available)</li>
+	<li>Yellow onions (unavailable)</li>
+</ul>
+Category: Spices 3%
+<ul>
+	<li>Salt (available)</li>
+	<li>Black pepper (unavailable)</li>
+	<li>Garlic (available)</li>
+</ul>
+Category: Garnish 2%
+<ul>
+	<li>Parmesan (unavailable)</li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;Based on this list, the recipe would have a buildability score of (75(2/3)+20(2/3)+3(2/3)+2(0/1) = 65) 65%. Clearly it is a problem that I don't have soy milk or yellow onions but let's say I have red onions. It's not exactly the same ingredient but they are relatively similar and could be substituted for the yellow onions. To handle substitutions the database will have groups of similar ingredients. Let's say that there is a group that contains; red onions, green onions, yellow onions and shallots. If a recipe calls for any member of that group and it is not available, the app can check if any member of that group is available as a substitute. To take into consideration that a green onion is not quite the same as a yellow onion I will weight a substitute ingredient as half of a requested ingredient. This results in the recipe having a sore of (75(2/3)+20(2.5/3)+3(2/3)+2(0/1) = 69) 69%. 
+&nbsp;&nbsp;&nbsp;&nbsp;There is one final case that needs to be taken into consideration. What if I can build one of the ingredients. Let's say that I don't have soy milk but I have soy beans and water, so I can make soy milk. This doesn't make much logical sense in the given example as nobody is going to be making soy milk just so they can make macaroni and cheese. The buildable ingredient clause was intended to be used for stuff more like poultry seasoning and hoisin sauce. Stuff that I typically won't have around but can easily make with ingredients that are already available. Anyway back to our example. In cases where an ingredient is not available and there is a reference to a recipe for that ingredient. The app will check that recipe to see if the ingredient can be made. In our example, we have soy beans and water so we can make soy milk and thus we have that ingredient. The final tally for the macaroni and cheese recipe is (75(2/3)+20(2.5/3)+3(2/3)+2(0/1)=94) 94%. 
+&nbsp;&nbsp;&nbsp;&nbsp;Thus ends our calculation of how buildable the macaroni and cheese recipe is. This score will allow the app to determine which recipes could be purposed for a given meal. A recipe with a score of 94% would show up before a recipe with the score of 68%. The code below shows how this calculation is done in JavaScript. For more details on how the scores are calculated and how the table layout looks for the database check out the <a href="https://kionokitse.wordpress.com/fridgemate/database-functionality/">Database Functionality</a> page of this project.
+<details>
+	<summary>Expand web content list</summary>
+[gist]91ac8119578ee007a7684718fcd0a502[/gist]
+</details>
+</div>
 
 2020-11-17 <font color="63C0EC"><b>P11_00_00 What is FridgeMate</b></font>
 >>>>CONTENT<<<<
