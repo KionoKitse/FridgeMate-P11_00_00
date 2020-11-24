@@ -113,7 +113,7 @@ CREATE TABLE `recipe` (
   `PERCENT` decimal(5,2) DEFAULT NULL,
   `INGREDIANT` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`RECIPE_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,7 @@ CREATE TABLE `recipe` (
 
 LOCK TABLES `recipe` WRITE;
 /*!40000 ALTER TABLE `recipe` DISABLE KEYS */;
-INSERT INTO `recipe` VALUES (1,'Butternut Squash Carbonara',2,1.15,0.00,4,97.54,0),(2,'Creamy Sun Dried Tomato Pasta with Garlic Soy',3,0.30,0.00,3,61.70,0),(3,'Cashew milk',0,0.00,0.00,5,100.00,1),(4,'Poultry seasoning',0,0.00,0.00,5,87.50,1),(8,'Exmouth',1,1.00,1.00,1,1.00,1),(9,'Exmouth',1,1.00,1.00,1,1.00,1),(10,'Exmouth',1,1.00,1.00,1,1.00,1),(11,'Exmouth',1,1.00,1.00,1,1.00,1),(12,'Exmouth',1,1.00,1.00,1,1.00,1),(13,'Exmouth',1,1.00,1.00,1,1.00,1);
+INSERT INTO `recipe` VALUES (1,'Butternut Squash Carbonara',2,1.15,0.00,4,97.54,0),(2,'Creamy Sun Dried Tomato Pasta with Garlic Soy',3,0.30,0.00,3,61.70,0),(3,'Cashew milk',0,0.00,0.00,5,100.00,1),(4,'Poultry seasoning',0,0.00,0.00,5,87.50,1);
 /*!40000 ALTER TABLE `recipe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,4 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-20 12:49:24
+-- Dump completed on 2020-11-20 14:21:27
