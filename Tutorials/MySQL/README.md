@@ -1,23 +1,10 @@
-Tutorial:
-https://www.sitepoint.com/using-node-mysql-javascript-client/
+Tutorial: [Using MySQL with Node.js and the mysql JavaScript Client](https://www.sitepoint.com/using-node-mysql-javascript-client/)
 
-To install dependencies:
-npm install
-
-Hiding connection info:
-https://stackoverflow.com/questions/57470659/how-to-hide-connection-details-for-mysql-database-in-node-js
-
-https://github.com/motdotla/dotenv#readme
-
-Nodemon
-https://www.npmjs.com/package/nodemon
-Running the program
-nodemon ./app.js
-
-Command process
-npm init -y
-npm install dotenv
-npm install -g nodemon
-
-Running the program
-nodemon ./app.js
+### Notes
+ * To install dependencies: npm install
+ * To run the app: node app.js
+ * To run the app with nodemon: nodemon app.js
+### References
+ * [How to hide connection details for mysql database in node.js?](https://stackoverflow.com/questions/57470659/how-to-hide-connection-details-for-mysql-database-in-node-js)
+ * [dotenv documentation](https://github.com/motdotla/dotenv#readme)
+ * [Nodemon documentaion](https://www.npmjs.com/package/nodemon)
