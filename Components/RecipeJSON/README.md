@@ -1,5 +1,6 @@
 ### Details
 Code related to reading and writing JSON data to a file. This code will be used for the NoSQL database and contain the recipe details.
+
 Project page details: [Database Functionality](https://kionokitse.wordpress.com/fridgemate/database-functionality/)
 
 ### Notes
