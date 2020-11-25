@@ -18,7 +18,6 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
  * Project documented at https://kionokitse.wordpress.com/FridgeMate/
 
 ### What's next
- * Write blog post for updating percentage
  * Format the README.md files for the tutorials 
  * Barcode reading tutorial with QuaggaJS
  * Try a shape detection API tutorial
