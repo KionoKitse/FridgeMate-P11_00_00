@@ -57,6 +57,12 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2020-11-19 Read/Write JSON files into objects NoSQL database
 * 2020-11-20 Working on MySQL functions for updating the percentage
 * 2020-11-23 Finished the MySQL functions
+* 2020-11-30 Designing website
+* 2020-12-01 Sign up for web hosting
+* 2020-12-02 Working on website
+* 2020-12-02 Got the layout for the recipe working
+* 2020-12-02 Working on getting PHP and MySQL inputs to recipe page
+* 2020-12-03 Got the PHP and MySQL connections working
 
 </details>
 
@@ -141,7 +147,8 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 	</details>
 	
 </details>
-
+* [How do you store your mysql user credentials in a secure way?](https://teamtreehouse.com/community/how-do-you-store-your-mysql-user-credentials-in-a-secure-way)
+* 
 ### Web content 
 <details>
 	<summary>Expand web content list</summary>
