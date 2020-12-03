@@ -4,7 +4,7 @@ APPROVED: Barcode reading
 &nbsp;&nbsp;&nbsp;&nbsp;There are a lot of functions in this app that will be difficult but this is the one that I have the least amount of understanding around and would be highly specific. I'm focusing on this aspect first since it will make my life much easier if I start from a platform that I know already supports barcode reading. In deciding what method to implement I started by looking for tutorials for how to do barcode reading in a web app. What I've found is that there are some pretty good tutorials and examples out there so it's not going to be groundbreaking new stuff. I have a full list of notes and links in the <a href="https://github.com/KionoKitse/FridgeMate-P11_00_00/blob/main/README.md">"GitHub README"</a> file under the Notebook section. The summary from my research is that there are two-ish options that I'm considering. The first option is using QuaggaJS or ZXing for a fairly capable standard barcode reading option. It will work on pretty much any modern browser and seems to be well loved by the community. The other option is making use of the Shape Detection API. This is fairly new so it is only supported in Chrome and requires enabling the Experimental Web Platform features. It seems to be fast and works well but it doesn't have widespread adoption yet and I'm not sure if it will work with iOS. For now I'm thinking that it would be best to start with QuaggaJS first and if that doesn't work move to the Shape Detection API.
 </div>
 
-Receipt scanning
+
 Database structure
 <script src="https://gist.github.com/KionoKitse/83a8fa2070b2497fb8463a7ab72c6d83.js"></script> JSON format
 <script src="https://gist.github.com/KionoKitse/7c10e13951ba97ebb80b189f5ba7c051.js"></script> Code for JSON
