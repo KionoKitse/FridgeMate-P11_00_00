@@ -147,8 +147,131 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 	</details>
 	
 </details>
+
+<details>
+	<Summary>Draft sketch for user interface layout</summary>
+	
+	Homepage
+	> Suggestions: Suggested food to make
+	  > Scheduled menu: Scheduled menu
+		> View recipe
+		> Remove items from menu
+	  > Recommend recipes: View recommended recipes
+		> Sort by:
+		  > Buildability score (default)
+		> Filter by:
+		  > Tags
+		  > Rating
+		  > Time
+	> Recipe box (done)
+	  - view all the recipes
+	  > Recipe preview 
+	  > Filter by:
+		> Name
+		> Tags
+		> Rating
+		> Time
+		> Ingredient
+	  > Sort by:
+		> Buildability
+		> Rating
+		> Name
+		> Time
+	> Ingredients (done)
+	  - All ingredients available
+	  > Pantry
+		- Ingredients that are currently in stock
+		> Mark ingredient as used
+		> Add ingredient to shopping list
+		> Sort by:
+		  > Name
+		  > Age
+	  > Store
+		- Ingredients that can be purchased
+		> Mark ingredient as available
+		> Add ingredient to shopping list
+		> Filter by:
+		  > Name
+		  > Group
+		- Sorted by name
+	  - Grouped by category
+		- Produce
+		  - Fruit
+		  - Vegetables
+		  - Herbs
+		  - Other
+		- Meat
+		- Dairy
+		- Frozen
+		- Canned
+		- Bakery
+		- Baking
+		- Boxed food
+		- Spices
+		- Others
+	> Shopping
+	  - Shopping list
+	  > Shopping list
+		- List of items scheduled to be purchased
+		> Mark item purchased
+		> Remove item from shopping list 
+		> Add non-pantry items
+		> Submit items purchased
+		- Grouped by category
+	  > Recommended ingredients
+		- Ingredients recommended to be purchased
+		> Add item to shopping list
+		~ Sorted by buildability improvement
+		~ Show up to 5 recipe icons sorted by buildability improvement
+	X Toolbox
+	  > Add recipe
+	  > Add new ingredients
+	  
+
+
+	+ Recipe preview
+	  > Name
+	  > Image
+	  > Active time
+	  > Rating
+	  > Buildability
+	  > Ingredients: 6
+		- Sorted by don't have -> have & main -> garnish
+		- Don't have = red
+		- Substitute = pink
+		- Buildable = purple
+		- Have = blue
+		- Grocery cart = BOLD
+	  > Add to grocery
+		> Select all missing or only a few
+	  > Add to menu
+
+	+ Recipe
+	  > Name
+	  > Image
+	  > Link
+	  > People
+	  > Active time
+	  > Passive time
+	  > Rating
+	  > Buildability
+	  > Add to menu
+	  > Ingredients
+		- Don't have = red
+		- Substitute = pink
+		- Buildable = purple
+		- Have = blue
+		- Grocery cart = BOLD
+		> Add ingredient to cart
+		> Mark ingredient used
+
+	+ Ingredient
+	  - Name
+	  - Age	
+</details>
+
 * [How do you store your mysql user credentials in a secure way?](https://teamtreehouse.com/community/how-do-you-store-your-mysql-user-credentials-in-a-secure-way)
-* 
+
 ### Web content 
 <details>
 	<summary>Expand web content list</summary>
