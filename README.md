@@ -63,6 +63,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2020-12-02 Got the layout for the recipe working
 * 2020-12-02 Working on getting PHP and MySQL inputs to recipe page
 * 2020-12-03 Got the PHP and MySQL connections working
+* 2020-12-08 Got finishing up the dynamic generation of pages using PHP
 
 </details>
 
