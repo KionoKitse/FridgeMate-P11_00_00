@@ -1,47 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <style>
-        .center {
-            margin: auto;
-            border: 3px solid #73AD21;
-            padding: 10px;
-        }
-
-        .break {
-            background: #3E87BC;
-            height: 2px;
-            margin: 5px 0 10px 0;
-            width: 100%;
-        }
-
-        p {
-            font-size: 3vw;
-            font-weight: normal;
-        }
-        th{
-            font-size: 3vw;
-            font-weight: normal;
-            padding: 0.5vw;
-        }
-        li{
-            font-size: 3vw;
-            font-weight: normal;
-        }
-        html * {
-            max-height: 999999px !important;
-            color: #3E87BC;
-        }
-
-
-    </style>
-    <script type="text/javascript" src="data.json"></script>
 </head>
 
 <body>
-
     <div class="center">
         <div id="Title">
             <p style="text-align: center; font-size: 5vw;">
@@ -228,83 +190,8 @@
             </p>
         </div>
     </div>
-    <div id="txtHint"><b>Person info will be listed here...</b></div>
 </body>
-
-<!--Load content into page-->
-<script>
-    //Update information on page
-    UpdateTitleContent()
-    UpdateStats()
-    showUser('4');
-
-    //Update the title, link and image
-    function UpdateTitleContent() {
-        var TitleString = '<p style="text-align: center; font-size: 5vw;"><a href="' + data.Link + '">' + data.Name + '</a></p>'
-        document.getElementById('Title').innerHTML = TitleString
-        document.getElementById("Image").src = data.Image
-    }
-    //Update basic stats content and notes
-    function UpdateStats() {
-        var StatsString =
-            '<tr>' +
-            '<th>' + data.Rating + '/5 <i class="fa fa-star"></i></th>' +
-            '<th>100% <i class="fas fa-clipboard-check"></i></th>' +
-            '<th>' + Min2Time(data.ActiveTime) + ' <i class="far fa-clock"></i></i></th>' +
-            '<th>' + Min2Time(data.PassiveTime) + ' <i class="fa fa-clock"></i></th>' +
-            '<th>' + data.People + ' <i class="fas fa-user-astronaut"></i></th>' +
-            '</tr>'
-        document.getElementById('Stats').innerHTML = StatsString
-        document.getElementById('Notes').innerHTML = '<p>' + data.Notes + '</p>'
-    }
-    //Function to convert min to h/min string
-    function Min2Time(Mins) {
-        if (Mins < 60) {
-            return Mins.toString()
-        }
-        else {
-            var Hrs = Math.floor(Mins / 60)
-            var min = Mins - 60 * Hrs
-            return Hrs + 'h' + min + 'min'
-        }
-    }
-
-    function QueryIngredients(str){
-      //Create a XMLHttpRequest
-      var xmlhttp = new XMLHttpRequest();
-      //Function t exicute when ready
-      xmlhttp.onreadystatechange = function(){
-        //What to do when the results are ready
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("txtHint").innerHTML = this.responseText;
-        }
-      };
-      //Make a call to the php function and send parameters
-      xmlhttp.open("GET","getuser.php?q="+str,true);
-      xmlhttp.send();
-    }
-    function showUser(str) {
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("txtHint").innerHTML = this.responseText;
-        }
-      };
-      xmlhttp.open("GET","getuser.php?q="+str,true);
-      xmlhttp.send();
-    }
-    
-    
-</script>
-
 </html>
-<!--
-    Credits
-    Loading JSON data: https://www.quora.com/How-can-I-load-data-from-a-JSON-file-into-a-variable-in-JavaScript-without-using-Ajax
-    Issues with font size being wrong on android: https://stackoverflow.com/questions/11289166/chrome-on-android-resizes-font
-    Getting mySQL stuff from php using JS: https://www.w3schools.com/php/php_ajax_database.asp
-
--->
 
 
 
