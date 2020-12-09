@@ -64,6 +64,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2020-12-02 Working on getting PHP and MySQL inputs to recipe page
 * 2020-12-03 Got the PHP and MySQL connections working
 * 2020-12-08 Got finishing up the dynamic generation of pages using PHP
+* 2020-12-09 Finished the recipe page
 
 </details>
 
@@ -280,4 +281,8 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * P11_00_00C001 Example JSON format for recipe
 * P11_00_00C002 Code for creating JSON data 
 * P11_00_00C003 Code for calculating recipe buildability score
+* P11_00_00C004 Image of recipe page
+* P11_00_00C005 Image recipe image pt1
+* P11_00_00C006 Image recipe image pt2
+* P11_00_00C007 Image recipe image pt3
 </details>
