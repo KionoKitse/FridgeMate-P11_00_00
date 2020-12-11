@@ -282,7 +282,8 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * P11_00_00C002 Code for creating JSON data 
 * P11_00_00C003 Code for calculating recipe buildability score
 * P11_00_00C004 Image of recipe page
-* P11_00_00C005 Image recipe image pt1
-* P11_00_00C006 Image recipe image pt2
-* P11_00_00C007 Image recipe image pt3
+* P11_00_00C005 Image information section
+* P11_00_00C006 Code information section
+* P11_00_00C007 Image ingredients section
+* P11_00_00C008 Code ingredients section
 </details>
