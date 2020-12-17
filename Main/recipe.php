@@ -107,7 +107,7 @@
          * 3 = Buildable
          * 4 = Substitute
         */
-        //Check the ingredient is not availible
+        //Check the ingredient is not available
         if ($Ingredient["status"] == 0){
             //Check if the ingredient is buildable
             if($Ingredient["recipe_id"]>0){
@@ -124,17 +124,17 @@
             }
             //Check if ingredient has a substitute
             if ($Ingredient["status"] == 0){
-                //Find if there are any substitue ingredients
+                //Find if there are any substitute ingredients
                 $Query1 = "SELECT group_id FROM fridgemate_db.group WHERE item_id = '".$Ingredient["item_id"]."'";
                 $Query2 = "SELECT item_id FROM fridgemate_db.group WHERE group_id IN (" . $Query1 . ") AND item_id != '".$Ingredient["item_id"]."'";
                 $ResultSet5 = $connection->query($Query2);
                 //SELECT ITEM_ID FROM fridgemate_db.group where GROUP_ID in (SELECT GROUP_ID FROM fridgemate_db.group where ITEM_ID = '19') and ITEM_ID != '19';
-                //Check any of the items in the group are availible
+                //Check any of the items in the group are available
                 while ($row1 = $ResultSet5->fetch_row()) {
                     $Item = $row1[0];
                     $Query1 = "SELECT * FROM pantry WHERE item_id = '".$row1[0]."'";
                     $ResultSet6 = $connection->query($Query1);
-                    //Check if ingredient is availible
+                    //Check if ingredient is available
                     while ($row2 = $ResultSet6->fetch_row()) {
                         if($row2[4] == 1){
                             //Replace ingredient with substitute and mark as a sub
