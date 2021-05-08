@@ -1,0 +1,56 @@
+/*Import fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+
+/*
+Colors: https://coolors.co/f4f1de-e07a5f-3d405b-81b29a-f2cc8f 
+Style guide
+0 = Don't have (MySQL)       orange   E07A5F
+1 = Have (MySQL)             blue     3D405B
+2 = Shopping list (MySQL)    bold     Bold
+3 = Buildable                tan      F2CC8F
+4 = Substitute               green    81B29A
+*/
+
+/*General styling*/
+.center {
+    margin: auto;
+    border: 3px solid #81B29A;
+    padding: 10px;
+    background: #F4F1DE;
+}
+.break {
+    background: #F2CC8F;
+    height: 2px;
+    margin: 5px 0 10px 0;
+    width: 100%;
+}
+p {
+    font-size: 3.7vw;
+    color: #3D405B;
+    white-space: pre-line;
+}
+th{
+    font-size: 3.7vw;
+    font-weight: bold;
+    padding: 0.5vw;
+    color: #81B29A;
+}
+td{
+    font-size: 3.2vw;
+    color: #3D405B;
+    padding: 0.5vw;
+}
+html * {
+    max-height: 999999px !important;
+    font-family: 'Ubuntu', sans-serif;
+}
+input {
+    width: 90%;
+    font-size: 3.2vw;
+}
+textarea{
+    white-space: pre-line;
+}
+select{
+    width: 100%;
+}

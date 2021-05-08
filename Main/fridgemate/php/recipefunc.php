@@ -21,7 +21,7 @@
     }
     //Function that reads the JSON data
     function ReadJSON($Id){
-        $JsonPath = file_get_contents('./RecipeFiles/'.$Id.'.json');
+        $JsonPath = file_get_contents('json/'.$Id.'.json');
         $JsonData = json_decode($JsonPath, true);
         return $JsonData;
     }
@@ -36,7 +36,7 @@
         $Percent = 0;
         $Steps = array();
 
-        require_once './includes/dbconnect.php';
+        require_once 'dbconnect.php';
         //Get the ingredients values needed for the recipe
         $Query1 = "SELECT * FROM ingredient WHERE recipe_id = '".$Id."'";
         $ResultSet1 = $connection->query($Query1);

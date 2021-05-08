@@ -1,3 +1,6 @@
 .env
 node_modules
 config.ini
+.htpasswd
+Main/fridgemate/dbconnect.php
+Main/fridgemate/.htaccess

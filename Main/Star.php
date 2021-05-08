@@ -4,11 +4,8 @@
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <!-- Import font -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
-    </style>
-    <!-- Colors: https://coolors.co/f4f1de-e07a5f-3d405b-81b29a-f2cc8f 
+    <!-- 
+        Colors: https://coolors.co/f4f1de-e07a5f-3d405b-81b29a-f2cc8f 
         Style guide
         0 = Don't have (MySQL)       orange   E07A5F
         1 = Have (MySQL)             blue     3D405B
@@ -17,6 +14,8 @@
         4 = Substitute               green    81B29A
     -->
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+
         input {
             width: 90%;
             font-size: 3.2vw;
@@ -56,8 +55,6 @@
             font-family: 'Ubuntu', sans-serif;
         }
     </style>
-
-    
 </head>
 
 <div id="Lists">
