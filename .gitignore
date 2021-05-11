@@ -4,3 +4,4 @@ config.ini
 .htpasswd
 Main/fridgemate/dbconnect.php
 Main/fridgemate/.htaccess
+private/cconfig.ini
