@@ -66,6 +66,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2020-12-08 Got finishing up the dynamic generation of pages using PHP
 * 2020-12-09 Finished the recipe page
 * 2020-12-10 Working on icons
+* 2021-05-14 Working on main page icons and display
 
 </details>
 
