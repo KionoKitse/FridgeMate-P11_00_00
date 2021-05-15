@@ -152,7 +152,7 @@
     </div>
     <script>
         //mainstyle.js - Set the center element width based on window size
-        SetCenterWidth();
+        //SetCenterWidth();
     </script>
 </body>
 </html>
