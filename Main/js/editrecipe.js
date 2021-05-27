@@ -339,7 +339,8 @@ function Submit(){
         }
         //Get the notes
         var Notes = document.getElementById("NotesBox").value;
-        //Get the prep step
+        //Get the prep step 
+        //There is an issue here
         var AllSteps = [];
         for (var Step = 0; Step<Steps.Ids.length; Step++){
             var TempStep = [];
@@ -358,7 +359,48 @@ function Submit(){
         //Get the id if there is one
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const id = urlParams.get('id');
+        var Id = urlParams.get('id');
+
+        //Sanitize the inputs
+
+        //Parse the data into a JSON so it may be passed to PHP
+        var EditResults = new Object();
+        EditResults.Id = Id;
+        EditResults.Name = Name;
+        EditResults.Link = Link;
+        EditResults.Image = Image
+        EditResults.Rating = Rating;
+        EditResults.ActiveTime = ActiveTime;
+        EditResults.PassiveTime = PassiveTime;
+        EditResults.People = People;
+        EditResults.MainList = MainList;
+        EditResults.SupportList = SupportList;
+        EditResults.SpicesList = SpicesList;
+        EditResults.GarnishList = GarnishList;
+        EditResults.AllSteps = AllSteps;
+
+        var jsonEditResults= JSON.stringify(EditResults);
+        /*
+        var Rating = document.getElementById("Rating").MainList;
+        var ActiveTime = document.getElementById("ActiveTime").value;
+        var PassiveTime = document.getElementById("PassiveTime").value;
+        var People = document.getElementById("People").value;
+        */
+
+        //Submit the data to server for processing
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var NewList = this.responseText;
+                //Error handling
+            }
+        };
+        xmlhttp.open("GET","php/submitEdit.php?name1="+Name1+"&name2="+Name2,true);
+        xmlhttp.send();
+
+
+		
+
 
     }catch(err){}
 
