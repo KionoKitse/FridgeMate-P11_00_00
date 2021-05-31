@@ -219,7 +219,6 @@
         </div>
 
         
-        
         <!-- Print Prep step -->
         <div class="break"></div> 
         <div id="DivStep0">
@@ -237,7 +236,7 @@
                     PreSelectedDropDown($AllIngredinets,'0',$OptionList)
                 ?>
             </table>
-            <textarea style="width:98%;" rows="10" id="NotesBox"><?php 
+            <textarea style="width:98%;" rows="10" id="Step0Box"><?php 
                 if(count($JsonData["Steps"])>0){
                     echo $JsonData["Steps"][0];
                 }?>

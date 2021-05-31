@@ -7,6 +7,17 @@ var Steps;
 var OptionList;
 var UnselectedOptions;
 
+//Class
+class Ingredient {
+    constructor(Quantity,Unit,Name1,Name2,Name3) {
+      this.Quantity = Quantity;
+      this.Unit = Unit;
+      this.Name1 = Name1;
+      this.Name2 = Name2;
+      this.Name3 = Name3;
+    }
+  }
+
 //Fill global variables
 document.addEventListener("DOMContentLoaded", GetIdCounts);
 document.addEventListener("DOMContentLoaded", BuildIngredientOptions);
@@ -287,8 +298,7 @@ function Submit(){
                 var Name1 = document.getElementById("Main"+Id+"Name1").value;
                 var Name2 = document.getElementById("Main"+Id+"Name2").value;
                 var Name3 = document.getElementById("Main"+Id+"Name3").value;
-                var Row = [Quantity,Unit,Name1,Name2,Name3];
-                MainList.push(Row);
+                MainList.push(new Ingredient(Quantity,Unit,Name1,Name2,Name3));
               }
               catch(err) {}
         }
@@ -302,8 +312,7 @@ function Submit(){
                 var Name1 = document.getElementById("Support"+Id+"Name1").value;
                 var Name2 = document.getElementById("Support"+Id+"Name2").value;
                 var Name3 = document.getElementById("Support"+Id+"Name3").value;
-                var Row = [Quantity,Unit,Name1,Name2,Name3];
-                SupportList.push(Row);
+                SupportList.push(new Ingredient(Quantity,Unit,Name1,Name2,Name3));
             }
             catch(err) {}
         }
@@ -317,8 +326,7 @@ function Submit(){
                 var Name1 = document.getElementById("Spices"+Id+"Name1").value;
                 var Name2 = document.getElementById("Spices"+Id+"Name2").value;
                 var Name3 = document.getElementById("Spices"+Id+"Name3").value;
-                var Row = [Quantity,Unit,Name1,Name2,Name3];
-                SpicesList.push(Row);
+                SpicesList.push(new Ingredient(Quantity,Unit,Name1,Name2,Name3));
             }
             catch(err) {}
         }
@@ -332,27 +340,42 @@ function Submit(){
                 var Name1 = document.getElementById("Garnish"+Id+"Name1").value;
                 var Name2 = document.getElementById("Garnish"+Id+"Name2").value;
                 var Name3 = document.getElementById("Garnish"+Id+"Name3").value;
-                var Row = [Quantity,Unit,Name1,Name2,Name3];
-                GarnishList.push(Row);
+                GarnishList.push(new Ingredient(Quantity,Unit,Name1,Name2,Name3));
             }
             catch(err) {}
         }
         //Get the notes
         var Notes = document.getElementById("NotesBox").value;
-        //Get the prep step 
-        //There is an issue here
+
+        //Get the ingredients for each step
         var AllSteps = [];
+        //For each step
         for (var Step = 0; Step<Steps.Ids.length; Step++){
-            var TempStep = [];
-            for (var Id = 0; Id <= Steps.Ids[0]; Id++) {
-                var ItemId = "SelectStep"+Step+"Item"+Id;
+            //Create a temp step
+            var StepIngredients = [];
+            //For each ingredient in a step
+            for (var Id = 1; Id <= Steps.Ids[0]; Id++) {
+                //Get the ingredient id
+                var StepItemId = "SelectStep"+Step+"Item"+Id;
+                //Try to get the ingredient and parse into ingredient object
                 try {
-                    var temp = document.getElementById(ItemId).value;
-                    TempStep.push(temp);
+                    var ItemId = document.getElementById(StepItemId).value;
+                    var Quantity = document.getElementById(ItemId+"Quantity").value;
+                    var Unit = document.getElementById(ItemId+"Unit").value;
+                    var Name1 = document.getElementById(ItemId+"Name1").value;
+                    var Name2 = document.getElementById(ItemId+"Name2").value;
+                    var Name3 = document.getElementById(ItemId+"Name3").value;
+                    StepIngredients.push(new Ingredient(Quantity,Unit,Name1,Name2,Name3));
                 }
                 catch(err) {}
             }
-            AllSteps.push(TempStep);
+            //Get the notes for this step
+            var Notes = document.getElementById("Step"+Step+"Box").value;
+            //Create a step object
+            var StepObj = new Object();
+            StepObj.ingredients = StepIngredients;
+            StepObj.notes = Notes;
+            AllSteps.push(StepObj);
         }
         
 
@@ -361,7 +384,11 @@ function Submit(){
         const urlParams = new URLSearchParams(queryString);
         var Id = urlParams.get('id');
 
-        //Sanitize the inputs
+        //Input validation
+        if(!(Rating >= 0 && Rating <= 5)) throw "Submit Validation Failed: Rating is not a number between 0-5";
+        if(!(ActiveTime >= 0 && ActiveTime <= 240)) throw "Submit Validation Failed: ActiveTime is not a number between 0-240";
+        if(!(PassiveTime >= 0 && PassiveTime <= 10080)) throw "Submit Validation Failed: PassiveTime is not a number between 0-10080";
+        if(!(People >= 0 && People <= 10)) throw "Submit Validation Failed: People is not a number between 0-10";
 
         //Parse the data into a JSON so it may be passed to PHP
         var EditResults = new Object();
@@ -377,32 +404,31 @@ function Submit(){
         EditResults.SupportList = SupportList;
         EditResults.SpicesList = SpicesList;
         EditResults.GarnishList = GarnishList;
-        EditResults.AllSteps = AllSteps;
+        EditResults.Notes = Notes;
+        EditResults.Steps = AllSteps;
 
         var jsonEditResults= JSON.stringify(EditResults);
-        /*
-        var Rating = document.getElementById("Rating").MainList;
-        var ActiveTime = document.getElementById("ActiveTime").value;
-        var PassiveTime = document.getElementById("PassiveTime").value;
-        var People = document.getElementById("People").value;
-        */
 
         //Submit the data to server for processing
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                var NewList = this.responseText;
+                var Hello = this.responseText;
+                console.log(Hello);
                 //Error handling
             }
         };
-        xmlhttp.open("GET","php/submitEdit.php?name1="+Name1+"&name2="+Name2,true);
-        xmlhttp.send();
+        xmlhttp.open("POST","php/submitEdit.php",true);
+        xmlhttp.send(jsonEditResults);
 
 
 		
 
 
-    }catch(err){}
+    }catch(err){
+        console.log(err);
+        //alert("Hello! I am an alert box!");
+    }
 
     //console.log(product);
 }
