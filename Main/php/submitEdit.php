@@ -21,37 +21,52 @@
     $Steps = $response->{'Steps'};
     $Error = false;
 
-    //Escape inputs
-    $People = "five";
-    //Check if it's a new recipe
+    //Test here
+    //$Id = false;
+
+    //Check if it's a new recipe and give it an id
     if(!$Id){
         //Check if there is a recipe with the same name
-        $Query1 = "SELECT recipe_id FROM recipe WHERE name = '".$Name."'";
-        $ResultSet = $connection->query($Query1);
-        while ($row = $ResultSet->fetch_row()) {
+        $Query = "SELECT recipe_id FROM recipe WHERE name = ?";
+        $stmt = $connection->prepare($Query);
+        $stmt->bind_param("s", $Name);
+        $stmt->execute();
+        $ResultSet = $stmt->get_result();
+        while ($row = $ResultSet->fetch_assoc()) {
             //If there is a recipe with the same name check if the link is the same
-            $JsonPath = file_get_contents('../json/'.$row[0].'.json');
+            $JsonPath = file_get_contents('../json/'.$row['recipe_id'].'.json');
             $JsonData = json_decode($JsonPath, true);
             //If the name is the same and the link is the same don't add go to exit
             if($Link == $JsonData["Link"]){
-                $Error = "Submit Edit Failed: Recipe already exists same name and link Recipe_Id=".$row[0];
+                $Error = "Submit Edit Failed: Recipe already exists same name and link RecipeId=".$row['recipe_id'];
                 goto EditExit;
             }
         }
-        //New recipe so add to database
-        $stmt = $connection->prepare("INSERT INTO recipe (name,people,active,pasive,rating) VALUES (?, ?, ?, ?, ?)");
+        //New recipe, so add to database
+        $Query = "INSERT INTO recipe (name,people,active,pasive,rating) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $connection->prepare($Query);
         $stmt->bind_param("siddi", $Name, $People, $ActiveTime, $PassiveTime, $Rating);
         $stmt->execute();
         
-        echo (var_dump($stmt));
+        //Get the last id number inserted in database
+        $Id = $connection->insert_id;
+    } 
 
+    //Get the last id number inserted in table
+    
 
-
-    } else {
-        echo ("Some id");
-    }
-
-
+            /*
+            //Trying to use this
+            $Query1 = "SELECT recipe_id FROM recipe WHERE name = ?";
+            $stmt = $connection->prepare($Query1);
+            $stmt->bind_param("s", $Name);
+            $stmt->execute();
+            $result = $stmt->get_result();
+    
+            while ($row = $result->fetch_assoc()) {
+                echo ($row['recipe_id']);
+            }
+            */
     
     
     //Get all the name1 ingredients
