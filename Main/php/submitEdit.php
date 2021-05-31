@@ -60,32 +60,43 @@
         //$done = $stmt->affected_rows; //Not useful because if nothing change it returns 0
     }
 
-    //Check if there are any new ingredients listed MainList
+    //Process Main ingredients
     echo(var_dump($MainList));
     foreach ($MainList as $row) {
-        //Check to see if ingredient already exist matchin name 1-3
-        /*
-        $Query = "SELECT recipe_id FROM pantry WHERE name1=? AND name2=? AND name3=?";
+        //Get the item_id for this ingredient must match name 1-3
+        $Query = "SELECT item_id FROM pantry WHERE name1=? AND name2=? AND name3=?";
         $stmt = $connection->prepare($Query);
         $stmt->bind_param("sss", $row['Name1'], $row['Name2'], $row['Name3']);
-        */
-        $Query = "SELECT item_id FROM pantry WHERE name1=? AND name2=?";
-        $stmt = $connection->prepare($Query);
-        $stmt->bind_param("ss", $row['Name1'], $row['Name2']);
         $stmt->execute();
         $ResultSet = $stmt->get_result();
-        $row = $ResultSet->fetch_assoc();
+        $result = $ResultSet->fetch_assoc();
+        $ItemId;
+        
+        //Ingredient does not exist so add it
+        if(!$result){
+            $Query = "INSERT INTO pantry (name1,name2,name3,status,recipe_id) VALUES (?, ?, ?, '0', '0')";
+            $stmt = $connection->prepare($Query);
+            $stmt->bind_param("sss", $row['Name1'], $row['Name2'], $row['Name3']);
+            $stmt->execute();
+            $ItemId = $connection->insert_id;
+        } else {
+            $ItemId = $result['item_id'];
+        }
+        
 
-        //echo ($ResultSet);
+
+        echo ($ItemId);
         //$ingredient->{'Name1'}
-        echo(var_dump($row));
+        
 
         //$Query1 = "SELECT recipe_id FROM fridgemate_db.pantry ORDER BY name1";
     }
 
 
+
     /*
-    $Query1 = "SELECT DISTINCT name1 FROM fridgemate_db.pantry ORDER BY name1";
+    echo (vardump($ItemId));
+    $Query1 = "UPDATE pantry SET name3='' WHERE item_id='24'";
     $ResultSet1 = $connection->query($Query1);
 
     //Print the ingredients for a datalist
