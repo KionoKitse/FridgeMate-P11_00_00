@@ -149,36 +149,6 @@
         }
         return $Result;
     }
-    /*
-    function PreSelectedDropDown($Object,$Type,$Options){
-        $Id = 1;
-        foreach($Object as $row){
-            //Create unique id
-            $RowId = $Type.$Id;
-            //Create row name
-            $RowName = $row->Quantity.' '.$row->Unit.' '.$row->Name1.' '.$row->Name2.' '.$row->Name3;
-            //Create a row
-            echo '<tr id="'.$RowId.'">';
-                echo '<td>';
-                    echo '<select style="width: 100%;" id="Select'.$RowId.'">';
-                        echo '<option value=""></option>';
-                        foreach($Options as $row2){
-                            if($RowName == $row2[1]){
-                                echo '<option selected="selected" value="'.$row2[0].'">'.$row2[1].'</option>';
-                            }else{
-                                echo '<option value="'.$row2[0].'">'.$row2[1].'</option>';
-                            }
-                        }
-                    echo '</select>';
-                echo '</td>';
-                echo '<td>';
-                    echo '<i onclick="RemoveElement(\''.$RowId.'\')" style="color: #F2CC8F; font-size: 5vw;" class="far fa-minus-square"></i>';
-                echo '</td>';
-            echo '</tr>';
-            $Id++;
-        }
-    }
-    */
     function PreSelectedDropDown($Object,$Step,$Options){
         $Id = 1;
         foreach($Object as $row){

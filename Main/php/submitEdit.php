@@ -4,21 +4,21 @@
 
     //Get the response data
     $str_json = file_get_contents('php://input');
-    $response = json_decode($str_json);
-    $Id = $response->{'Id'};
-    $Name = $response->{'Name'};
-    $Link = $response->{'Link'};
-    $Image = $response->{'Image'};
-    $Rating = $response->{'Rating'};
-    $ActiveTime = $response->{'ActiveTime'};
-    $PassiveTime = $response->{'PassiveTime'};
-    $People = $response->{'People'};
-    $MainList = $response->{'MainList'};
-    $SupportList = $response->{'SupportList'};
-    $SpicesList = $response->{'SpicesList'};
-    $GarnishList = $response->{'GarnishList'};
-    $Notes = $response->{'Notes'};
-    $Steps = $response->{'Steps'};
+    $response = json_decode($str_json, true);
+    $Id = $response['Id']; 
+    $Name = $response['Name'];
+    $Link = $response['Link'];
+    $Image = $response['Image'];
+    $Rating = $response['Rating'];
+    $ActiveTime = $response['ActiveTime'];
+    $PassiveTime = $response['PassiveTime'];
+    $People = $response['People'];
+    $MainList = $response['MainList'];
+    $SupportList = $response['SupportList'];
+    $SpicesList = $response['SpicesList'];
+    $GarnishList = $response['GarnishList'];
+    $Notes = $response['Notes'];
+    $Steps = $response['Steps'];
     $Error = false;
 
     //Test here
@@ -50,9 +50,50 @@
         
         //Get the last id number inserted in database
         $Id = $connection->insert_id;
-    } 
+    } else {
+        //Update the parameters for an existing recipe
+        $Query = "UPDATE recipe SET name=?, people=?, active=?, pasive=?, rating=? WHERE recipe_id=?";
+        $stmt = $connection->prepare($Query);
+        $stmt->bind_param("siddii", $Name, $People, $ActiveTime, $PassiveTime, $Rating, $Id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        //$done = $stmt->affected_rows; //Not useful because if nothing change it returns 0
+    }
 
-    //Get the last id number inserted in table
+    //Check if there are any new ingredients listed MainList
+    echo(var_dump($MainList));
+    foreach ($MainList as $row) {
+        //Check to see if ingredient already exist matchin name 1-3
+        /*
+        $Query = "SELECT recipe_id FROM pantry WHERE name1=? AND name2=? AND name3=?";
+        $stmt = $connection->prepare($Query);
+        $stmt->bind_param("sss", $row['Name1'], $row['Name2'], $row['Name3']);
+        */
+        $Query = "SELECT item_id FROM pantry WHERE name1=? AND name2=?";
+        $stmt = $connection->prepare($Query);
+        $stmt->bind_param("ss", $row['Name1'], $row['Name2']);
+        $stmt->execute();
+        $ResultSet = $stmt->get_result();
+        $row = $ResultSet->fetch_assoc();
+
+        //echo ($ResultSet);
+        //$ingredient->{'Name1'}
+        echo(var_dump($row));
+
+        //$Query1 = "SELECT recipe_id FROM fridgemate_db.pantry ORDER BY name1";
+    }
+
+
+    /*
+    $Query1 = "SELECT DISTINCT name1 FROM fridgemate_db.pantry ORDER BY name1";
+    $ResultSet1 = $connection->query($Query1);
+
+    //Print the ingredients for a datalist
+    while ($row = $ResultSet1->fetch_row()) {
+        echo "<option value=\"".$row[0]."\">".$row[0]."</option>";
+    }
+
+     */
     
 
             /*
