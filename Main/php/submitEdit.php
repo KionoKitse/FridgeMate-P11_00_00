@@ -5,7 +5,7 @@
     //Get the response data
     $str_json = file_get_contents('php://input');
     $response = json_decode($str_json, true);
-    $Id = $response['Id']; 
+    $RecipeId = $response['Id']; 
     $Name = $response['Name'];
     $Link = $response['Link'];
     $Image = $response['Image'];
@@ -19,13 +19,16 @@
     $GarnishList = $response['GarnishList'];
     $Notes = $response['Notes'];
     $Steps = $response['Steps'];
+
+    //Variables
+    $ItemId;
     $Error = false;
 
     //Test here
-    //$Id = false;
+    //$RecipeId = false;
 
     //Check if it's a new recipe and give it an id
-    if(!$Id){
+    if(!$RecipeId){
         //Check if there is a recipe with the same name
         $Query = "SELECT recipe_id FROM recipe WHERE name = ?";
         $stmt = $connection->prepare($Query);
@@ -49,16 +52,24 @@
         $stmt->execute();
         
         //Get the last id number inserted in database
-        $Id = $connection->insert_id;
+        $RecipeId = $connection->insert_id;
     } else {
         //Update the parameters for an existing recipe
         $Query = "UPDATE recipe SET name=?, people=?, active=?, pasive=?, rating=? WHERE recipe_id=?";
         $stmt = $connection->prepare($Query);
-        $stmt->bind_param("siddii", $Name, $People, $ActiveTime, $PassiveTime, $Rating, $Id);
+        $stmt->bind_param("siddii", $Name, $People, $ActiveTime, $PassiveTime, $Rating, $RecipeId);
         $stmt->execute();
         $result = $stmt->get_result();
         //$done = $stmt->affected_rows; //Not useful because if nothing change it returns 0
     }
+
+    //Clear the Ingredients table for the given Recipe_Id
+    /*
+    $Query = "DELETE FROM ingredient WHERE recipe_id=?";
+    $stmt = $connection->prepare($Query);
+    $stmt->bind_param("i", $RecipeId);
+    $stmt->execute();
+    */
 
     //Process Main ingredients
     echo(var_dump($MainList));
@@ -70,7 +81,6 @@
         $stmt->execute();
         $ResultSet = $stmt->get_result();
         $result = $ResultSet->fetch_assoc();
-        $ItemId;
         
         //Ingredient does not exist so add it
         if(!$result){
@@ -82,10 +92,14 @@
         } else {
             $ItemId = $result['item_id'];
         }
+
+        foreach($Steps as $Step){
+            echo(var_dump($Step));
+        }
         
 
 
-        echo ($ItemId);
+        //echo ($ItemId);
         //$ingredient->{'Name1'}
         
 

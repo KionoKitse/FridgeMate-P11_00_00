@@ -16,7 +16,16 @@ class Ingredient {
       this.Name2 = Name2;
       this.Name3 = Name3;
     }
-  }
+}
+class PantryObj {
+    constructor(ItemId,Name1,Name2,Name3) {
+      this.ItemId = ItemId;
+      this.Name1 = Name1;
+      this.Name2 = Name2;
+      this.Name3 = Name3;
+    }
+}
+
 
 //Fill global variables
 document.addEventListener("DOMContentLoaded", GetIdCounts);
@@ -288,96 +297,118 @@ function Submit(){
         var ActiveTime = document.getElementById("ActiveTime").value;
         var PassiveTime = document.getElementById("PassiveTime").value;
         var People = document.getElementById("People").value;
+
+        //Get the data for the Pantry table
+        var PantryTable = [];
         //Get the main ingredients
-        var MainList = [];
         for (var Id = 1; Id <= MainId; Id++) {
-            var RowId = "Main"+Id;
+            var ItemId = "Main"+Id;
             try {
-                var Quantity = document.getElementById("Main"+Id+"Quantity").value;
-                var Unit = document.getElementById("Main"+Id+"Unit").value;
                 var Name1 = document.getElementById("Main"+Id+"Name1").value;
                 var Name2 = document.getElementById("Main"+Id+"Name2").value;
-                var Name3 = document.getElementById("Main"+Id+"Name3").value;
-                MainList.push(new Ingredient(Quantity,Unit,Name1,Name2,Name3));
+                var Name3 = document.getElementById("Main"+Id+"Name3").value;                
+                PantryTable.push(new PantryObj(ItemId,Name1,Name2,Name3));
               }
               catch(err) {}
         }
         //Get the support ingredients
-        var SupportList = [];
         for (var Id = 1; Id <= SupportId; Id++) {
-            var RowId = "Support"+Id;
+            var ItemId = "Support"+Id;
             try {
-                var Quantity = document.getElementById("Support"+Id+"Quantity").value;
-                var Unit = document.getElementById("Support"+Id+"Unit").value;
                 var Name1 = document.getElementById("Support"+Id+"Name1").value;
                 var Name2 = document.getElementById("Support"+Id+"Name2").value;
                 var Name3 = document.getElementById("Support"+Id+"Name3").value;
-                SupportList.push(new Ingredient(Quantity,Unit,Name1,Name2,Name3));
+                PantryTable.push(new PantryObj(ItemId,Name1,Name2,Name3));
             }
             catch(err) {}
         }
         //Get the spices ingredients
-        var SpicesList = [];
         for (var Id = 1; Id <= SpicesId; Id++) {
-            var RowId = "Spices"+Id;
+            var ItemId = "Spices"+Id;
             try {
-                var Quantity = document.getElementById("Spices"+Id+"Quantity").value;
-                var Unit = document.getElementById("Spices"+Id+"Unit").value;
                 var Name1 = document.getElementById("Spices"+Id+"Name1").value;
                 var Name2 = document.getElementById("Spices"+Id+"Name2").value;
                 var Name3 = document.getElementById("Spices"+Id+"Name3").value;
-                SpicesList.push(new Ingredient(Quantity,Unit,Name1,Name2,Name3));
+                PantryTable.push(new PantryObj(ItemId,Name1,Name2,Name3));
             }
             catch(err) {}
         }
         //Get the garnish ingredients
-        var GarnishList = [];
         for (var Id = 1; Id <= GarnishId; Id++) {
-            var RowId = "Garnish"+Id;
+            var ItemId = "Garnish"+Id;
             try {
-                var Quantity = document.getElementById("Garnish"+Id+"Quantity").value;
-                var Unit = document.getElementById("Garnish"+Id+"Unit").value;
                 var Name1 = document.getElementById("Garnish"+Id+"Name1").value;
                 var Name2 = document.getElementById("Garnish"+Id+"Name2").value;
                 var Name3 = document.getElementById("Garnish"+Id+"Name3").value;
-                GarnishList.push(new Ingredient(Quantity,Unit,Name1,Name2,Name3));
+                PantryTable.push(new PantryObj(ItemId,Name1,Name2,Name3));
             }
             catch(err) {}
         }
-        //Get the notes
-        var Notes = document.getElementById("NotesBox").value;
 
-        //Get the ingredients for each step
-        var AllSteps = [];
-        //For each step
-        for (var Step = 0; Step<Steps.Ids.length; Step++){
-            //Create a temp step
-            var StepIngredients = [];
+        //Get the data for the Ingredient table
+        var IngredientTable = [];
+        //Get the ingredient information in each step
+        for (var Step = 1; Step<Steps.Ids.length; Step++){
             //For each ingredient in a step
-            for (var Id = 1; Id <= Steps.Ids[0]; Id++) {
-                //Get the ingredient id
+            for (var Id = 1; Id <= Steps.Ids[Step]; Id++) {
+                //Parse the ingredient
                 var StepItemId = "SelectStep"+Step+"Item"+Id;
-                //Try to get the ingredient and parse into ingredient object
                 try {
-                    var ItemId = document.getElementById(StepItemId).value;
-                    var Quantity = document.getElementById(ItemId+"Quantity").value;
-                    var Unit = document.getElementById(ItemId+"Unit").value;
-                    var Name1 = document.getElementById(ItemId+"Name1").value;
-                    var Name2 = document.getElementById(ItemId+"Name2").value;
-                    var Name3 = document.getElementById(ItemId+"Name3").value;
-                    StepIngredients.push(new Ingredient(Quantity,Unit,Name1,Name2,Name3));
+                    //Variables
+                    var ItemId, Category, CategoryId, Quantity, Unit;
+                    //Get the ItemId information
+                    ItemId = document.getElementById(StepItemId).value; //Suport1
+
+                    if(ItemId.substring(0, 4) === 'Main'){
+                        Category = 1;
+                        CategoryId = ItemId.substring(4);
+                    } else if(ItemId.substring(0, 6) === 'Spices'){
+                        Category = 3;
+                        CategoryId = ItemId.substring(6);
+                    } else if(ItemId.substring(0, 7) === 'Support'){
+                        Category = 2;
+                        CategoryId = ItemId.substring(7);
+                    } else {
+                        Category = 4;
+                        CategoryId = ItemId.substring(7);
+                    }
+                    Quantity = document.getElementById(ItemId+"Quantity").value;
+                    Unit = document.getElementById(ItemId+"Unit").value;
+
+                    var ParsedIngredient = new Object;
+                    ParsedIngredient.ItemId = ItemId;
+                    ParsedIngredient.Category = Category;
+                    ParsedIngredient.CategoryId = CategoryId;
+                    ParsedIngredient.Quantity = Quantity;
+                    ParsedIngredient.Unit = Unit;
+                    ParsedIngredient.Step = Step;
+                    ParsedIngredient.Prep = 0;
+                    IngredientTable.push(ParsedIngredient);
                 }
                 catch(err) {}
             }
-            //Get the notes for this step
-            var Notes = document.getElementById("Step"+Step+"Box").value;
-            //Create a step object
-            var StepObj = new Object();
-            StepObj.ingredients = StepIngredients;
-            StepObj.notes = Notes;
-            AllSteps.push(StepObj);
+        }
+        //Mark the prep ingredients
+        for (var Id = 1; Id <= Steps.Ids[0]; Id++) {
+            var StepItemId = "SelectStep0Item"+Id;
+            var ItemId = document.getElementById(StepItemId).value;
+            for (var row = 0; row<IngredientTable.length; row++) {
+                if(IngredientTable[row].ItemId === ItemId){
+                    IngredientTable[row].Prep = 1;
+                    break;
+                }
+            }
         }
         
+        //Get the data for the JSON file
+        var Notes = document.getElementById("NotesBox").value;
+        var StepDirections = [];
+        for (var Step = 0; Step<Steps.Ids.length; Step++){
+            try{
+                StepDirections.push(document.getElementById("Step"+Step+"Box").value);
+            }
+            catch(err){}
+        }
 
         //Get the id if there is one
         const queryString = window.location.search;
@@ -405,7 +436,7 @@ function Submit(){
         EditResults.SpicesList = SpicesList;
         EditResults.GarnishList = GarnishList;
         EditResults.Notes = Notes;
-        EditResults.Steps = AllSteps;
+        EditResults.IngredientTable = IngredientTable;
 
         var jsonEditResults= JSON.stringify(EditResults);
 
