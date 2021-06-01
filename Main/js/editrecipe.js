@@ -23,6 +23,7 @@ class PantryObj {
       this.Name1 = Name1;
       this.Name2 = Name2;
       this.Name3 = Name3;
+      this.Item_Id = null;
     }
 }
 
@@ -431,12 +432,10 @@ function Submit(){
         EditResults.ActiveTime = ActiveTime;
         EditResults.PassiveTime = PassiveTime;
         EditResults.People = People;
-        EditResults.MainList = MainList;
-        EditResults.SupportList = SupportList;
-        EditResults.SpicesList = SpicesList;
-        EditResults.GarnishList = GarnishList;
-        EditResults.Notes = Notes;
+        EditResults.PantryTable = PantryTable;
         EditResults.IngredientTable = IngredientTable;
+        EditResults.Notes = Notes;
+        EditResults.StepDirections = StepDirections;
 
         var jsonEditResults= JSON.stringify(EditResults);
 

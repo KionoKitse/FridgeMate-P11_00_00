@@ -13,15 +13,13 @@
     $ActiveTime = $response['ActiveTime'];
     $PassiveTime = $response['PassiveTime'];
     $People = $response['People'];
-    $MainList = $response['MainList'];
-    $SupportList = $response['SupportList'];
-    $SpicesList = $response['SpicesList'];
-    $GarnishList = $response['GarnishList'];
+    $PantryTable = $response['PantryTable'];
+    $IngredientTable = $response['IngredientTable'];
     $Notes = $response['Notes'];
-    $Steps = $response['Steps'];
+    $StepDirections = $response['StepDirections'];
 
     //Variables
-    $ItemId;
+    
     $Error = false;
 
     //Test here
@@ -71,6 +69,31 @@
     $stmt->execute();
     */
 
+    //Go through all the ingredients, add if needed and get unique Id
+    $Item_Id;
+    foreach ($PantryTable as $key => $row) { //Using key because I want to modify the array
+        //Get the item_id for this ingredient must match name 1-3
+        $Query = "SELECT item_id FROM pantry WHERE name1=? AND name2=? AND name3=?";
+        $stmt = $connection->prepare($Query);
+        $stmt->bind_param("sss", $row['Name1'], $row['Name2'], $row['Name3']);
+        $stmt->execute();
+        $ResultSet = $stmt->get_result();
+        $result = $ResultSet->fetch_assoc();
+        if($result){
+            $Item_Id = $result['item_id'];
+        } else {
+            //Ingredient does not exist so add it
+            $Query = "INSERT INTO pantry (name1,name2,name3,status,recipe_id) VALUES (?, ?, ?, '0', '0')";
+            $stmt = $connection->prepare($Query);
+            $stmt->bind_param("sss", $row['Name1'], $row['Name2'], $row['Name3']);
+            $stmt->execute();
+            $Item_Id = $connection->insert_id;
+        }
+        //Save the Item_Id to PantryTable
+        $PantryTable[$key]['Item_Id'] = $Item_Id;
+    }
+    echo(var_dump($PantryTable));
+/*
     //Process Main ingredients
     echo(var_dump($MainList));
     foreach ($MainList as $row) {
@@ -105,7 +128,7 @@
 
         //$Query1 = "SELECT recipe_id FROM fridgemate_db.pantry ORDER BY name1";
     }
-
+*/
 
 
     /*
