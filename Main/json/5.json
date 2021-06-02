@@ -1,15 +1,1 @@
-{
-	"Recipe_ID":5,
-	"Name":"Grilled Cheese",
-	"Link":"https://www.allrecipes.com/recipe/23891/grilled-cheese-sandwich/",
-	"Image":"https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F641694.jpg&w=258&h=172&c=sc&poi=face&q=85",
-	"People":2,
-	"ActiveTime":20,
-	"PassiveTime":80,
-	"Rating":3,
-	"Notes":"Sandwich is good but could use some more cheese.",
-	"Steps": [ 
-		"Group: 1\n* Chop fresh parsley\n\nGroup: 2\n* Add galic\n* Add oregano\n\nGroup: 3\n* Wash and cut spinach",
-		"Heat skillet to medium high.\nAdd butter and sliced bread.\nToast on one side.",
-		"Once the bread is toasted.\nRemove from skillet and add a little more butter then put untoasted side down.\nPut cheese and spices attop the toasted bread.\nClose sandwich and grill until finished." ]
-}
+{"Recipe_ID":"5","Name":"Grilled Cheese","Link":"https:\/\/www.allrecipes.com\/recipe\/23891\/grilled-cheese-sandwich\/","Image":"https:\/\/imagesvc.meredithcorp.io\/v3\/mm\/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F641694.jpg&w=258&h=172&c=sc&poi=face&q=85","People":"2","ActiveTime":"20","PassiveTime":"80","Rating":"3","Notes":"Sandwich is good but could use some more cheese.","Steps":["Group: 1\n* Chop fresh parsley\n\nGroup: 2\n* Add galic\n* Add oregano\n\nGroup: 3\n* Wash and cut spinach                        ","Heat skillet to medium high.\nAdd butter and sliced bread.\nToast on one side.","Once the bread is toasted.\nRemove from skillet and add a little more butter then put untoasted side down.\nPut cheese and spices attop the toasted bread.\nClose sandwich and grill until finished."]}

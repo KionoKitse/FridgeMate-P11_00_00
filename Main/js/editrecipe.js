@@ -356,22 +356,18 @@ function Submit(){
                 var StepItemId = "SelectStep"+Step+"Item"+Id;
                 try {
                     //Variables
-                    var ItemId, Category, CategoryId, Quantity, Unit;
+                    var ItemId, Category, Quantity, Unit;
                     //Get the ItemId information
                     ItemId = document.getElementById(StepItemId).value; //Suport1
 
                     if(ItemId.substring(0, 4) === 'Main'){
                         Category = 1;
-                        CategoryId = ItemId.substring(4);
                     } else if(ItemId.substring(0, 6) === 'Spices'){
                         Category = 3;
-                        CategoryId = ItemId.substring(6);
                     } else if(ItemId.substring(0, 7) === 'Support'){
                         Category = 2;
-                        CategoryId = ItemId.substring(7);
                     } else {
                         Category = 4;
-                        CategoryId = ItemId.substring(7);
                     }
                     Quantity = document.getElementById(ItemId+"Quantity").value;
                     Unit = document.getElementById(ItemId+"Unit").value;
@@ -379,7 +375,6 @@ function Submit(){
                     var ParsedIngredient = new Object;
                     ParsedIngredient.ItemId = ItemId;
                     ParsedIngredient.Category = Category;
-                    ParsedIngredient.CategoryId = CategoryId;
                     ParsedIngredient.Quantity = Quantity;
                     ParsedIngredient.Unit = Unit;
                     ParsedIngredient.Step = Step;
@@ -443,8 +438,9 @@ function Submit(){
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                var Hello = this.responseText;
-                console.log(Hello);
+                alert(this.responseText);
+                //var Hello = this.responseText;
+                //console.log(Hello);
                 //Error handling
             }
         };
