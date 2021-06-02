@@ -3,12 +3,15 @@
     require_once '../dbconnect.php';
 
     //Get input
-    $name1 = filter_var($_GET['name1'], FILTER_SANITIZE_STRING);
-    $name2 = filter_var($_GET['name2'], FILTER_SANITIZE_STRING);
+    $name1 = filter_var($_GET['name1'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $name2 = filter_var($_GET['name2'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
     
     //Get all the name1 ingredients
-    $Query1 = "SELECT DISTINCT name3 FROM fridgemate_db.pantry WHERE name1 = '".$name1."' AND name2 = '".$name2."' ORDER BY name3";
-    $ResultSet1 = $connection->query($Query1);
+    $Query1 = "SELECT DISTINCT name3 FROM pantry WHERE name1 = ? AND name2 = ? ORDER BY name3";
+    $stmt = $connection->prepare($Query1);
+    $stmt->bind_param("ss", $name1, $name2);
+    $stmt->execute();
+    $ResultSet1 = $stmt->get_result();
 
     //Print the ingredients for a datalist
     echo "<datalist id=\"Name1\">";
@@ -18,5 +21,6 @@
     echo "</datalist>";
 
     //Exit
+    $stmt->close();
     db_disconnect($connection);
 ?>

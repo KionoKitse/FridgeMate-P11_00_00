@@ -29,17 +29,33 @@
 
         require_once 'dbconnect.php';
         //Get the ingredients values needed for the recipe
-        $Query1 = "SELECT * FROM ingredient WHERE recipe_id = '".$Id."'";
-        $ResultSet1 = $connection->query($Query1);
+        //$Query1 = "SELECT * FROM ingredient WHERE recipe_id = '".$Id."'";
+        //$ResultSet1 = $connection->query($Query1);
+        $Query1 = "SELECT * FROM ingredient WHERE recipe_id = ?";
+        $stmt = $connection->prepare($Query1);
+        $stmt->bind_param("i", $Id);
+        $stmt->execute();
+        $ResultSet1 = $stmt->get_result();
 
         //Get the ingredient information
-        $Query1 = "SELECT item_id FROM ingredient WHERE recipe_id = '".$Id."'";
+        //$Query1 = "SELECT item_id FROM ingredient WHERE recipe_id = '".$Id."'";
+        //$Query2 = "SELECT * FROM pantry WHERE item_id IN (" . $Query1 . ")";
+        //$ResultSet2 = $connection->query($Query2);
+        $Query1 = "SELECT item_id FROM ingredient WHERE recipe_id = ?";
         $Query2 = "SELECT * FROM pantry WHERE item_id IN (" . $Query1 . ")";
-        $ResultSet2 = $connection->query($Query2);
+        $stmt = $connection->prepare($Query2);
+        $stmt->bind_param("i", $Id);
+        $stmt->execute();
+        $ResultSet2 = $stmt->get_result();
 
         //Get the ingredient information
-        $Query1 = "SELECT * FROM recipe WHERE recipe_id = '".$Id."'";
-        $ResultSet3 = $connection->query($Query1);
+        //$Query1 = "SELECT * FROM recipe WHERE recipe_id = '".$Id."'";
+        //$ResultSet3 = $connection->query($Query1);
+        $Query1 = "SELECT * FROM recipe WHERE recipe_id = ?";
+        $stmt = $connection->prepare($Query1);
+        $stmt->bind_param("i", $Id);
+        $stmt->execute();
+        $ResultSet3 = $stmt->get_result();
 
         //Get the recipe percent
         while ($row = $ResultSet3->fetch_row()) {
@@ -65,8 +81,14 @@
                 //Check if the ingredient is buildable
                 if($Ingredient["recipe_id"]>0){
                     //Check the buildability score for that ingredient
-                    $Query1 = "SELECT percent FROM fridgemate_db.recipe WHERE recipe_id = '".$Ingredient["recipe_id"]."'";
-                    $ResultSet4 = $connection->query($Query1);
+                    //$Query1 = "SELECT percent FROM recipe WHERE recipe_id = '".$Ingredient["recipe_id"]."'";
+                    //$ResultSet4 = $connection->query($Query1);
+                    $Query1 = "SELECT percent FROM recipe WHERE recipe_id = ?";
+                    $stmt = $connection->prepare($Query1);
+                    $stmt->bind_param("i", $Ingredient['recipe_id']);
+                    $stmt->execute();
+                    $ResultSet4 = $stmt->get_result();
+
                     while ($row1 = $ResultSet4->fetch_row()) {
                         if($row1[0] > 90){
                             $Ingredient["status"] = 3;
@@ -77,15 +99,26 @@
                 //Check if ingredient has a substitute
                 if ($Ingredient["status"] == 0){
                     //Find if there are any substitute ingredients
-                    $Query1 = "SELECT group_id FROM fridgemate_db.group WHERE item_id = '".$Ingredient["item_id"]."'";
-                    $Query2 = "SELECT item_id FROM fridgemate_db.group WHERE group_id IN (" . $Query1 . ") AND item_id != '".$Ingredient["item_id"]."'";
-                    $ResultSet5 = $connection->query($Query2);
+                    //$Query1 = "SELECT group_id FROM fridgemate_db.group WHERE item_id = '".$Ingredient["item_id"]."'";
+                    //$Query2 = "SELECT item_id FROM fridgemate_db.group WHERE group_id IN (" . $Query1 . ") AND item_id != '".$Ingredient["item_id"]."'";
+                    //$ResultSet5 = $connection->query($Query2);
+                    $Query1 = "SELECT group_id FROM group WHERE item_id = ?";
+                    $Query2 = "SELECT item_id FROM group WHERE group_id IN (" . $Query1 . ") AND item_id != ?";
+                    $stmt = $connection->prepare($Query1);
+                    $stmt->bind_param("ii", $Ingredient['item_id'], $Ingredient['item_id']);
+                    $stmt->execute();
+                    $ResultSet5 = $stmt->get_result();
                     //SELECT ITEM_ID FROM fridgemate_db.group where GROUP_ID in (SELECT GROUP_ID FROM fridgemate_db.group where ITEM_ID = '19') and ITEM_ID != '19';
                     //Check any of the items in the group are available
                     while ($row1 = $ResultSet5->fetch_row()) {
-                        $Item = $row1[0];
-                        $Query1 = "SELECT * FROM pantry WHERE item_id = '".$row1[0]."'";
-                        $ResultSet6 = $connection->query($Query1);
+                        //$Item = $row1[0];
+                        //$Query1 = "SELECT * FROM pantry WHERE item_id = '".$row1[0]."'";
+                        //$ResultSet6 = $connection->query($Query1);
+                        $Query1 = "SELECT * FROM pantry WHERE item_id = ?";
+                        $stmt = $connection->prepare($Query1);
+                        $stmt->bind_param("i", $row1[0]);
+                        $stmt->execute();
+                        $ResultSet6 = $stmt->get_result();
                         //Check if ingredient is available
                         while ($row2 = $ResultSet6->fetch_row()) {
                             if($row2[4] == 1){
@@ -169,6 +202,7 @@
             }
         }
 
+        $stmt->close();
         db_disconnect($connection);
 
         //Create results object
