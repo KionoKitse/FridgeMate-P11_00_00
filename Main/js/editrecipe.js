@@ -242,7 +242,7 @@ function AddIngredientLine(id){
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     //Add items to cells
-    cell1.innerHTML = '<select id="Select'+RowId+'">'+UnselectedOptions+'</select>';
+    cell1.innerHTML = '<select id="Select'+RowId+'" onchange="UpdateSelectOption('+RowId+')">'+UnselectedOptions+'</select>';
     cell2.innerHTML = '<i onclick="RemoveElement(\''+RowId+'\')" style="color: #F2CC8F; font-size: 5vw;" class="far fa-minus-square"></i>';
     //Give row an id
     row.id = RowId;
@@ -262,9 +262,10 @@ function AddStep(){
     NewStep += '</tr>'; 
     //NewStep += PreSelectedDropDown($AllIngredinets,$Id,$OptionList);
     NewStep += '</table>';
-    NewStep += '<textarea style="width:98%;" rows="10" id="Step'+StepId+'Box"></textarea>';
+    NewStep += '<textarea style="width:98%;" rows="10" id="Step'+StepId+'Box" onchange="UpdateStepText('+StepId+')"></textarea>';
     NewStep += '</div>';
     NewStep += '<div class="break" id="BreakStep'+StepId+'"></div>'
+
     //Add new html to old html 
     var OldSteps = document.getElementById("Steps").innerHTML;
     document.getElementById("Steps").innerHTML = OldSteps + NewStep;
@@ -285,6 +286,28 @@ function RemoveStep(){
             RemoveElement('BreakStep'+StepId);
         }  
     }
+}
+//Function to transfer the textarea value to it's innerHTML
+function UpdateStepText(Step){
+    document.getElementById("Step"+Step+"Box").innerHTML = document.getElementById("Step"+Step+"Box").value;
+}
+//Function to update the selected option
+function UpdateSelectOption(Id){
+    //Get selection box
+    var SelectionBox = document.getElementById(Id);
+    //Get the value
+    var value = SelectionBox.value;
+    var hello = document.getElementById(Id);
+
+    var SelectionBox = document.getElementById(Id);
+    var Options = SelectionBox.options;
+    for (var idk, j=0; idk=Options[j]; j++){
+        if(idk.value == SelectionBox.value){
+            SelectionBox.selectedIndex = j;
+            break;
+        }
+    }
+
 }
 //Function to submit the data
 function Submit(){

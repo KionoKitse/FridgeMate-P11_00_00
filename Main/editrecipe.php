@@ -264,7 +264,7 @@
                                 echo '</tr>';   
                                 PreSelectedDropDown($AllIngredinets,$Id,$OptionList);
                             echo '</table>';
-                            echo '<textarea style="width:98%;" rows="10" id="Step'.$Id.'Box">';
+                            echo '<textarea style="width:98%;" rows="10" id="Step'.$Id.'Box" onchange="UpdateStepText('.$Id.')">';
                                 echo $JsonData["Steps"][$Id];
                             echo '</textarea>';
                         echo '</div>';
