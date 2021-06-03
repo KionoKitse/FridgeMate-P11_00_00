@@ -178,7 +178,7 @@
                 //Create a row
                 echo '<tr id="'.$RowId.'">';
                     echo '<td>';
-                        echo '<select id="Select'.$RowId.'">';
+                        echo '<select id="Select'.$RowId.'" onchange="UpdateSelectOption(\'Select'.$RowId.'\')">';
                             echo '<option value=""></option>';
                             foreach($Options as $row2){
                                 if($RowName == $row2[1]){

@@ -242,7 +242,7 @@ function AddIngredientLine(id){
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     //Add items to cells
-    cell1.innerHTML = '<select id="Select'+RowId+'" onchange="UpdateSelectOption(\''+RowId+'\')">'+UnselectedOptions+'</select>';
+    cell1.innerHTML = '<select id="Select'+RowId+'" onchange="UpdateSelectOption(\'Select'+RowId+'\')">'+UnselectedOptions+'</select>';
     cell2.innerHTML = '<i onclick="RemoveElement(\''+RowId+'\')" style="color: #F2CC8F; font-size: 5vw;" class="far fa-minus-square"></i>';
     //Give row an id
     row.id = RowId;
@@ -295,19 +295,20 @@ function UpdateStepText(Step){
 function UpdateSelectOption(Id){
     //Get selection box
     var SelectionBox = document.getElementById(Id);
-    //Get the value
-    var value = SelectionBox.value;
-    var hello = document.getElementById(Id);
+    var SelectedId = SelectionBox.value;
+    var SelectionText = SelectionBox.innerHTML;
 
-    var SelectionBox = document.getElementById(Id);
-    var Options = SelectionBox.options;
-    for (var idk, j=0; idk=Options[j]; j++){
-        if(idk.value == SelectionBox.value){
-            SelectionBox.selectedIndex = j;
-            break;
-        }
-    }
+    //Remove the previous selection if needed
+    var KeyText = 'selected="selected" ';
+    var SelectionText = SelectionText.replace(KeyText, '');
 
+
+    //Find the SelectedId inside the SelectionText and add 
+    var n = SelectionText.search(SelectedId)-7;
+    var NewText = SelectionText.slice(0, n) + KeyText + SelectionText.slice(n);
+
+    //Update dropdown
+    SelectionBox.innerHTML = NewText;
 }
 //Function to submit the data
 function Submit(){
