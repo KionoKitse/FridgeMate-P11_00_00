@@ -241,7 +241,6 @@
                 </tr>
                 <?php
                     //Print the recipe tags
-                    
                     for($i=0; $i<count($RecipeTags)-1; $i+=2){
                         echo '<tr>';
                             echo '<td>';

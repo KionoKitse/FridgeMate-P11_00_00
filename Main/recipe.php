@@ -34,6 +34,7 @@
     $Garnish = $MySQL["Garnish"];
     $Prep = $MySQL["Prep"];
     $Percent = $MySQL["Percent"];
+    $RecipeTags = $MySQL["RecipeTags"];
     $Steps = $MySQL["Steps"];
 ?>
 
@@ -107,11 +108,43 @@
         <div class="break" style="clear: both;"></div>
 
         <div id="Notes">
-            <p>
+            <table style="text-align: left;">
+                <tr>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td>
+                        <?php
+                            echo $JsonData["Notes"];
+                        ?>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="break"></div> 
+        <div id="Tags">
+            <table style="text-align: left; width: 100%;" id="TagTable">
+                <tr>
+                    <th colspan="2">Tags</th>
+                </tr>
                 <?php
-                    echo $JsonData["Notes"];
+                    //Print the recipe tags     
+                    for($i=0; $i<count($RecipeTags)-1; $i+=2){
+                        echo '<tr>';
+                            echo '<td>'.$RecipeTags[$i].'</td>';
+                            echo '<td>'.$RecipeTags[$i+1].'</td>';
+                        echo '</tr>';
+                    }
+                    //Print the last recipe tag if needed
+                    if(($i+1)==count($RecipeTags)){
+                        echo '<tr>';
+                            echo '<td>'.$RecipeTags[$i].'</td>';
+                            echo '<td></td>';
+                        echo '</tr>';
+                    }
                 ?>
-            </p>
+            </table>
         </div>
 
         <!-- Print Prep step -->

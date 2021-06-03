@@ -35,6 +35,7 @@
         $Prep = array();
         $Percent = 0;
         $Steps = array();
+        $RecipeTags = array();
 
         require_once 'dbconnect.php';
         //Get the ingredients values needed for the recipe
@@ -65,6 +66,16 @@
         $stmt->bind_param("i", $Id);
         $stmt->execute();
         $ResultSet3 = $stmt->get_result();
+
+        //Get the recipe tags
+        $Query1 = "SELECT tag FROM tags WHERE recipe_id = ?";
+        $stmt = $connection->prepare($Query1);
+        $stmt->bind_param("i", $Id);
+        $stmt->execute();
+        $ResultSet4 = $stmt->get_result();
+        while ($row = $ResultSet4->fetch_row()) {
+            array_push($RecipeTags,$row[0]);
+        }
 
         //Get the recipe percent
         while ($row = $ResultSet3->fetch_row()) {
@@ -204,6 +215,7 @@
         $Result["Prep"] = $Prep;
         $Result["Percent"] = $Percent;
         $Result["Steps"] = $Steps;
+        $Result["RecipeTags"] = $RecipeTags;
 
         return $Result;
     }

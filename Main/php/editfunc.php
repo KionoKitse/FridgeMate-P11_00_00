@@ -9,6 +9,7 @@
         $Prep = array();
         $Percent = 0;
         $Steps = array();
+        $RecipeTags = array();
 
         require_once 'dbconnect.php';
         //Get the ingredients values needed for the recipe
@@ -50,7 +51,6 @@
         $stmt->bind_param("i", $Id);
         $stmt->execute();
         $ResultSet4 = $stmt->get_result();
-        $RecipeTags = [];
         while ($row = $ResultSet4->fetch_row()) {
             array_push($RecipeTags,$row[0]);
         }
