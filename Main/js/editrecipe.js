@@ -310,6 +310,25 @@ function UpdateSelectOption(Id){
     //Update dropdown
     SelectionBox.innerHTML = NewText;
 }
+//Function to add a row of tags
+function AddTags(){
+    //Get the table
+    var table = document.getElementById("TagTable");
+    //Add a row an two cells
+    var row = table.insertRow(-1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    //Set the inner html
+    cell1.innerHTML = '<input type="text" list="Tags"></input>'; 
+    cell2.innerHTML = '<input type="text" list="Tags"></input>';
+}
+//Function to remove a row of tags
+function RemoveTags(){
+    //Get the table
+    var table = document.getElementById("TagTable");
+    //Remove the last row
+    if(table.rows.length > 1) table.deleteRow(-1);
+}
 //Function to submit the data
 function Submit(){
     try{
@@ -419,6 +438,16 @@ function Submit(){
                 }
             }
         }
+
+        //Get the data for the Tags table
+        var TagsTable = [];
+        var table = document.getElementById("TagTable");
+        for (var Id = 1; Id<table.rows.length; Id++){
+            var ValueA = table.rows[Id].cells[0].computedName;
+            var ValueB = table.rows[Id].cells[1].computedName;
+            if(ValueA != '') TagsTable.push(ValueA);
+            if(ValueB != '') TagsTable.push(ValueB);
+        }
         
         //Get the data for the JSON file
         var Notes = document.getElementById("NotesBox").value;
@@ -453,6 +482,7 @@ function Submit(){
         EditResults.People = People;
         EditResults.PantryTable = PantryTable;
         EditResults.IngredientTable = IngredientTable;
+        EditResults.TagsTable = TagsTable;
         EditResults.Notes = Notes;
         EditResults.StepDirections = StepDirections;
 

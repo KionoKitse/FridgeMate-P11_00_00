@@ -40,6 +40,21 @@
         $stmt->execute();
         $ResultSet3 = $stmt->get_result();
 
+        //Get all the tags
+        $Query1 = "SELECT DISTINCT tag FROM tags ORDER BY tag";
+        $AllTags = $connection->query($Query1);
+
+        //Get the recipe tags
+        $Query1 = "SELECT tag FROM tags WHERE recipe_id = ?";
+        $stmt = $connection->prepare($Query1);
+        $stmt->bind_param("i", $Id);
+        $stmt->execute();
+        $ResultSet4 = $stmt->get_result();
+        $RecipeTags = [];
+        while ($row = $ResultSet4->fetch_row()) {
+            array_push($RecipeTags,$row[0]);
+        }
+    
         //Get the recipe percent
         while ($row = $ResultSet3->fetch_row()) {
             $Percent = $row[6];
@@ -129,6 +144,9 @@
         $Result["Prep"] = $Prep;
         $Result["Percent"] = $Percent;
         $Result["Steps"] = $Steps;
+        $Result["AllTags"] = $AllTags;
+        $Result["RecipeTags"] = $RecipeTags;
+
 
         return $Result;
     }

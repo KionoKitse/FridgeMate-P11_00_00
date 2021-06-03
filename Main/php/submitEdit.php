@@ -15,6 +15,7 @@
     $People = $response['People'];
     $PantryTable = $response['PantryTable'];
     $IngredientTable = $response['IngredientTable'];
+    $TagsTable = $response['TagsTable'];
     $Notes = $response['Notes'];
     $StepDirections = $response['StepDirections'];
 
@@ -124,6 +125,33 @@
     }
     catch (exception $e) {
         $Error = "Submit Edit Failed: Could not finish adding data to Ingredients table";
+        goto EditExit;
+    }
+
+    //Clear the tags table for the given Recipe_Id
+    try {
+        $Query = "DELETE FROM tags WHERE recipe_id=?";
+        $stmt = $connection->prepare($Query);
+        $stmt->bind_param("i", $RecipeId);
+        $stmt->execute();
+    }
+    catch (exception $e) {
+        $Error = "Submit Edit Failed: Could not remove data from Tags table";
+        goto EditExit;
+    }
+
+    //Add the new tags
+    try {
+        foreach ($TagsTable as $Tag){
+            //Insert tag into table 
+            $Query = "INSERT INTO tags (recipe_id, tag) VALUES (?, ?)";
+            $stmt = $connection->prepare($Query);
+            $stmt->bind_param("is", $RecipeId, $Tag);
+            $stmt->execute();
+        }
+    }
+    catch (exception $e) {
+        $Error = "Submit Edit Failed: Could not add to the Tags table";
         goto EditExit;
     }
 

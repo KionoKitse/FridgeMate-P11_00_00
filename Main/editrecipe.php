@@ -58,6 +58,8 @@
         $Prep = $MySQL["Prep"];
         $Percent = $MySQL["Percent"];
         $Steps = $MySQL["Steps"];
+        $AllTags = $MySQL["AllTags"];
+        $RecipeTags = $MySQL["RecipeTags"];
     }
 ?>
 
@@ -107,6 +109,16 @@
             <option value="pch">
             <option value="*">
         </datalist>
+        
+        <!-- Create Tags datalist -->
+        <datalist id="Tags">
+            <?php
+                while ($row = $AllTags->fetch_row()) {
+                    echo "<option value=\"".$row[0]."\">";
+                }
+            ?>
+        </datalist>
+
     </div>
     <div class="center">
         <div id="Title">
@@ -167,7 +179,7 @@
             -->
         </table>
         <div class="break" style="clear: both;"></div>
-        <table id="Support"">
+        <table id="Support">
             <tr>
                 <th colspan="4" style="text-align: left;">
                     Support <i onclick="AddIngredient('Support')" style="color: #F2CC8F;" class="far fa-plus-square"></i>
@@ -216,6 +228,43 @@
                 </tr>
             </table>
             <textarea style="width:98%;" rows="5" id="NotesBox"><?php echo $JsonData["Notes"];?></textarea><br>
+        </div>
+        
+        <div class="break"></div> 
+        <div id="Tags">
+            <table style="text-align: left; width: 100%;" id="TagTable">
+                <tr>
+                    <th>Tags 
+                        <i onclick="AddTags()" style="color: #F2CC8F;" class="far fa-plus-square"></i>
+                        <i onclick="RemoveTags()" style="color: #F2CC8F;" class="far fa-minus-square"></i>
+                    </th>
+                </tr>
+                <?php
+                    //Print the recipe tags
+                    
+                    for($i=0; $i<count($RecipeTags)-1; $i+=2){
+                        echo '<tr>';
+                            echo '<td>';
+                                echo '<input type="text" value="'.$RecipeTags[$i].'" list="Tags">';
+                            echo '</td>';
+                            echo '<td>';
+                                echo '<input type="text" value="'.$RecipeTags[$i+1].'" list="Tags">';
+                            echo '</td>';
+                        echo '</tr>';
+                    }
+                    //Print the last recipe tag if needed
+                    if(($i+1)==count($RecipeTags)){
+                        echo '<tr>';
+                            echo '<td>';
+                                echo '<input type="text" value="'.$RecipeTags[$i].'" list="Tags">';
+                            echo '</td>';
+                            echo '<td>';
+                                echo '<input type="text" list="Tags">';
+                            echo '</td>';
+                        echo '</tr>';
+                    }
+                ?>
+            </table>
         </div>
 
         
