@@ -73,6 +73,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2021-06-01 Bug_210601: There is an issue with adding step 2 step 1 disappears
 * 2021-06-03 Fixed Bug_210601
 * 2021-06-03 Finished edit recipe page
+* 2021-06-03 Added tags to recipe page
 </details>
 
 ### Notebook
