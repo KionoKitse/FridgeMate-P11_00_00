@@ -234,7 +234,7 @@ function GetIdCounts(){
 function AddIngredientLine(id){
     //Create a unique id
     Steps.Ids[id]++;
-    var RowId='Step'+id+'Item'+ Steps.Ids[id];
+    var RowId='Step'+id+'Item'+Steps.Ids[id];
     //Get the table
     var table = document.getElementById('Step'+id);
     //Create a new row
@@ -242,7 +242,7 @@ function AddIngredientLine(id){
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     //Add items to cells
-    cell1.innerHTML = '<select id="Select'+RowId+'" onchange="UpdateSelectOption('+RowId+')">'+UnselectedOptions+'</select>';
+    cell1.innerHTML = '<select id="Select'+RowId+'" onchange="UpdateSelectOption(\''+RowId+'\')">'+UnselectedOptions+'</select>';
     cell2.innerHTML = '<i onclick="RemoveElement(\''+RowId+'\')" style="color: #F2CC8F; font-size: 5vw;" class="far fa-minus-square"></i>';
     //Give row an id
     row.id = RowId;
