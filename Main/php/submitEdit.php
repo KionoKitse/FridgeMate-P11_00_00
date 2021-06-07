@@ -42,7 +42,7 @@
                 }
             }
             //New recipe, so add to database
-            $Query = "INSERT INTO recipe (name,people,active,pasive,rating) VALUES (?, ?, ?, ?, ?)";
+            $Query = "INSERT INTO recipe (name,people,active,passive,rating) VALUES (?, ?, ?, ?, ?)";
             $stmt = $connection->prepare($Query);
             $stmt->bind_param("siddi", $Name, $People, $ActiveTime, $PassiveTime, $Rating);
             $stmt->execute();
@@ -51,7 +51,7 @@
             $RecipeId = $connection->insert_id;
         } else {
             //Update the parameters for an existing recipe
-            $Query = "UPDATE recipe SET name=?, people=?, active=?, pasive=?, rating=? WHERE recipe_id=?";
+            $Query = "UPDATE recipe SET name=?, people=?, active=?, passive=?, rating=? WHERE recipe_id=?";
             $stmt = $connection->prepare($Query);
             $stmt->bind_param("siddii", $Name, $People, $ActiveTime, $PassiveTime, $Rating, $RecipeId);
             $stmt->execute();
