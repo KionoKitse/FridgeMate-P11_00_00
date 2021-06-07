@@ -30,18 +30,22 @@
 
 <!-- Get the required information to render the page -->
 <?php
-    include 'php/genFunc.php';
     require_once 'dbconnect.php';
 
     //Get all the recipes that are on the menu
     $Query1 = "SELECT * FROM recipe WHERE menu = '1' ORDER BY percent DESC";
     $ResultSet1 = $connection->query($Query1);
     //Get all the recipes sorted by buildability then Rating
-    $Query2 = "SELECT * FROM recipe ORDER BY percent DESC, rating DESC";
-    $ResultSet2 = $connection->query($Query2);
-    
-    //echo str_replace("display:none;","display:table-row;",'A display:none; B);
-    //$NewTile = str_replace("display:none;", "display:table-row;", $NewTile);
+    $Query1 = "SELECT * FROM recipe ORDER BY percent DESC, rating DESC";
+    $ResultSet2 = $connection->query($Query1);
+    //Get all the ingredients that are on expiry notice
+    $Query1 = "SELECT item_id FROM pantry where DATEDIFF(CURDATE(), purchase) > expires AND status = '1'";
+    //Get all the recipes that use these ingredients
+    $Query2 = "SELECT recipe_id FROM ingredient WHERE item_id IN (".$Query1.")";
+    $ResultSet3 = $connection->query($Query2);
+    //Get the recipe information
+    $Query1 = "SELECT * FROM recipe where RECIPE_ID IN (".$Query2.")"; 
+    $ResultSet4 = $connection->query($Query1);
 
     db_disconnect($connection);
 ?>
@@ -54,12 +58,10 @@
             echo GetMenuItems($ResultSet1);
             echo'<p style="text-align: center; font-size: 5vw; color: #81B29A; font-weight: bold;">Buildability</p>';
             echo GetBuildItems($ResultSet2);
+            echo'<p style="text-align: center; font-size: 5vw; color: #81B29A; font-weight: bold;">Expiry Notice</p>';
+            echo GetOlderItems($ResultSet4, $ResultSet3);
         ?>
     </div>
-    <button onclick="RunThis()">Click me</button>
-    <div><p>
-        (section old produce -> buildability) - users can add a recipe to the menu and display 10 more
-    </p></div>
 </body>
 
 
@@ -204,6 +206,47 @@
         //Add a display counter
         $BuildTable .= '<input type="hidden" id="BuildDisp" value="'.$i.'">';
         return $BuildTable;
+    }
+    function GetOlderItems($ResultSet4,$ResultSet3){
+        //Count the number of older ingredients in each recipe
+        $OlderCt = [];
+        while ($row = $ResultSet3->fetch_assoc()) {
+            //echo var_dump($row);
+            array_push($OlderCt, $row["recipe_id"]);
+        }
+        $OlderCt = array_count_values($OlderCt);
+
+        //Create the older table 
+        $OlderTable = '<table id="Older" style="width: 100%; border-collapse:collapse; border-spacing:0;">';
+        while ($row = $ResultSet4->fetch_assoc()) {
+            $NewTile = CreateTile($row,'Older');
+
+            //Replace percent value by older ingredients count
+            $Id = $row["RECIPE_ID"];
+            $Percent = (int)$row["PERCENT"];
+            $Search = $Percent.'% <i style="color: #81B29A;" class="fas fa-clipboard-check"></i>';
+            $Replace = $OlderCt[$Id].' <i style="color: #81B29A;" class="fas fa-clipboard-check"></i>';
+            $NewTile = str_replace($Search, $Replace, $NewTile); //Search / Replace
+            
+            $OlderTable .= $NewTile;
+        }
+
+        //Set the first 5 tiles to active display
+        for($i = 0; $i < 2; $i++){
+            $pos = strpos($OlderTable, "display:none");
+            if ($pos !== false) {
+                $OlderTable = substr_replace($OlderTable, "display:table-row", $pos, strlen("display:none"));
+            }
+        }
+
+        //Add the last row
+        $OlderTable .= '<tr><td colspan="3"><button id=OlderShow class="bttnWide"  onclick="ShowMoreLessTiles(\'Older\')"><span style="color: #3D405B;"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></span></button></td></tr>';
+        $OlderTable .= '</table>';
+        //Add a display counter
+        $OlderTable .= '<input type="hidden" id="OlderDisp" value="'.$i.'">';
+        return $OlderTable;
+
+        
     }
     //Function to create a tile element
     function CreateTile($RecipeObj,$Type){
