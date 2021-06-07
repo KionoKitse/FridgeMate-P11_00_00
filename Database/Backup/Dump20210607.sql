@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `fridgemate_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `fridgemate_db`;
--- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: fridgemate_db
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	8.0.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,9 +23,9 @@ DROP TABLE IF EXISTS `group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `group` (
-  `GROUP_ID` int(11) DEFAULT NULL,
-  `ITEM_ID` int(11) DEFAULT NULL,
-  `pk` int(11) NOT NULL AUTO_INCREMENT,
+  `GROUP_ID` int DEFAULT NULL,
+  `ITEM_ID` int DEFAULT NULL,
+  `pk` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`pk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -50,14 +48,14 @@ DROP TABLE IF EXISTS `ingredient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ingredient` (
-  `RECIPE_ID` int(11) DEFAULT NULL,
-  `ITEM_ID` int(11) DEFAULT NULL,
-  `CATEGORY` int(11) DEFAULT NULL,
+  `RECIPE_ID` int DEFAULT NULL,
+  `ITEM_ID` int DEFAULT NULL,
+  `CATEGORY` int DEFAULT NULL,
   `QUANTITY` varchar(5) DEFAULT NULL,
   `UNIT` varchar(45) DEFAULT NULL,
-  `STEP` int(11) DEFAULT NULL,
-  `PREP` tinyint(4) DEFAULT NULL,
-  `pk` int(11) NOT NULL AUTO_INCREMENT,
+  `STEP` int DEFAULT NULL,
+  `PREP` tinyint DEFAULT NULL,
+  `pk` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`pk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -80,14 +78,15 @@ DROP TABLE IF EXISTS `pantry`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pantry` (
-  `item_id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_id` int NOT NULL AUTO_INCREMENT,
   `name1` varchar(45) DEFAULT NULL,
   `name2` varchar(45) DEFAULT NULL,
   `name3` varchar(45) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT NULL,
-  `recipe_id` int(11) DEFAULT NULL,
-  `expires` int(11) DEFAULT NULL,
+  `status` tinyint DEFAULT NULL,
+  `recipe_id` int DEFAULT NULL,
+  `expires` int DEFAULT NULL,
   `purchase` varchar(10) DEFAULT NULL,
+  `category` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`item_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -98,7 +97,7 @@ CREATE TABLE `pantry` (
 
 LOCK TABLES `pantry` WRITE;
 /*!40000 ALTER TABLE `pantry` DISABLE KEYS */;
-INSERT INTO `pantry` VALUES (1,'Tomato','Canned','Whole',1,0,NULL,NULL),(2,'Tomato','Romma','',1,0,NULL,NULL),(3,'Tofu','Firm','',1,0,NULL,NULL),(4,'Squash','Butternut','',0,4,NULL,NULL),(5,'Pasta','Fettuccine','',1,0,NULL,NULL),(6,'Onion','Yellow','',1,0,14,'2021-06-01'),(7,'Sugar','White','',1,0,NULL,NULL),(8,'Cashew','Raw','',1,0,NULL,NULL),(9,'Oil','Olive','',1,0,NULL,NULL),(10,'Pepper Flakes','','',1,0,NULL,NULL),(11,'Sage','Fresh','',1,0,3,'2021-06-01'),(12,'Black Pepper','','',1,0,NULL,NULL),(13,'Nutritional yeast','','',1,0,NULL,NULL),(14,'Veggie broth','','',0,0,NULL,NULL),(15,'Lemon','Juice','',1,0,NULL,NULL),(16,'Oil','','',1,0,NULL,NULL),(17,'Soy Sauce','','',1,0,NULL,NULL),(18,'Paprika','Smoked','',1,0,NULL,NULL),(19,'Garlic','Powder','',0,0,NULL,NULL),(20,'Maple Syrup','','',1,0,NULL,NULL),(21,'Miso paste','','',0,0,NULL,NULL),(22,'Garlic','Fresh','',1,0,NULL,NULL),(23,'Salt','','',1,0,NULL,NULL),(24,'Pasta','Farfalle','',1,0,NULL,NULL),(25,'Soy curls','','',0,0,NULL,NULL),(26,'Milk','Cashew','',1,3,NULL,NULL),(27,'Sun dried tomato','','',1,0,NULL,NULL),(28,'Spinach','','',1,0,NULL,NULL),(29,'Sage','Dry','',0,0,NULL,NULL),(30,'Onion','Dry','',1,0,NULL,NULL),(31,'Thyme','Dry','',1,0,NULL,NULL),(32,'Poultry seasoning','','',0,4,NULL,NULL),(33,'Oregano','Dry','',0,0,NULL,NULL),(34,'Thyme','Fresh','',1,0,NULL,NULL),(35,'Basil','Fresh','',1,0,NULL,NULL),(36,'Water','','',1,0,NULL,NULL),(37,'Marjoram','Dry','',1,0,NULL,NULL),(38,'Rosemary','Dry','',1,0,NULL,NULL),(39,'Nutmeg','Ground','',1,0,NULL,NULL),(40,'Bread','','',1,6,NULL,NULL),(41,'Cheese','Cheddar','',1,0,NULL,NULL),(42,'Butter','','',1,0,NULL,NULL),(43,'Parsley','Fresh','',1,0,NULL,NULL),(44,'Lentils','Split','',0,0,NULL,NULL),(45,'Tomato','','',0,0,NULL,NULL),(46,'Ginger','','',0,0,NULL,NULL),(47,'Ghee','','',0,0,NULL,NULL),(48,'Cumin','Seeds','',0,0,NULL,NULL),(49,'Bay leaf','','',0,0,NULL,NULL),(50,'Garlic','','',0,0,NULL,NULL),(51,'Garam masala','','',0,0,NULL,NULL),(52,'Turmeric','','',0,0,NULL,NULL),(53,'Cayenne','','',0,0,NULL,NULL),(54,'Cilantro','','',0,0,NULL,NULL),(55,'Cream','Heavy','',0,0,NULL,NULL);
+INSERT INTO `pantry` VALUES (1,'Tomato','Canned','Whole',1,0,NULL,NULL,'Canned'),(2,'Tomato','Romma','',1,0,NULL,NULL,'Produce'),(3,'Tofu','Firm','',1,0,NULL,NULL,'Dairy'),(4,'Squash','Butternut','',0,4,NULL,NULL,'Produce'),(5,'Pasta','Fettuccine','',1,0,NULL,NULL,'Boxed'),(6,'Onion','Yellow','',1,0,14,'2021-06-01','Produce'),(7,'Sugar','White','',1,0,NULL,NULL,'Baking'),(8,'Cashew','Raw','',1,0,NULL,NULL,'Snacks'),(9,'Oil','Olive','',1,0,NULL,NULL,'Baking'),(10,'Pepper Flakes','','',1,0,NULL,NULL,'Spices'),(11,'Sage','Fresh','',1,0,3,'2021-06-01','Herbs'),(12,'Black Pepper','','',1,0,NULL,NULL,'Spices'),(13,'Nutritional yeast','','',1,0,NULL,NULL,'Specialty'),(14,'Veggie broth','','',0,0,NULL,NULL,'Boxed'),(15,'Lemon','Juice','',1,0,NULL,NULL,'Produce'),(16,'Oil','','',1,0,NULL,NULL,'Baking'),(17,'Soy Sauce','','',1,0,NULL,NULL,'Specialty'),(18,'Paprika','Smoked','',1,0,NULL,NULL,'Spices'),(19,'Garlic','Powder','',0,0,NULL,NULL,'Spices'),(20,'Maple Syrup','','',1,0,NULL,NULL,'Canned'),(21,'Miso paste','','',0,0,NULL,NULL,'Specialty'),(22,'Garlic','Fresh','',1,0,NULL,NULL,'Herbs'),(23,'Salt','','',1,0,NULL,NULL,'Baking'),(24,'Pasta','Farfalle','',1,0,NULL,NULL,'Boxed'),(25,'Soy curls','','',0,0,NULL,NULL,'Specialty'),(26,'Milk','Cashew','',1,3,NULL,NULL,'Dairy'),(27,'Sun dried tomato','','',1,0,NULL,NULL,'Boxed'),(28,'Spinach','','',1,0,NULL,NULL,'Produce'),(29,'Sage','Dry','',0,0,NULL,NULL,'Spices'),(30,'Onion','Dry','',1,0,NULL,NULL,'Spices'),(31,'Thyme','Dry','',1,0,NULL,NULL,'Spices'),(32,'Poultry seasoning','','',0,4,NULL,NULL,'Spices'),(33,'Oregano','Dry','',0,0,NULL,NULL,'Spices'),(34,'Thyme','Fresh','',1,0,NULL,NULL,'Herbs'),(35,'Basil','Fresh','',1,0,NULL,NULL,'Herbs'),(36,'Water','','',1,0,NULL,NULL,'None'),(37,'Marjoram','Dry','',1,0,NULL,NULL,'Spices'),(38,'Rosemary','Dry','',1,0,NULL,NULL,'Spices'),(39,'Nutmeg','Ground','',1,0,NULL,NULL,'Spices'),(40,'Bread','','',1,6,NULL,NULL,'Baking'),(41,'Cheese','Cheddar','',1,0,NULL,NULL,'Dairy'),(42,'Butter','','',1,0,NULL,NULL,'Dairy'),(43,'Parsley','Fresh','',1,0,NULL,NULL,'Herbs'),(44,'Lentils','Split','',0,0,NULL,NULL,'Grains'),(45,'Tomato','','',0,0,NULL,NULL,'Produce'),(46,'Ginger','','',0,0,NULL,NULL,'Herbs'),(47,'Ghee','','',0,0,NULL,NULL,'Specialty'),(48,'Cumin','Seeds','',0,0,NULL,NULL,'Spices'),(49,'Bay leaf','','',0,0,NULL,NULL,'Spices'),(50,'Garlic','','',0,0,NULL,NULL,'Herbs'),(51,'Garam masala','','',0,0,NULL,NULL,'Spices'),(52,'Turmeric','','',0,0,NULL,NULL,'Spices'),(53,'Cayenne','','',0,0,NULL,NULL,'Spices'),(54,'Cilantro','','',0,0,NULL,NULL,'Herbs'),(55,'Cream','Heavy','',0,0,NULL,NULL,'Dairy');
 /*!40000 ALTER TABLE `pantry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,12 +109,12 @@ DROP TABLE IF EXISTS `recipe`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recipe` (
-  `RECIPE_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `RECIPE_ID` int NOT NULL AUTO_INCREMENT,
   `NAME` varchar(45) DEFAULT NULL,
-  `PEOPLE` int(11) DEFAULT NULL,
+  `PEOPLE` int DEFAULT NULL,
   `ACTIVE` decimal(5,2) DEFAULT NULL,
   `PASSIVE` decimal(5,2) DEFAULT NULL,
-  `RATING` int(11) DEFAULT NULL,
+  `RATING` int DEFAULT NULL,
   `PERCENT` decimal(5,2) DEFAULT NULL,
   `IMAGE` varchar(150) DEFAULT NULL,
   `TOP1` varchar(45) DEFAULT NULL,
@@ -124,8 +123,8 @@ CREATE TABLE `recipe` (
   `TOP4` varchar(45) DEFAULT NULL,
   `TOP5` varchar(45) DEFAULT NULL,
   `TOP6` varchar(45) DEFAULT NULL,
-  `MENU` tinyint(4) DEFAULT '0',
-  `INGREDIANT` tinyint(4) DEFAULT '0',
+  `MENU` tinyint DEFAULT '0',
+  `INGREDIANT` tinyint DEFAULT '0',
   PRIMARY KEY (`RECIPE_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -148,7 +147,7 @@ DROP TABLE IF EXISTS `tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tags` (
-  `RECIPE_ID` int(11) DEFAULT NULL,
+  `RECIPE_ID` int DEFAULT NULL,
   `TAG` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -172,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-07  7:36:50
+-- Dump completed on 2021-06-07 17:32:20
