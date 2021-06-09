@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link href="css/mainstyle.css" rel="stylesheet" type="text/css">
     <script src="js/mainstyle.js"></script>
+    <script src="js/scripts.js"></script>
 </head>
 
 <!-- JavaScript functions for DOM manipulations -->
@@ -64,7 +65,7 @@
 ?>
 
 <body>
-    <!-- Lists used for the datalatalists -->
+    <!-- Lists used for the datallists -->
     <div id="Lists">
         <!-- Create Ids for each category -->
         <?php

@@ -13,11 +13,9 @@
     $ResultSet1 = $stmt->get_result();
 
     //Print the ingredients for a datalist
-    echo "<datalist id=\"Name1\">";
     while ($row = $ResultSet1->fetch_row()) {
         echo "<option value=\"".$row[0]."\">".$row[0]."</option>";
     }
-    echo "</datalist>";
 
     //Exit
     $stmt->close();
