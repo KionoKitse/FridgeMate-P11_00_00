@@ -225,7 +225,6 @@ function UpdateSelectOption(Id){
     var KeyText = 'selected="selected" ';
     var SelectionText = SelectionText.replace(KeyText, '');
 
-
     //Find the SelectedId inside the SelectionText and add 
     var n = SelectionText.search(SelectedId)-7;
     var NewText = SelectionText.slice(0, n) + KeyText + SelectionText.slice(n);

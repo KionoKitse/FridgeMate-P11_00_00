@@ -98,15 +98,22 @@
     //Get the response data
     $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
 
-    //Update the parameters for an existing recipe
-    $Query = "SELECT * FROM pantry WHERE item_id=?";
-    $stmt = $connection->prepare($Query);
+    //Get the ingredient information
+    $Query1 = "SELECT * FROM pantry WHERE item_id=?";
+    $stmt = $connection->prepare($Query1);
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $ResultSet1 = $stmt->get_result();
-    $row = $ResultSet1->fetch_assoc();
+    $Ingredient = $ResultSet1->fetch_assoc();
+    echo var_dump($Ingredient);
 
-    echo var_dump($row);
+    //Get all the categories
+    $Query1 = "SELECT DISTINCT category FROM pantry";
+    $ResultSet2 = $connection->query($Query1);    
+
+    //Get all the recipes
+    $Query1 = "SELECT recipe_id, name FROM recipe";
+    $ResultSet3 = $connection->query($Query1);    
 
     //exit
     $stmt->close();
@@ -122,21 +129,39 @@
   <span id="error"></span>
 
   <!-- Lists used for the datalists -->
-  <div id="Lists"></div>
+  <div id="Lists">
+    <!-- All the categories -->
+    <datalist id="CategoryAll">
+    <?php
+      while ($row = $ResultSet2->fetch_assoc()) {
+        echo '<option value="'.$row["category"].'">'.$row["category"].'</option>';
+      }
+    ?>
+    </datalist>
+
+    <!-- All the recipes -->
+    <datalist id="RecipeAll">
+    <?php
+      while ($row = $ResultSet2->fetch_assoc()) {
+        echo '<option value="'.$row["category"].'">'.$row["category"].'</option>';
+      }
+    ?>
+    </datalist>
+  </div>
 
   <div class="center">
     <p style="text-align: center; font-size: 5vw; color: #81B29A; font-weight: bold;">Edit Ingredient</p>
     <table style="width: 100%; border-collapse:collapse; border: spacing 1px;">
     <tr>
       <td>Id:</td>
-      <td colspan="3"><?php echo $row["item_id"];?></td>
+      <td colspan="3"><?php echo $Ingredient["item_id"];?></td>
     </tr>
     <tr>
       <td>Status:</td>
       <td colspan="3">
         <label class="switch">
           <?php
-            if($row["status"]=='1'){
+            if($Ingredient["status"]=='1'){
               echo '<input id="Status" type="checkbox" checked>';
             }
             else{
@@ -149,24 +174,32 @@
     </tr>
     <tr>
       <td>Name:</td>
-      <td><input onchange="GetName2('Main1')" type="text" value="<?php echo $row["name1"];?>" id="Main1Name1" list="Name1All"></td>
-      <td><input onchange="GetName3('Main1')" type="text" value="<?php echo $row["name2"];?>" id="Main1Name2" list="Name2Main1"></td>
-      <td><input type="text" value="<?php echo $row["name3"];?>" id="Main1Name3" list="Name3Main1"></td>
+      <td><input onchange="GetName2('Main1')" type="text" value="<?php echo $Ingredient["name1"];?>" id="Main1Name1" list="Name1All"></td>
+      <td><input onchange="GetName3('Main1')" type="text" value="<?php echo $Ingredient["name2"];?>" id="Main1Name2" list="Name2Main1"></td>
+      <td><input type="text" value="<?php echo $Ingredient["name3"];?>" id="Main1Name3" list="Name3Main1"></td>
     </tr>
     <tr>
       <td>Category:</td>
-      <td colspan="3"><input onchange="GetName2('Main1')" type="text" value="Bread" id="Main1Name1" list="Name1All"></td>
+      <td colspan="3"><input type="text" value="<?php echo $Ingredient["category"];?>" id="Category" list="CategoryAll"></td>
     </tr>
     <tr>
       <td>Purchase:</td>
-      <td colspan="3"><input onchange="GetName2('Main1')" type="text" value="Bread" id="Main1Name1" list="Name1All"></td>
+      <td colspan="3"><input type="text" value="<?php echo $Ingredient["purchase"];?>" id="Purchase"></td>
     </tr>
     <tr>
       <td>Recipe:</td>
-      <td colspan="3"><input onchange="GetName2('Main1')" type="text" value="Bread" id="Main1Name1" list="Name1All"></td>
+      <td colspan="3">
+        <select id="Recipe">
+          <option value="0"></option>
+            <?php
+              while ($row = $ResultSet3->fetch_assoc()) {
+                echo '<option value="'.$row["recipe_id"].'">'.$row["name"].'</option>';
+              }
+            ?>
+        </select>
+      </td>
     </tr>
   </table>
-  
   <table style="width: 100%; border-collapse:collapse; border: spacing 1px;">
     <tr>
       <th colspan="4">Groups <i onclick="AddIngredient('Main')" class="far fa-plus-square"></i></td>
@@ -192,4 +225,7 @@
 </body>
 </html>
 <script>
+  function SelectedOption(name,id){
+
+  }
 </script>
