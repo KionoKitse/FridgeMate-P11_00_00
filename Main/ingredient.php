@@ -105,7 +105,7 @@
     $stmt->execute();
     $ResultSet1 = $stmt->get_result();
     $Ingredient = $ResultSet1->fetch_assoc();
-    echo var_dump($Ingredient);
+    //echo var_dump($Ingredient);
 
     //Get all the categories
     $Query1 = "SELECT DISTINCT category FROM pantry";
@@ -114,6 +114,9 @@
     //Get all the recipes
     $Query1 = "SELECT recipe_id, name FROM recipe";
     $ResultSet3 = $connection->query($Query1);    
+
+    //Create the group tables
+    $hello = CreateGroupTables($connection,$id);
 
     //exit
     $stmt->close();
@@ -188,8 +191,8 @@
     </tr>
     <tr>
       <td>Recipe:</td>
-      <td colspan="3">
-        <select id="Recipe">
+      <td colspan="3" style="padding-right: 0;">
+        <select style="width:100%" id="Recipe" onchange="UpdateSelectOption('Recipe')">
           <option value="0"></option>
             <?php
               while ($row = $ResultSet3->fetch_assoc()) {
@@ -199,6 +202,7 @@
         </select>
       </td>
     </tr>
+
   </table>
   <table style="width: 100%; border-collapse:collapse; border: spacing 1px;">
     <tr>
@@ -225,7 +229,77 @@
 </body>
 </html>
 <script>
-  function SelectedOption(name,id){
 
-  }
 </script>
+<?php
+  function CreateGroupTables($connection,$id){
+    $left = true;
+    $inGroup = false;
+    $GroupTable = '<table style="width: 100%; border-collapse:collapse; border: spacing 1px;">';
+    $GroupTable .= '<tr><th colspan="4">Groups <i onclick="AddGroup()" class="far fa-plus-square"></i></td></tr>';
+    
+    //Get the different group ids
+    $Query1 = "SELECT DISTINCT group_id FROM fridgemate_db.group";
+    $ResultSet4 = $connection->query($Query1);  
+    echo var_dump($ResultSet4);
+    while ($group = $ResultSet4->fetch_assoc()) {
+      //Get all the ingredients in that group
+      $Query1 = "SELECT item_id FROM fridgemate_db.group WHERE group_id=".$group["group_id"];
+      $Query2 = "SELECT item_id, name1, name2, name3 FROM pantry WHERE item_id IN (".$Query1.")";
+      $ResultSet5 = $connection->query($Query2); 
+
+      //Print the left column
+      if($left){
+        $GroupTable .= '<tr><td><select id="Group'.$group["group_id"].'">';
+        $GroupTable .= '<option selected="selected">Group '.$group["group_id"].'</option>';
+        while ($row = $ResultSet5->fetch_assoc()) {
+          $GroupTable .= '<option>'.$row["name1"].' '.$row["name2"].' '.$row["name3"].'</option>';
+          if($row["item_id"] == $id){
+            $inGroup = true;
+          }
+        } 
+        $GroupTable .= '</select></td>';
+        //Ingredient is in group use minus button
+        if($inGroup){
+          $GroupTable .= '<td><i class="far fa-minus-square"></i></td>';
+          $inGroup = false;
+        } 
+        //Ingredient is not in group use plus
+        else{
+          $GroupTable .= '<td><i class="far fa-plus-square"></i></td>';
+        }
+        
+        $left = false;
+        
+      //Print the right column
+      }else{
+        $GroupTable .= '<td><select id="Group'.$group["group_id"].'">';
+        $GroupTable .= '<option selected="selected" value="1">Group '.$group["group_id"].'</option>';
+        while ($row = $ResultSet5->fetch_assoc()) {
+          $GroupTable .= '<option>'.$row["name1"].' '.$row["name2"].' '.$row["name3"].'</option>';
+          if($row["item_id"] == $id){
+            $inGroup = true;
+          }
+        } 
+        $GroupTable .= '</select></td>';
+        //Ingredient is in group use minus button
+        if($inGroup){
+          $GroupTable .= '<td><i class="far fa-minus-square"></i></td>';
+          $inGroup = false;
+        }
+        //Ingredient is not in group use plus
+        else{
+          $GroupTable .= '<td><i class="far fa-plus-square"></i></td>';
+        }
+        $GroupTable .= '</tr>';
+        $left = true;
+      }
+    }  
+    $GroupTable .= '</table>';
+    echo $GroupTable;
+  }
+  
+?>
+
+
+

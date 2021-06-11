@@ -82,3 +82,21 @@ function GetName3(str){
     xmlhttp.open("GET","php/name3.php?name1="+Name1+"&name2="+Name2,true);
     xmlhttp.send();
 }
+//Function to update the selected option
+function UpdateSelectOption(Id){
+    //Get selection box
+    var SelectionBox = document.getElementById(Id);
+    var SelectedId = SelectionBox.value;
+    var SelectionText = SelectionBox.innerHTML;
+
+    //Remove the previous selection if needed
+    var KeyText = 'selected="selected" ';
+    var SelectionText = SelectionText.replace(KeyText, '');
+
+    //Find the SelectedId inside the SelectionText and add 
+    var n = SelectionText.search(SelectedId)-7;
+    var NewText = SelectionText.slice(0, n) + KeyText + SelectionText.slice(n);
+
+    //Update dropdown
+    SelectionBox.innerHTML = NewText;
+}

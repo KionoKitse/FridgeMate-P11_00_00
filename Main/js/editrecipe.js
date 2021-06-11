@@ -214,24 +214,6 @@ function RemoveStep(){
 function UpdateStepText(Step){
     document.getElementById("Step"+Step+"Box").innerHTML = document.getElementById("Step"+Step+"Box").value;
 }
-//Function to update the selected option
-function UpdateSelectOption(Id){
-    //Get selection box
-    var SelectionBox = document.getElementById(Id);
-    var SelectedId = SelectionBox.value;
-    var SelectionText = SelectionBox.innerHTML;
-
-    //Remove the previous selection if needed
-    var KeyText = 'selected="selected" ';
-    var SelectionText = SelectionText.replace(KeyText, '');
-
-    //Find the SelectedId inside the SelectionText and add 
-    var n = SelectionText.search(SelectedId)-7;
-    var NewText = SelectionText.slice(0, n) + KeyText + SelectionText.slice(n);
-
-    //Update dropdown
-    SelectionBox.innerHTML = NewText;
-}
 //Function to add a row of tags
 function AddTags(){
     //Get the table
