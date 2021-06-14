@@ -229,13 +229,45 @@
 </body>
 </html>
 <script>
+  var ChangeList=[];
+  function ChangeGroup(id,item){
+    var Bttn = document.getElementById("BttnGroup"+id);
+    var List = document.getElementById("Group"+id);
+    //Add to group
+    if (Bttn.className == "far fa-plus-square"){
+      //Change icon
+      Bttn.className = "far fa-minus-square";
+      //Record changes
+      var temp = [id,item];
+      ChangeList.push(temp);
+      //Add to select options
+      var option = document.createElement("option");
+      option.text = "This Ingredient";
+      List.add(option);
+    }
+    //Remove from group
+    else{
+      //Change icon
+      Bttn.className = "far fa-plus-square";
+      //Record changes
+      var temp = [id,false];
+      ChangeList.push(temp);
+      //Add to select options
+      var option = document.createElement("option");
+      option.text = "This Ingredient";
+      List.remove(List.selectedIndex);
+    }
+  }
+  function AddGroup(){
+    var table = document.getElementById("GroupTable");
+  }
 
 </script>
 <?php
   function CreateGroupTables($connection,$id){
     $left = true;
     $inGroup = false;
-    $GroupTable = '<table style="width: 100%; border-collapse:collapse; border: spacing 1px;">';
+    $GroupTable = '<table id="GroupTable" style="width: 100%; border-collapse:collapse; border: spacing 1px;">';
     $GroupTable .= '<tr><th colspan="4">Groups <i onclick="AddGroup()" class="far fa-plus-square"></i></td></tr>';
     
     //Get the different group ids
@@ -261,12 +293,12 @@
         $GroupTable .= '</select></td>';
         //Ingredient is in group use minus button
         if($inGroup){
-          $GroupTable .= '<td><i class="far fa-minus-square"></i></td>';
+          $GroupTable .= '<td><i id="BttnGroup'.$group["group_id"].'" onclick="ChangeGroup('.$group["group_id"].','.$id.')" class="far fa-minus-square"></i></td>';
           $inGroup = false;
         } 
         //Ingredient is not in group use plus
         else{
-          $GroupTable .= '<td><i class="far fa-plus-square"></i></td>';
+          $GroupTable .= '<td><i id="BttnGroup'.$group["group_id"].'" onclick="ChangeGroup('.$group["group_id"].','.$id.')" class="far fa-plus-square"></i></td>';
         }
         
         $left = false;
@@ -284,17 +316,26 @@
         $GroupTable .= '</select></td>';
         //Ingredient is in group use minus button
         if($inGroup){
-          $GroupTable .= '<td><i class="far fa-minus-square"></i></td>';
+          $GroupTable .= '<td><i id="BttnGroup'.$group["group_id"].'" onclick="ChangeGroup('.$group["group_id"].','.$id.')" class="far fa-minus-square"></i></td>';
           $inGroup = false;
         }
         //Ingredient is not in group use plus
         else{
-          $GroupTable .= '<td><i class="far fa-plus-square"></i></td>';
+          $GroupTable .= '<td><i id="BttnGroup'.$group["group_id"].'" onclick="ChangeGroup('.$group["group_id"].','.$id.')" class="far fa-plus-square"></i></td>';
         }
         $GroupTable .= '</tr>';
         $left = true;
       }
-    }  
+    } 
+    //create last right column if needed 
+    if(!$left){
+      $GroupTable .= '<td><select id="Group0">';
+      $GroupTable .= '<option selected="selected" value="1">Group0</option>';
+      $GroupTable .= '</select></td>';
+      $GroupTable .= '<td><i id="BttnGroup0" onclick="ChangeGroup(0,'.$id.')" class="far fa-plus-square"></i></td>';
+      $GroupTable .= '</tr>';
+    }
+
     $GroupTable .= '</table>';
     echo $GroupTable;
   }
