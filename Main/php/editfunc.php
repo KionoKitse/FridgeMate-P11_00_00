@@ -9,6 +9,7 @@
         $Prep = array();
         $Percent = 0;
         $Steps = array();
+        $AllTags = array();
         $RecipeTags = array();
 
         require_once 'dbconnect.php';
@@ -42,8 +43,11 @@
         $ResultSet3 = $stmt->get_result();
 
         //Get all the tags
-        $Query1 = "SELECT DISTINCT tag FROM tags ORDER BY tag";
-        $AllTags = $connection->query($Query1);
+        $Query1 = "SELECT DISTINCT tag FROM tags ORDER BY tag"; 
+        $ResultSet5 = $connection->query($Query1);
+        while ($row = $ResultSet5->fetch_row()) {
+            array_push($AllTags,$row[0]);
+        }
 
         //Get the recipe tags
         $Query1 = "SELECT tag FROM tags WHERE recipe_id = ?";

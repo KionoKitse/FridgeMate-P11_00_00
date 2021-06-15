@@ -330,7 +330,7 @@
     //create last right column if needed 
     if(!$left){
       $GroupTable .= '<td><select id="Group0">';
-      $GroupTable .= '<option selected="selected" value="1">Group0</option>';
+      $GroupTable .= '<option selected="selected" value="1">Group 0</option>';
       $GroupTable .= '</select></td>';
       $GroupTable .= '<td><i id="BttnGroup0" onclick="ChangeGroup(0,'.$id.')" class="far fa-plus-square"></i></td>';
       $GroupTable .= '</tr>';

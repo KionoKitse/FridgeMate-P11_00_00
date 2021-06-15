@@ -26,6 +26,8 @@
     $Prep = array();
     $Percent = 0;
     $Steps = array();
+    $AllTags = array();
+    $RecipeTags = array();
     $JsonData["Recipe"] = NULL;
     $JsonData["Name"] = "Recipe Name";
     $JsonData["Link"] = "Link";
@@ -114,11 +116,12 @@
         <!-- Create Tags datalist -->
         <datalist id="Tags">
             <?php
-                while ($row = $AllTags->fetch_row()) {
-                    echo "<option value=\"".$row[0]."\">";
+                foreach($AllTags as $val) {
+                    echo "<option value=\"$val\">";
                 }
             ?>
         </datalist>
+        
 
     </div>
     <div class="center">
