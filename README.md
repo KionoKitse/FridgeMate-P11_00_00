@@ -74,8 +74,10 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2021-06-03 Fixed Bug_210601
 * 2021-06-03 Finished edit recipe page
 * 2021-06-03 Added tags to recipe page
-* 2021-06-06 Working on suggest page
-* 2021-06-07 Finished suggest page
+* 3021-06-06 Working on suggest page
+* 2021-06-14 Bug_2106141: All tags not showing on a new recipe
+* 2021-06-14 Bug_2106142: Prep step starts with spaces already inside
+
 </details>
 
 ### Notebook
