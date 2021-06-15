@@ -385,6 +385,13 @@ function Submit(){
             catch(err){}
         }
 
+        //Get the top 6 ingredients
+        var TopList = new Array(6);
+        for (var i = 0; (i<6) && (i<PantryTable.length); i++){
+            TopList[i] = PantryTable[i].Name1+" "+PantryTable[i].Name2+" "+PantryTable[i].Name3;
+        }
+
+
         //Get the id if there is one
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -411,6 +418,7 @@ function Submit(){
         EditResults.TagsTable = TagsTable;
         EditResults.Notes = Notes;
         EditResults.StepDirections = StepDirections;
+        EditResults.TopList = TopList;
 
         var jsonEditResults= JSON.stringify(EditResults);
 

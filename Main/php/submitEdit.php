@@ -18,6 +18,7 @@
     $TagsTable = $response['TagsTable'];
     $Notes = $response['Notes'];
     $StepDirections = $response['StepDirections'];
+    $TopList = $response['TopList'];
 
     //Variables
     $Error = false;
@@ -42,18 +43,22 @@
                 }
             }
             //New recipe, so add to database
-            $Query = "INSERT INTO recipe (name,people,active,passive,rating) VALUES (?, ?, ?, ?, ?)";
+            $Query = "INSERT INTO recipe (name,people,active,passive,rating,image,top1,top2,top3,top4,top5,top6) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $connection->prepare($Query);
-            $stmt->bind_param("siddi", $Name, $People, $ActiveTime, $PassiveTime, $Rating);
+            $stmt->bind_param("siddisssssss", $Name, $People, $ActiveTime, $PassiveTime, $Rating, $Image,
+                $TopList[0], $TopList[1], $TopList[2], $TopList[3], $TopList[4], $TopList[5]);
             $stmt->execute();
             
             //Get the last id number inserted in database
             $RecipeId = $connection->insert_id;
         } else {
             //Update the parameters for an existing recipe
-            $Query = "UPDATE recipe SET name=?, people=?, active=?, passive=?, rating=? WHERE recipe_id=?";
+            $Query = "UPDATE recipe SET name=?, people=?, active=?, passive=?, rating=?, image=?, 
+                top1=?, top2=?, top3=?, top4=?, top5=?, top6=? WHERE recipe_id=?";
             $stmt = $connection->prepare($Query);
-            $stmt->bind_param("siddii", $Name, $People, $ActiveTime, $PassiveTime, $Rating, $RecipeId);
+            $stmt->bind_param("siddisssssssi", $Name, $People, $ActiveTime, $PassiveTime, $Rating, $Image, 
+                $TopList[0], $TopList[1], $TopList[2], $TopList[3], $TopList[4], $TopList[5], $RecipeId);
             $stmt->execute();
             $result = $stmt->get_result();
             //$done = $stmt->affected_rows; //Not useful because if nothing change it returns 0

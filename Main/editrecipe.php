@@ -64,7 +64,6 @@
         $AllTags = $MySQL["AllTags"];
         $RecipeTags = $MySQL["RecipeTags"];
     }
-    echo count($JsonData["Steps"]);
 ?>
 
 <body>
