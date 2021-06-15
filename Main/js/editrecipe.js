@@ -331,6 +331,22 @@ function Submit(){
                 catch(err) {}
             }
         }
+
+        //Mark the prep ingredients
+        var PrepTable = document.getElementById("Step0");
+        var NumRows = PrepTable.rows.length;
+        for (var i=1; i<NumRows; i++){
+            //Get the item id for this prep ingredient
+            var ItemId = PrepTable.rows[i].cells[0].children[0].value;
+            for (var row = 0; row<IngredientTable.length; row++) {
+                if(IngredientTable[row].ItemId === ItemId){
+                    IngredientTable[row].Prep = 1;
+                    break;
+                }
+            }
+        }
+
+        /*
         //Mark the prep ingredients
         for (var Id = 1; Id <= Steps.Ids[0]; Id++) {
             var StepItemId = "SelectStep0Item"+Id;
@@ -342,6 +358,7 @@ function Submit(){
                 }
             }
         }
+        */
 
         //Get the data for the Tags table
         var TagsTable = [];

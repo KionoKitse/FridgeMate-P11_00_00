@@ -170,18 +170,6 @@
             <?php
                 FillRow($Main,"Main");
             ?>
-            <!--
-            <tr id="Main0">
-                <td style="width: 10%;"><input type="text" name="Quantity"></td>
-                <td style="width: 15%;"><input type="text" name="Unit" list="Unit"/></td>
-                <td><input onchange="GetName2('Main0')" type="text" id="Main0Name1" list="Name1All"/></td>
-                <td><input onchange="GetName3('Main0')" type="text" id="Main0Name2" list="Name2Main0"/></td>
-                <td><input type="text" id="Main0Name3" list="Name3Main0"/></td>
-                <td>
-                    <i onclick="RemoveElement('Main0')" style="color: #F2CC8F; font-size: 5vw" class="fas fa-plus-square"></i>
-                </td>
-            </tr>
-            -->
         </table>
         <div class="break" style="clear: both;"></div>
         <table id="Support">
@@ -329,10 +317,5 @@
             </tr>
         </div>
     </div>
-    <script>
-        //mainstyle.js - Set the center element width based on window size
-        //
-        //SetCenterWidth();
-    </script>
 </body>
 </html>
