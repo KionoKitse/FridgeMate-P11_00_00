@@ -64,6 +64,7 @@
         $AllTags = $MySQL["AllTags"];
         $RecipeTags = $MySQL["RecipeTags"];
     }
+    echo count($JsonData["Steps"]);
 ?>
 
 <body>
@@ -288,11 +289,7 @@
                     PreSelectedDropDown($AllIngredinets,'0',$OptionList)
                 ?>
             </table>
-            <textarea style="width:98%;" rows="10" id="Step0Box"><?php 
-                if(count($JsonData["Steps"])>0){
-                    echo $JsonData["Steps"][0];
-                }?>
-            </textarea>
+            <textarea style="width:98%;" rows="10" id="Step0Box"><?php if(count($JsonData["Steps"])>0) echo $JsonData["Steps"][0];?></textarea>
         </div>
         <div class="break"></div>
         <table id="AddNewStep">
