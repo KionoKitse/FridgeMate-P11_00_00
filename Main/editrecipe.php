@@ -224,6 +224,8 @@
         </div>
         
         <div class="break"></div> 
+        
+        <!-- Tags section -->
         <div id="Tags">
             <table style="text-align: left; width: 100%;" id="TagTable">
                 <tr>

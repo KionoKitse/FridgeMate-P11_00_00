@@ -222,9 +222,14 @@ function AddTags(){
     var row = table.insertRow(-1);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
-    //Set the inner html
-    cell1.innerHTML = '<input type="text" list="Tags"></input>'; 
-    cell2.innerHTML = '<input type="text" list="Tags"></input>';
+    //Create input element
+    var inputElement1 = document.createElement("INPUT");
+    inputElement1.setAttribute("type", "text");
+    inputElement1.setAttribute("list", "Tags");
+    var inputElement2 = inputElement1.cloneNode(true);
+    //Add children
+    cell1.appendChild(inputElement1); 
+    cell2.appendChild(inputElement2);
 }
 //Function to remove a row of tags
 function RemoveTags(){

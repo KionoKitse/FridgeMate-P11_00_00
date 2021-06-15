@@ -78,7 +78,12 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2021-06-14 *Bug_2106141: All tags not showing on a new recipe*
 * 2021-06-14 Bug_2106142: Prep step starts with spaces already inside
 * 2021-06-15 Fixed Bug_2106142: Prep step starts with spaces already inside
-
+* 2021-06-15 Fixed an issue with the marking prep steps
+* 2021-06-15 Adding real recipes
+* 2021-06-15 Bug_2106151: *Modify ingredient after building it gets lost?*
+* 2021-06-15 Bug_2106152: Recipe with only prep step gets lost added to pantry but not ingredient
+* 2021-06-15 Fixed Bug_2106152: Recipe with only prep step gets lost added to pantry but not ingredient - Needs to be Step1
+* 2021-06-15 Fixed Bug_2106141: All tags not showing on a new recipe
 </details>
 
 ### Notebook
