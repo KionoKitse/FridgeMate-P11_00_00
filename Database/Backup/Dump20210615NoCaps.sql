@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `group` (
-  `GROUP_ID` int DEFAULT NULL,
-  `ITEM_ID` int DEFAULT NULL,
+  `group_id` int DEFAULT NULL,
+  `item_id` int DEFAULT NULL,
   `pk` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`pk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -50,13 +50,13 @@ DROP TABLE IF EXISTS `ingredient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ingredient` (
-  `RECIPE_ID` int DEFAULT NULL,
-  `ITEM_ID` int DEFAULT NULL,
-  `CATEGORY` int DEFAULT NULL,
-  `QUANTITY` varchar(5) DEFAULT NULL,
-  `UNIT` varchar(45) DEFAULT NULL,
-  `STEP` int DEFAULT NULL,
-  `PREP` tinyint DEFAULT NULL,
+  `recipe_id` int DEFAULT NULL,
+  `item_id` int DEFAULT NULL,
+  `category` int DEFAULT NULL,
+  `quantity` varchar(5) DEFAULT NULL,
+  `unit` varchar(45) DEFAULT NULL,
+  `step` int DEFAULT NULL,
+  `prep` tinyint DEFAULT NULL,
   `pk` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`pk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=249 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -80,16 +80,16 @@ DROP TABLE IF EXISTS `pantry`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pantry` (
-  `ITEM_ID` int NOT NULL AUTO_INCREMENT,
-  `NAME1` varchar(45) DEFAULT NULL,
-  `NAME2` varchar(45) DEFAULT NULL,
-  `NAME3` varchar(45) DEFAULT NULL,
-  `STATUS` tinyint DEFAULT NULL,
-  `RECIPE_ID` int DEFAULT NULL,
-  `EXPIRES` int DEFAULT NULL,
-  `PURCHASE` varchar(10) DEFAULT NULL,
-  `CATEGORY` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`ITEM_ID`)
+  `item_id` int NOT NULL AUTO_INCREMENT,
+  `name1` varchar(45) DEFAULT NULL,
+  `name2` varchar(45) DEFAULT NULL,
+  `name3` varchar(45) DEFAULT NULL,
+  `status` tinyint DEFAULT NULL,
+  `recipe_id` int DEFAULT NULL,
+  `expires` int DEFAULT NULL,
+  `purchase` varchar(10) DEFAULT NULL,
+  `category` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`item_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -111,23 +111,23 @@ DROP TABLE IF EXISTS `recipe`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recipe` (
-  `RECIPE_ID` int NOT NULL AUTO_INCREMENT,
-  `NAME` varchar(45) DEFAULT NULL,
-  `PEOPLE` int DEFAULT NULL,
-  `ACTIVE` decimal(5,2) DEFAULT NULL,
-  `PASSIVE` decimal(5,2) DEFAULT NULL,
-  `RATING` int DEFAULT NULL,
-  `PERCENT` decimal(5,2) DEFAULT NULL,
-  `IMAGE` varchar(150) DEFAULT NULL,
-  `TOP1` varchar(45) DEFAULT NULL,
-  `TOP2` varchar(45) DEFAULT NULL,
-  `TOP3` varchar(45) DEFAULT NULL,
-  `TOP4` varchar(45) DEFAULT NULL,
-  `TOP5` varchar(45) DEFAULT NULL,
-  `TOP6` varchar(45) DEFAULT NULL,
-  `MENU` tinyint DEFAULT '0',
-  `INGREDIANT` tinyint DEFAULT '0',
-  PRIMARY KEY (`RECIPE_ID`)
+  `recipe_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `people` int DEFAULT NULL,
+  `active` decimal(5,2) DEFAULT NULL,
+  `passive` decimal(5,2) DEFAULT NULL,
+  `rating` int DEFAULT NULL,
+  `percent` decimal(5,2) DEFAULT NULL,
+  `image` varchar(150) DEFAULT NULL,
+  `top1` varchar(45) DEFAULT NULL,
+  `top2` varchar(45) DEFAULT NULL,
+  `top3` varchar(45) DEFAULT NULL,
+  `top4` varchar(45) DEFAULT NULL,
+  `top5` varchar(45) DEFAULT NULL,
+  `top6` varchar(45) DEFAULT NULL,
+  `menu` tinyint DEFAULT '0',
+  `ingredient` tinyint DEFAULT '0',
+  PRIMARY KEY (`recipe_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -149,8 +149,8 @@ DROP TABLE IF EXISTS `tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tags` (
-  `RECIPE_ID` int DEFAULT NULL,
-  `TAG` varchar(45) DEFAULT NULL,
+  `recipe_id` int DEFAULT NULL,
+  `tag` varchar(45) DEFAULT NULL,
   `pk` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`pk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

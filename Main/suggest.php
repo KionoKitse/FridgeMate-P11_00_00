@@ -222,8 +222,8 @@
             $NewTile = CreateTile($row,'Older');
 
             //Replace percent value by older ingredients count
-            $Id = $row["RECIPE_ID"];
-            $Percent = (int)$row["PERCENT"];
+            $Id = $row["recipe_id"];
+            $Percent = (int)$row["percent"];
             $Search = $Percent.'% <i style="color: #81B29A;" class="fas fa-clipboard-check"></i>';
             $Replace = $OlderCt[$Id].' <i style="color: #81B29A;" class="fas fa-clipboard-check"></i>';
             $NewTile = str_replace($Search, $Replace, $NewTile); //Search / Replace
@@ -250,20 +250,20 @@
     }
     //Function to create a tile element
     function CreateTile($RecipeObj,$Type){
-        $Id = $RecipeObj["RECIPE_ID"];
-        $Image = $RecipeObj["IMAGE"];
-        $Name = $RecipeObj["NAME"];
-        $Rating = (int)$RecipeObj["RATING"];
-        $Percent = (int)$RecipeObj["PERCENT"];
-        $Active = (int)$RecipeObj["ACTIVE"];
-        $Passive = (int)$RecipeObj["PASSIVE"];
-        $People = (int)$RecipeObj["PEOPLE"];
-        $Top1 = $RecipeObj["TOP1"];
-        $Top2 = $RecipeObj["TOP2"];
-        $Top3 = $RecipeObj["TOP3"];
-        $Top4 = $RecipeObj["TOP4"];
-        $Top5 = $RecipeObj["TOP5"];
-        $Top6 = $RecipeObj["TOP6"];
+        $Id = $RecipeObj["recipe_id"];
+        $Image = $RecipeObj["image"];
+        $Name = $RecipeObj["name"];
+        $Rating = (int)$RecipeObj["rating"];
+        $Percent = (int)$RecipeObj["percent"];
+        $Active = (int)$RecipeObj["active"];
+        $Passive = (int)$RecipeObj["passive"];
+        $People = (int)$RecipeObj["people"];
+        $Top1 = $RecipeObj["top1"];
+        $Top2 = $RecipeObj["top2"];
+        $Top3 = $RecipeObj["top3"];
+        $Top4 = $RecipeObj["top4"];
+        $Top5 = $RecipeObj["top5"];
+        $Top6 = $RecipeObj["top6"];
 
         $Result = <<<EOT
             <!--New Item-->
