@@ -112,7 +112,7 @@
 
             //Add tile to menu table
             var MenuTable = document.getElementById('Menu');
-            MenuTable.children[0].appendChild(Tile);
+            MenuTable.appendChild(Tile);
         }
     }
     function ShowMoreLessTiles(TableId){
