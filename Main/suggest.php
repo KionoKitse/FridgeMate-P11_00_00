@@ -66,17 +66,22 @@
 
 
 <script>
-    //Script to set entire table row as clickable links
-    //https://stackoverflow.com/questions/36113459/how-to-make-entire-tr-in-a-table-clickable-like-a-href
-    var elements = document.getElementsByClassName('clickable');
-    for (var i = 0; i < elements.length; i++) {
-        var element = elements[i];
-        element.addEventListener('click', function() {
-            var href = this.dataset.href;
-            if (href) {
-                window.location.assign(href);
-            }
-        })
+    
+    SetClickable();
+    //Function to apply an event listener to all clickable elements
+    function SetClickable(){
+        //Script to set entire table row as clickable links
+        //https://stackoverflow.com/questions/36113459/how-to-make-entire-tr-in-a-table-clickable-like-a-href
+        var elements = document.getElementsByClassName('clickable');
+        for (var i = 0; i < elements.length; i++) {
+            var element = elements[i];
+            element.addEventListener('click', function() {
+                var href = this.dataset.href;
+                if (href) {
+                    window.location.assign(href);
+                }
+            })
+        }
     }
 
     //Function to remove a tile
@@ -88,33 +93,71 @@
         var Name = document.getElementById("ButtonMenu5").value;
         document.getElementById("ButtonMenu5").value = !Name;
     }
+    //Function to move a tile from one list to another
     function ChangeTile(TileId){
         var temp = document.getElementById("Button"+TileId);
         var OnMenu = document.getElementById("Button"+TileId).value;
+        
         //Remove from menu display and remove from menu in database
         if(OnMenu == 'true'){
-            RemoveTile(TileId);
+            //Change status in database
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+
+                    //Remove the tile
+                    RemoveTile(TileId);
+                }
+            };
+            xmlhttp.open("GET","php/direct/setMenu.php?id="+TileId+"&val=0",true);
+            xmlhttp.send();
         }
         //Add to menu display and add to menu in database
         else{
-            //Get the element
-            var Tile = document.getElementById(TileId).cloneNode(true); 
-            
-            //Extract number
-            var RecipeId = TileId.replace(/[^0-9]/g, ''); 
-            
-            //Convert tile to a menu tile
-            Tile.id = 'Menu'+RecipeId;
-            var Btn = Tile.children[2].children[0];
-            Btn.id = 'ButtonMenu'+RecipeId;
-            Btn.setAttribute('onclick','ChangeTile("Menu'+RecipeId+'")');
-            Btn.value = 'true';
+            //Change status in database
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
 
-            //Add tile to menu table
-            var MenuTable = document.getElementById('Menu');
-            MenuTable.appendChild(Tile);
+                    //Get the element
+                    var Tile = document.getElementById(TileId).cloneNode(true); 
+                    
+                    //Extract number
+                    var RecipeId = TileId.replace(/[^0-9]/g, ''); 
+                    
+                    //Convert tile to a menu tile
+                    Tile.id = 'Menu'+RecipeId;
+                    var Btn = Tile.children[2].children[0];
+                    Btn.id = 'ButtonMenu'+RecipeId;
+                    Btn.setAttribute('onclick','ChangeTile("Menu'+RecipeId+'")');
+                    Btn.value = 'true';
+
+                    //Add the event listener
+                    Tile.children[0].addEventListener('click', function() {
+                        var href = this.dataset.href;
+                        if (href) {
+                            window.location.assign(href);
+                        }
+                    })
+                    Tile.children[1].addEventListener('click', function() {
+                        var href = this.dataset.href;
+                        if (href) {
+                            window.location.assign(href);
+                        }
+                    })
+
+                    //Add tile to menu table
+                    var MenuTable = document.getElementById('Menu');
+                    MenuTable.appendChild(Tile);
+                }
+            };
+            xmlhttp.open("GET","php/direct/setMenu.php?id="+TileId+"&val=1",true);
+            xmlhttp.send();                
         }
     }
+
     function ShowMoreLessTiles(TableId){
         //Get the table and the number of entries displayed
         var Table = document.getElementById(TableId);
@@ -167,7 +210,7 @@
 
 
 <?php
-    //Function to get the MySQL data
+    //Function to build the table of tiles for what is on the menu
     function GetMenuItems($ResultSet1){    
         //Create the menu table 
         $MenuTable = '<table id="Menu" style="width: 100%; border-collapse:collapse; border-spacing:0;">';
@@ -183,6 +226,7 @@
 
         return $MenuTable;
     }
+    //Function to build the table of tiles suggestions based on buildability
     function GetBuildItems($ResultSet2){
         //Create the build table 
         $BuildTable = '<table id="Build" style="width: 100%; border-collapse:collapse; border-spacing:0;">';
@@ -207,6 +251,7 @@
         $BuildTable .= '<input type="hidden" id="BuildDisp" value="'.$i.'">';
         return $BuildTable;
     }
+    //Function to build the table of tiles for expiring ingredients
     function GetOlderItems($ResultSet4,$ResultSet3){
         //Count the number of older ingredients in each recipe
         $OlderCt = [];
@@ -304,7 +349,7 @@
                     </table>
                 </td>
                     
-                <td class="clickable" style="vertical-align: middle;"><button id="Button$Type$Id" onclick="ChangeTile('$Type$Id')" value = 'false' class="bttnTall"><i style="color: #3D405B" class="fas fa-kiwi-bird fa-flip-horizontal"></i></button></td>
+                <td style="vertical-align: middle;"><button id="Button$Type$Id" onclick="ChangeTile('$Type$Id')" value = 'false' class="bttnTall"><i style="color: #3D405B" class="fas fa-kiwi-bird fa-flip-horizontal"></i></button></td>
 
             </tr>
         EOT;
