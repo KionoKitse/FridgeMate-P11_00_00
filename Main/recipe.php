@@ -66,20 +66,20 @@
     $stmt->bind_param("i", $Id);
     $stmt->execute();
     $ResultSet4 = $stmt->get_result();
-    while ($row = $ResultSet4->fetch_row()) {
-        array_push($RecipeTags,$row[0]);
+    while ($row = $ResultSet4->fetch_assoc()) {
+        array_push($RecipeTags,$row["tag"]);
     }
 
     //Get the recipe percent
-    while ($row = $ResultSet3->fetch_row()) {
-        $Percent = $row[6];
+    while ($row = $ResultSet3->fetch_assoc()) {
+        $Percent = $row["percent"];
     }
     $Percent = floatval($Percent);
 
     //Build lists of ingredients
-    while ($row = $ResultSet1->fetch_row()) {
+    while ($row = $ResultSet1->fetch_assoc()) {
         //Get the ingredient object
-        $Ingredient = GetIngredient($row[1], $ResultSet2);
+        $Ingredient = GetIngredient($row["item_id"], $ResultSet2);
         
         /*
         * Status guide
@@ -91,73 +91,38 @@
         */
         //Check the ingredient is not available
         if ($Ingredient["status"] == 0){
-            //Check if the ingredient is buildable
-            if($Ingredient["recipe_id"]>0){
-                //Check the buildability score for that ingredient
-                $Query1 = "SELECT percent FROM fridgemate_db.recipe WHERE recipe_id = '".$Ingredient["recipe_id"]."'";
-                $ResultSet4 = $connection->query($Query1);
-                while ($row1 = $ResultSet4->fetch_row()) {
-                    if($row1[0] > 90){
-                        $Ingredient["status"] = 3;
-                    }
-                }
-                
-            }
-            //Check if ingredient has a substitute
-            if ($Ingredient["status"] == 0){
-                //Find if there are any substitute ingredients
-                $Query1 = "SELECT group_id FROM fridgemate_db.group WHERE item_id = '".$Ingredient["item_id"]."'";
-                $Query2 = "SELECT item_id FROM fridgemate_db.group WHERE group_id IN (" . $Query1 . ") AND item_id != '".$Ingredient["item_id"]."'";
-                $ResultSet5 = $connection->query($Query2);
-                //SELECT ITEM_ID FROM fridgemate_db.group where GROUP_ID in (SELECT GROUP_ID FROM fridgemate_db.group where ITEM_ID = '19') and ITEM_ID != '19';
-                //Check any of the items in the group are available
-                while ($row1 = $ResultSet5->fetch_row()) {
-                    $Item = $row1[0];
-                    $Query1 = "SELECT * FROM pantry WHERE item_id = '".$row1[0]."'";
-                    $ResultSet6 = $connection->query($Query1);
-                    //Check if ingredient is available
-                    while ($row2 = $ResultSet6->fetch_row()) {
-                        if($row2[4] == 1){
-                            //Replace ingredient with substitute and mark as a sub
-                            $Ingredient["item_id"] = $row2[0];
-                            $Ingredient["name1"] = $row2[1];
-                            $Ingredient["name2"] = $row2[2];
-                            $Ingredient["name3"] = $row2[3];
-                            $Ingredient["status"] = 4;
-                        }
-                    }
-                }
-            }
+            $Ingredient = AltIngredient($Ingredient,$connection)
         }
 
         //Create new ingredient object
         $Object = (object) [
-            'Quantity' => $row[3],
-            'Unit' => $row[4],
+            'Quantity' => $row["quantity"],
+            'Unit' => $row["unit"],
             'Name1' => $Ingredient["name1"],
             'Name2' => $Ingredient["name2"],
             'Name3' => $Ingredient["name3"],
             'Status' => $Ingredient["status"],          //How to display the ingredient
             'AltRecipe' => $Ingredient["recipe_id"],    //Which recipe to call when looking at that ingredient
-            'Step' => $row[5]                           //Which step it is called in
+            'Step' => $row["step"]                      //Which step it is called in
         ];
 
         //Add Main, Support, Spices or Garnish
-        if ($row[2] == 1) {
+        if ($row["category"] == 1) {
             array_push($Main, $Object);
-        } elseif ($row[2] == 2) {
+        } elseif ($row["category"] == 2) {
             array_push($Support, $Object);
-        } elseif ($row[2] == 3) {
+        } elseif ($row["category"] == 3) {
             array_push($Spices, $Object);
         } else {
             array_push($Garnish, $Object);
         }
 
         //Add ingredients to the prep list
-        if ($row[6] == 1) {
+        if ($row["prep"] == 1) {
             array_push($Prep, $Object);
         }
     }
+    echo var_dump($Main);
 
     //Get the ingredients per step
     $Index = 1;
@@ -360,5 +325,48 @@
             $Min = $Time - 60 * $Hrs;
             return $Hrs . 'h ' . $Min . 'min';
         }
+    }
+    //Function to find a substitute ingredient
+    function AltIngredient($Ingredient,$connection){
+        $Result = $Ingredient;
+
+        //Check if ingredient is buildable
+        if($Ingredient["recipe_id"]>0){
+            //Check the buildability score for that ingredient
+            $Query1 = "SELECT percent FROM recipe WHERE recipe_id = '".$Ingredient["recipe_id"]."'";
+            $ResultSet4 = $connection->query($Query1);
+            while ($row1 = $ResultSet4->fetch_assoc()) {
+                if($row1["percent"] > 90){
+                    $Result["status"] = 3;
+                    goto SendResult;
+                }
+            }
+        }
+        
+        //Find if there are any substitute ingredients
+        $Query1 = "SELECT group_id FROM group WHERE item_id = '".$Ingredient["item_id"]."'";
+        $Query2 = "SELECT item_id FROM group WHERE group_id IN (" . $Query1 . ") AND item_id != '".$Ingredient["item_id"]."'";
+        $ResultSet5 = $connection->query($Query2);
+            
+        //Check any of the items in the group are available
+        while ($row1 = $ResultSet5->fetch_assoc()) {
+            $Query1 = "SELECT * FROM pantry WHERE item_id = '".$row1["item_id"]."'";
+            $ResultSet6 = $connection->query($Query1);
+            //Check if ingredient is available
+            while ($row2 = $ResultSet6->fetch_row()) {
+                if($row2["status"] == 1){
+                    //Replace ingredient with substitute and mark as a sub
+                    $Result["item_id"] = $row2["item_id"];
+                    $Result["name1"] = $row2["name1"];
+                    $Result["name2"] = $row2["name2"];
+                    $Result["name3"] = $row2["name3"];
+                    $Result["status"] = 4;
+                    goto SendResult;
+                }
+            }
+        }
+        //Exit
+        SendResult:
+        return 
     }
 ?>
