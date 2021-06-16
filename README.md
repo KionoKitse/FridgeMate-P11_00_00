@@ -75,7 +75,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2021-06-03 Finished edit recipe page
 * 2021-06-03 Added tags to recipe page
 * 3021-06-06 Working on suggest page
-* 2021-06-14 *Bug_2106141: All tags not showing on a new recipe*
+* 2021-06-14 Bug_2106141: All tags not showing on a new recipe
 * 2021-06-14 Bug_2106142: Prep step starts with spaces already inside
 * 2021-06-15 Fixed Bug_2106142: Prep step starts with spaces already inside
 * 2021-06-15 Fixed an issue with the marking prep steps
@@ -86,6 +86,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2021-06-15 Fixed Bug_2106141: All tags not showing on a new recipe
 * 2021-06-15 Edit recipe now adds Top1-Top6 and image to pantry table
 * 2021-06-16 Adding and removing recipes from the menu
+* 2021-06-16 Fixed Bug_2106141: All tags not showing on a new recipe
 </details>
 
 ### Notebook

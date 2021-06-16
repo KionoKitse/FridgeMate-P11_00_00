@@ -64,7 +64,6 @@
     </div>
 </body>
 
-
 <script>
     
     SetClickable();
@@ -205,9 +204,6 @@
         document.getElementById(TableId+'Disp').value = i;
     }
 </script>
-
-
-
 
 <?php
     //Function to build the table of tiles for what is on the menu

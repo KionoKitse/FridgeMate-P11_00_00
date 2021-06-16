@@ -1,4 +1,5 @@
 <?php
+    include 'php/genFunc.php';
 
     //Function that returns an ingredient based on the requested ID
     function GetIngredient($Id, $Result){
@@ -9,12 +10,6 @@
                 return $row;
             }
         }
-    }
-    //Function that reads the JSON data
-    function ReadJSON($Id){
-        $JsonPath = file_get_contents('json/'.$Id.'.json');
-        $JsonData = json_decode($JsonPath, true);
-        return $JsonData;
     }
     //Function that gets the MySQL data
     function GetMySQL($Id){

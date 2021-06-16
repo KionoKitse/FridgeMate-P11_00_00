@@ -1,4 +1,6 @@
 <?php
+    include 'php/genFunc.php';
+
     //Function that parses minutes to min/hr
     function ParseTime($Time){
         if ($Time < 60) {
@@ -18,12 +20,6 @@
                 return $row;
             }
         }
-    }
-    //Function that reads the JSON data
-    function ReadJSON($Id){
-        $JsonPath = file_get_contents('json/'.$Id.'.json');
-        $JsonData = json_decode($JsonPath, true);
-        return $JsonData;
     }
     //Function that gets the MySQL data
     function GetMySQL($Id){
