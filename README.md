@@ -88,6 +88,9 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2021-06-16 Adding and removing recipes from the menu
 * 2021-06-16 Fixed Bug_2106141: All tags not showing on a new recipe
 * 2021-06-17 Finished ingredient section
+* 2021-06-17 Add categories to pantry items
+* 2021-06-17 Add shopping cart to ingredients page
+* 2021-06-17 Change table from group to sets
 </details>
 
 ### Notebook

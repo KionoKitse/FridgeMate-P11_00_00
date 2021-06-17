@@ -89,9 +89,10 @@
         * 3 = Buildable
         * 4 = Substitute
         */
+
         //Check the ingredient is not available
         if ($Ingredient["status"] == 0){
-            $Ingredient = AltIngredient($Ingredient,$connection)
+            $Ingredient = AltIngredient($Ingredient,$connection);
         }
 
         //Create new ingredient object
@@ -122,7 +123,6 @@
             array_push($Prep, $Object);
         }
     }
-    echo var_dump($Main);
 
     //Get the ingredients per step
     $Index = 1;
@@ -344,29 +344,40 @@
         }
         
         //Find if there are any substitute ingredients
-        $Query1 = "SELECT group_id FROM group WHERE item_id = '".$Ingredient["item_id"]."'";
-        $Query2 = "SELECT item_id FROM group WHERE group_id IN (" . $Query1 . ") AND item_id != '".$Ingredient["item_id"]."'";
-        $ResultSet5 = $connection->query($Query2);
-            
-        //Check any of the items in the group are available
-        while ($row1 = $ResultSet5->fetch_assoc()) {
-            $Query1 = "SELECT * FROM pantry WHERE item_id = '".$row1["item_id"]."'";
-            $ResultSet6 = $connection->query($Query1);
-            //Check if ingredient is available
-            while ($row2 = $ResultSet6->fetch_row()) {
-                if($row2["status"] == 1){
-                    //Replace ingredient with substitute and mark as a sub
-                    $Result["item_id"] = $row2["item_id"];
-                    $Result["name1"] = $row2["name1"];
-                    $Result["name2"] = $row2["name2"];
-                    $Result["name3"] = $row2["name3"];
-                    $Result["status"] = 4;
-                    goto SendResult;
+        $Query1 = "SELECT group_id FROM sets WHERE item_id = ?";
+        $Query2 = "SELECT item_id FROM sets WHERE group_id IN (" . $Query1 . ") AND item_id != ?";
+        $stmt = $connection->prepare($Query2);
+        $stmt->bind_param("ii", $Ingredient["item_id"], $Ingredient["item_id"]);
+        $stmt->execute();
+        $ResultSet5 = $stmt->get_result();
+
+        if($ResultSet5){
+           //Check any of the items in the group are available
+            while ($row1 = $ResultSet5->fetch_assoc()) {
+                $Query1 = "SELECT * FROM pantry WHERE item_id = ?";
+                $stmt = $connection->prepare($Query1);
+                $stmt->bind_param("i", $row1["item_id"]);
+                $stmt->execute();
+                $ResultSet6 = $stmt->get_result();
+
+                //Check if ingredient is available
+                while ($row2 = $ResultSet6->fetch_assoc()) {
+                    if($row2["status"] == 1){
+                        //Replace ingredient with substitute and mark as a sub
+                        $Result["item_id"] = $row2["item_id"];
+                        $Result["name1"] = $row2["name1"];
+                        $Result["name2"] = $row2["name2"];
+                        $Result["name3"] = $row2["name3"];
+                        $Result["status"] = 4;
+                        goto SendResult;
+                    }
                 }
-            }
+            } 
         }
+            
+        
         //Exit
         SendResult:
-        return 
+        return $Result;
     }
 ?>

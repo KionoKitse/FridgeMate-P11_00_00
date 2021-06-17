@@ -36,7 +36,7 @@
             }
 
             //Add the item to the group
-            $Query = "INSERT INTO fridgemate_db.group (group_id, item_id) VALUES (?,?)";
+            $Query = "INSERT INTO sets (group_id, item_id) VALUES (?,?)";
             $stmt = $connection->prepare($Query);
             $stmt->bind_param("ii", $row[0], $row[1]);
             $stmt->execute();
@@ -44,13 +44,13 @@
         //Remove from group
         else{
             echo "Remove";
-            $Query = "SELECT pk FROM fridgemate_db.group WHERE group_id=? AND item_id=?";
+            $Query = "SELECT pk FROM sets WHERE group_id=? AND item_id=?";
             $stmt = $connection->prepare($Query);
             $stmt->bind_param("ii", $row[0], $Item_id);
             $stmt->execute();
             $key = $stmt->get_result()->fetch_assoc();
 
-            $Query = "DELETE FROM fridgemate_db.group WHERE pk=?";
+            $Query = "DELETE FROM sets WHERE pk=?";
             $stmt = $connection->prepare($Query);
             $stmt->bind_param("i", $key["pk"]);
             $stmt->execute();

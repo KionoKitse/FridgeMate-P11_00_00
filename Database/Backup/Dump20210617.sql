@@ -18,30 +18,6 @@ USE `fridgemate_db`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `group`
---
-
-DROP TABLE IF EXISTS `group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `group` (
-  `group_id` int DEFAULT NULL,
-  `item_id` int DEFAULT NULL,
-  `pk` int NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`pk`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `group`
---
-
-LOCK TABLES `group` WRITE;
-/*!40000 ALTER TABLE `group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `group` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `ingredient`
 --
 
@@ -99,7 +75,7 @@ CREATE TABLE `pantry` (
 
 LOCK TABLES `pantry` WRITE;
 /*!40000 ALTER TABLE `pantry` DISABLE KEYS */;
-INSERT INTO `pantry` VALUES (1,'Onion','','',0,0,NULL,NULL,'Produce',NULL),(2,'Pepper','Bell','',0,0,NULL,NULL,'Produce',NULL),(3,'Celery','','',0,0,NULL,NULL,'Produce',NULL),(4,'Tomato','Canned','',0,0,NULL,NULL,'Canned',NULL),(5,'Shrimp','Raw','',0,0,NULL,NULL,'Seafood',NULL),(6,'Oil','','',0,0,NULL,NULL,'Baking',NULL),(7,'Butter','','',0,0,NULL,NULL,'Dairy',NULL),(8,'Water','','',0,0,NULL,NULL,'None',NULL),(9,'Garlic','','',0,0,NULL,NULL,'Herbs',NULL),(10,'Cajun seasoning','','',0,0,NULL,NULL,'Spices',NULL),(11,'Thyme','Dry','',0,0,NULL,NULL,'Spices',NULL),(12,'Cayenne','','',0,0,NULL,NULL,'Spices',NULL),(13,'Bay laurel','','',0,0,NULL,NULL,'Spices',NULL),(14,'Worcestershire sauce','','',0,0,NULL,NULL,'Sauce',NULL),(15,'Tabasco sauce','','',0,0,NULL,NULL,'Sauce',NULL),(16,'Salt','','',0,0,NULL,NULL,'Spices',NULL),(17,'Pepper','','',0,0,NULL,NULL,'Spices',NULL),(18,'Parsley','Fresh','',0,0,NULL,NULL,'Herbs',NULL),(19,'Lemon','','',0,0,NULL,NULL,'Fruit',NULL),(21,'Rice','Basmati ','',0,0,NULL,NULL,'Grains',NULL),(22,'Broth','Chicken','',0,0,NULL,NULL,'Spices',NULL),(23,'Garlic','Powder','',0,0,NULL,NULL,'Spices',NULL),(24,'Paprika','','',0,0,NULL,NULL,'Spices',NULL),(25,'Onion','Powder','',0,0,NULL,NULL,'Spices',NULL),(26,'Oregano','Dry','',0,0,NULL,NULL,'Spices',NULL),(27,'Red pepper flakes','','',0,0,NULL,NULL,'Spices',NULL),(28,'Carrots','','',0,0,NULL,NULL,'Produce',NULL),(29,'Parsnips','','',0,0,NULL,NULL,'Produce',NULL),(30,'Lentils','Red','',0,0,NULL,NULL,'Grains',NULL),(31,'Beans','Red','',0,0,NULL,NULL,'Grains',NULL),(32,'Potatoes','Yellow','',0,0,NULL,NULL,'Produce',NULL),(33,'Oil','Olive','',0,0,NULL,NULL,'Baking',NULL),(34,'Broth','Vegetable','',0,0,NULL,NULL,'Spices',NULL),(35,'Milk','','',0,0,NULL,NULL,'Dairy',NULL),(36,'Cumin','','',0,0,NULL,NULL,'Spices',NULL),(37,'Ginger','','',0,0,NULL,NULL,'Herbs',NULL),(38,'Corriander','Fresh','',0,0,NULL,NULL,'Herbs',NULL),(39,'Parmesan','','',0,0,NULL,NULL,'Dairy',NULL);
+INSERT INTO `pantry` VALUES (1,'Onion','','',0,0,NULL,NULL,'Produce',NULL),(2,'Pepper','Bell','',0,0,NULL,NULL,'Produce',NULL),(3,'Celery','','',0,0,NULL,NULL,'Produce',NULL),(4,'Tomato','Canned','',0,0,NULL,NULL,'Canned',NULL),(5,'Shrimp','Raw','',0,0,NULL,NULL,'Seafood',NULL),(6,'Oil','','',0,0,NULL,'2021-06-17','Baking',0),(7,'Butter','','',0,0,NULL,NULL,'Dairy',NULL),(8,'Water','','',0,0,NULL,NULL,'None',NULL),(9,'Garlic','','',0,0,NULL,NULL,'Herbs',NULL),(10,'Cajun seasoning','','',0,0,NULL,NULL,'Spices',NULL),(11,'Thyme','Dry','',0,0,NULL,NULL,'Spices',NULL),(12,'Cayenne','','',0,0,NULL,NULL,'Spices',NULL),(13,'Bay laurel','','',0,0,NULL,'2021-06-17','Spices',0),(14,'Worcestershire sauce','','',0,0,NULL,NULL,'Sauce',NULL),(15,'Tabasco sauce','','',0,0,NULL,NULL,'Sauce',NULL),(16,'Salt','','',0,0,NULL,NULL,'Spices',NULL),(17,'Pepper','','',0,0,NULL,NULL,'Spices',NULL),(18,'Parsley','Fresh','',0,0,NULL,NULL,'Herbs',NULL),(19,'Lemon','','',0,0,NULL,NULL,'Fruit',NULL),(21,'Rice','Basmati ','',0,0,NULL,NULL,'Grains',NULL),(22,'Broth','Chicken','',0,0,NULL,NULL,'Spices',NULL),(23,'Garlic','Powder','',0,0,NULL,NULL,'Spices',NULL),(24,'Paprika','','',0,0,NULL,NULL,'Spices',NULL),(25,'Onion','Powder','',0,0,NULL,NULL,'Spices',NULL),(26,'Oregano','Dry','',0,0,NULL,NULL,'Spices',NULL),(27,'Red pepper flakes','','',0,0,NULL,NULL,'Spices',NULL),(28,'Carrots','','',0,0,NULL,NULL,'Produce',NULL),(29,'Parsnips','','',0,0,NULL,NULL,'Produce',NULL),(30,'Lentils','Red','',0,0,NULL,NULL,'Grains',NULL),(31,'Beans','Red','',0,0,NULL,NULL,'Grains',NULL),(32,'Potatoes','Yellow','',0,0,NULL,NULL,'Produce',NULL),(33,'Oil','Olive','',0,0,NULL,NULL,'Baking',NULL),(34,'Broth','Vegetable','',0,0,NULL,NULL,'Spices',NULL),(35,'Milk','','',0,0,NULL,NULL,'Dairy',NULL),(36,'Cumin','','',0,0,NULL,NULL,'Spices',NULL),(37,'Ginger','','',0,0,NULL,NULL,'Herbs',NULL),(38,'Corriander','Fresh','',0,0,NULL,NULL,'Herbs',NULL),(39,'Parmesan','','',0,0,NULL,NULL,'Dairy',NULL);
 /*!40000 ALTER TABLE `pantry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,6 +118,31 @@ INSERT INTO `recipe` VALUES (1,'The Best Shrimp Creole',4,25.00,20.00,5,NULL,'ht
 UNLOCK TABLES;
 
 --
+-- Table structure for table `sets`
+--
+
+DROP TABLE IF EXISTS `sets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sets` (
+  `group_id` int DEFAULT NULL,
+  `item_id` int DEFAULT NULL,
+  `pk` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`pk`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sets`
+--
+
+LOCK TABLES `sets` WRITE;
+/*!40000 ALTER TABLE `sets` DISABLE KEYS */;
+INSERT INTO `sets` VALUES (1,1,1),(1,2,2);
+/*!40000 ALTER TABLE `sets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tags`
 --
 
@@ -175,4 +176,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-17 15:14:33
+-- Dump completed on 2021-06-17 16:37:12

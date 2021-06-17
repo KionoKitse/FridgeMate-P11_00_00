@@ -314,12 +314,12 @@
     $GroupTable .= '<tr><th colspan="4">Groups</td></tr>';
     
     //Get the different group ids
-    $Query1 = "SELECT DISTINCT group_id FROM fridgemate_db.group";
+    $Query1 = "SELECT DISTINCT group_id FROM sets";
     $ResultSet4 = $connection->query($Query1);  
 
     while ($group = $ResultSet4->fetch_assoc()) {
       //Get all the ingredients in that group
-      $Query1 = "SELECT item_id FROM fridgemate_db.group WHERE group_id=".$group["group_id"];
+      $Query1 = "SELECT item_id FROM sets WHERE group_id=".$group["group_id"];
       $Query2 = "SELECT item_id, name1, name2, name3 FROM pantry WHERE item_id IN (".$Query1.")";
       $ResultSet5 = $connection->query($Query2); 
 
