@@ -76,9 +76,6 @@
     width:100%;
     text-align: center; 
   }
-  td {
-    padding-right: 2vw;
-  }
   select{
     width: 35vw;
     height: 6vw;
@@ -87,6 +84,12 @@
   i{
     color: #F2CC8F; 
     font-size: 5.5vw;
+  }
+  .bttnYellow {
+    background-color: #F2CC8F;
+    width:100%;
+    border-radius: 5px; 
+    border: 2px solid #FFE6A9; 
   }
 </style>
 
@@ -116,20 +119,19 @@
     $ResultSet3 = $connection->query($Query1);    
 
     //Create the group tables
-    $hello = CreateGroupTables($connection,$id);
+    $GroupTable = CreateGroupTables($connection,$id);
 
     //exit
     $stmt->close();
     db_disconnect($connection);
 ?>
 
-<!-- SGet content to render this page -->
+<!-- Get content to render this page -->
 <script>
   document.addEventListener("DOMContentLoaded", GetName1);
 </script>
 
 <body>
-  <span id="error"></span>
 
   <!-- Lists used for the datalists -->
   <div id="Lists">
@@ -154,84 +156,83 @@
 
   <div class="center">
     <p style="text-align: center; font-size: 5vw; color: #81B29A; font-weight: bold;">Edit Ingredient</p>
-    <table style="width: 100%; border-collapse:collapse; border: spacing 1px;">
-    <tr>
-      <td>Id:</td>
-      <td colspan="3"><?php echo $Ingredient["item_id"];?></td>
-    </tr>
-    <tr>
-      <td>Status:</td>
-      <td colspan="3">
-        <label class="switch">
-          <?php
-            if($Ingredient["status"]=='1'){
-              echo '<input id="Status" type="checkbox" checked>';
-            }
-            else{
-              echo '<input id="Status" type="checkbox">';
-            }
-          ?>
-          <span class="slider round"></span>
-        </label>
-      </td>
-    </tr>
-    <tr>
-      <td>Name:</td>
-      <td><input onchange="GetName2('Main1')" type="text" value="<?php echo $Ingredient["name1"];?>" id="Main1Name1" list="Name1All"></td>
-      <td><input onchange="GetName3('Main1')" type="text" value="<?php echo $Ingredient["name2"];?>" id="Main1Name2" list="Name2Main1"></td>
-      <td><input type="text" value="<?php echo $Ingredient["name3"];?>" id="Main1Name3" list="Name3Main1"></td>
-    </tr>
-    <tr>
-      <td>Category:</td>
-      <td colspan="3"><input type="text" value="<?php echo $Ingredient["category"];?>" id="Category" list="CategoryAll"></td>
-    </tr>
-    <tr>
-      <td>Purchase:</td>
-      <td colspan="3"><input type="text" value="<?php echo $Ingredient["purchase"];?>" id="Purchase"></td>
-    </tr>
-    <tr>
-      <td>Recipe:</td>
-      <td colspan="3" style="padding-right: 0;">
-        <select style="width:100%" id="Recipe" onchange="UpdateSelectOption('Recipe')">
-          <option value="0"></option>
+    <table id="ingredient" style="width: 100%; border-collapse:collapse; border: spacing 1px;">
+      <tr>
+        <td>Id:</td>
+        <td colspan="3"><?php echo $Ingredient["item_id"];?></td>
+      </tr>
+      <tr>
+        <td>Status:</td>
+        <td>
+          <label class="switch">
             <?php
-              while ($row = $ResultSet3->fetch_assoc()) {
-                echo '<option value="'.$row["recipe_id"].'">'.$row["name"].'</option>';
+              if($Ingredient["status"]=='1'){
+                echo '<input id="Status" type="checkbox" checked>';
+              }
+              else{
+                echo '<input id="Status" type="checkbox">';
               }
             ?>
-        </select>
-      </td>
-    </tr>
-
-  </table>
-  <table style="width: 100%; border-collapse:collapse; border: spacing 1px;">
-    <tr>
-      <th colspan="4">Groups <i onclick="AddIngredient('Main')" class="far fa-plus-square"></i></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: bottom" >
-        <select id="SelectStep0Item1" onchange="UpdateSelectOption('SelectStep0Item1')">
-          <option value="1">Group 1</option>
-        </select>
-      </td>
-      <td><i onclick="AddIngredient('Main')" class="far fa-plus-square"></i></td>
-      <td>
-        <select id="SelectStep0Item1" onchange="UpdateSelectOption('SelectStep0Item1')">
-          <option value="2">Group 2</option>
-      </td>
-      <td><i onclick="AddIngredient('Main')" class="far fa-minus-square"></i></td>
-    </tr>
-
-    
-  </table>
-    
+            <span class="slider round"></span>
+          </label>
+        </td>
+        <td>Shopping List:</td>
+        <td>
+          <label class="switch">
+            <?php
+              if($Ingredient["shopping"]=='1'){
+                echo '<input id="Status" type="checkbox" checked>';
+              }
+              else{
+                echo '<input id="Status" type="checkbox">';
+              }
+            ?>
+            <span class="slider round"></span>
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td>Name:</td>
+        <td style="padding-right: 2vw;"><input onchange="GetName2('Main1')" type="text" value="<?php echo $Ingredient["name1"];?>" id="Main1Name1" list="Name1All"></td>
+        <td style="padding-right: 2vw;"><input onchange="GetName3('Main1')" type="text" value="<?php echo $Ingredient["name2"];?>" id="Main1Name2" list="Name2Main1"></td>
+        <td style="padding-right: 2vw;"><input type="text" value="<?php echo $Ingredient["name3"];?>" id="Main1Name3" list="Name3Main1"></td>
+      </tr>
+      <tr>
+        <td>Category:</td>
+        <td colspan="3"><input type="text" value="<?php echo $Ingredient["category"];?>" id="Category" list="CategoryAll"></td>
+      </tr>
+      <tr>
+        <td>Purchase:</td>
+        <td colspan="3"><input type="text" value="<?php echo $Ingredient["purchase"];?>" id="Purchase"></td>
+      </tr>
+      <tr>
+        <td>Expires:</td>
+        <td colspan="3"><input type="text" value="<?php echo $Ingredient["expires"];?>" id="Expires"></td>
+      </tr>
+      <tr>
+        <td>Recipe:</td>
+        <td colspan="3" style="padding-right: 0;">
+          <select style="width:100%" id="Recipe" onchange="UpdateSelectOption('Recipe')">
+            <option value="0"></option>
+              <?php
+                while ($row = $ResultSet3->fetch_assoc()) {
+                  echo '<option value="'.$row["recipe_id"].'">'.$row["name"].'</option>';
+                }
+              ?>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <?php echo $GroupTable; ?>    
+    <button class="bttnYellow" onclick="Submit()">Submit Changes</button>
   </div>
 </body>
 </html>
+
 <script>
   var ChangeList=[];
   function ChangeGroup(id,item){
-    var Bttn = document.getElementById("BttnGroup"+id);
+    var Bttn = document.getElementById("BttnGroup"+id);ingredient
     var List = document.getElementById("Group"+id);
     //Add to group
     if (Bttn.className == "far fa-plus-square"){
@@ -258,22 +259,59 @@
       List.remove(List.selectedIndex);
     }
   }
-  function AddGroup(){
-    var table = document.getElementById("GroupTable");
-  }
+  function Submit(){
+    //Get the tables
+    var dataTable = document.getElementById("ingredient");
+    var groupTable = document.getElementById("GroupTable");
+    //Get updated pantry values
+    var Item_id = dataTable.rows[0].cells[1].innerHTML;
+    var Status = dataTable.rows[1].cells[1].children[0].children[0].checked ? 1: 0;
+    var Shopping = dataTable.rows[1].cells[3].children[0].children[0].checked ? 1: 0;
+    var Name1 = dataTable.rows[2].cells[1].children[0].value;
+    var Name2 = dataTable.rows[2].cells[2].children[0].value;
+    var Name3 = dataTable.rows[2].cells[3].children[0].value;
+    var Category = dataTable.rows[3].cells[1].children[0].value;
+    var Purchase = dataTable.rows[4].cells[1].children[0].value;
+    var Expires = dataTable.rows[5].cells[1].children[0].value;
+    var Recipe_id = dataTable.rows[6].cells[1].children[0].value;
 
+    //Parse the data into a JSON so it may be passed to PHP
+    var Results = new Object();
+    Results.Item_id = Item_id;
+    Results.Status = Status;
+    Results.Shopping = Shopping;
+    Results.Name1 = Name1;
+    Results.Name2 = Name2;
+    Results.Name3 = Name3;
+    Results.Category = Category;
+    Results.Purchase = Purchase;
+    Results.Recipe_id = Recipe_id;
+    Results.ChangeList = ChangeList;
+    var jsonResults= JSON.stringify(Results);
+
+    //Submit the data to server for processing
+    var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          alert(this.responseText);
+        }
+      };
+    xmlhttp.open("POST","php/direct/submitIngredient.php",true);
+    xmlhttp.send(jsonResults);
+  }
 </script>
+
 <?php
   function CreateGroupTables($connection,$id){
     $left = true;
     $inGroup = false;
     $GroupTable = '<table id="GroupTable" style="width: 100%; border-collapse:collapse; border: spacing 1px;">';
-    $GroupTable .= '<tr><th colspan="4">Groups <i onclick="AddGroup()" class="far fa-plus-square"></i></td></tr>';
+    $GroupTable .= '<tr><th colspan="4">Groups</td></tr>';
     
     //Get the different group ids
     $Query1 = "SELECT DISTINCT group_id FROM fridgemate_db.group";
     $ResultSet4 = $connection->query($Query1);  
-    echo var_dump($ResultSet4);
+
     while ($group = $ResultSet4->fetch_assoc()) {
       //Get all the ingredients in that group
       $Query1 = "SELECT item_id FROM fridgemate_db.group WHERE group_id=".$group["group_id"];
@@ -335,9 +373,20 @@
       $GroupTable .= '<td><i id="BttnGroup0" onclick="ChangeGroup(0,'.$id.')" class="far fa-plus-square"></i></td>';
       $GroupTable .= '</tr>';
     }
+    else{
+      //Create left as group 0
+      $GroupTable .= '<tr><td><select id="Group0">';
+      $GroupTable .= '<option selected="selected" value="1">Group 0</option>';
+      $GroupTable .= '</select></td>';
+      $GroupTable .= '<td><i id="BttnGroup0" onclick="ChangeGroup(0,'.$id.')" class="far fa-plus-square"></i></td>';
+      //Create right as empty
+      $GroupTable .= '<td></td>';
+      $GroupTable .= '<td></td>';
+      $GroupTable .= '</tr>';
+    }
 
     $GroupTable .= '</table>';
-    echo $GroupTable;
+    return $GroupTable;
   }
   
 ?>
