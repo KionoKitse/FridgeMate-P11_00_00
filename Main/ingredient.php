@@ -300,7 +300,7 @@
           alert(this.responseText);
         }
       };
-    xmlhttp.open("POST","php/direct/submitIngredient.php",true);
+    xmlhttp.open("POST","php/submitIngredient.php",true);
     xmlhttp.send(jsonResults);
   }
 </script>

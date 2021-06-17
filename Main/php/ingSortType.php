@@ -9,20 +9,20 @@
     $CategoryMode = false;
     if($type == 'A-Z'){
         //Get all ingredients sorted by alphabetically
-        $Query1 = "SELECT item_id, status, name1, name2, name3, purchase  FROM pantry ORDER BY name1, name2, name3";
+        $Query1 = "SELECT item_id, status, cart, name1, name2, name3, purchase  FROM pantry ORDER BY name1, name2, name3";
         $ResultSet1 = $connection->query($Query1);    
     } elseif($type == 'Cat'){
         //Get all ingredients sorted by category
-        $Query1 = "SELECT item_id, status, category, name1, name2, name3, purchase FROM pantry ORDER BY category,status DESC,name1,name2,name3";
+        $Query1 = "SELECT item_id, status, cart, category, name1, name2, name3, purchase FROM pantry ORDER BY category,status DESC,name1,name2,name3";
         $ResultSet1 = $connection->query($Query1);
         $CategoryMode = true;
     } elseif($type == 'Stat'){
         //Get all ingredients sorted by status
-        $Query1 = "SELECT item_id, status, name1, name2, name3, purchase FROM pantry ORDER BY status DESC,name1,name2,name3";
+        $Query1 = "SELECT item_id, status, cart, name1, name2, name3, purchase FROM pantry ORDER BY status DESC,name1,name2,name3";
         $ResultSet1 = $connection->query($Query1);
     } else{
         //Get all ingredients sorted by age
-        $Query1 = "SELECT * FROM pantry order by status DESC, DATEDIFF(CURDATE(), purchase) DESC"; 
+        $Query1 = "SELECT item_id, status, cart, name1, name2, name3, purchase FROM pantry order by status DESC, DATEDIFF(CURDATE(), purchase) DESC"; 
         $ResultSet1 = $connection->query($Query1);
     }
 
@@ -49,6 +49,20 @@
                 }
                 else{
                     echo '<input id="'.$row["item_id"].'" onchange="changeStatus(\''.$row["item_id"].'\')" type="checkbox">';
+                }
+                    echo '<span class="slider round"></span>';
+                echo '</label>';
+            echo '</td>';
+
+            //Print the cart status
+            echo '<td  style="width: 8vw;">';
+                echo '<label class="switch">';
+                //Print switch with current status
+                if($row["cart"]=='1'){
+                    echo '<input id="Cart'.$row["item_id"].'" onchange="changeCart(\'Cart'.$row["item_id"].'\')" type="checkbox" checked>';
+                }
+                else{
+                    echo '<input id="Cart'.$row["item_id"].'" onchange="changeCart(\'Cart'.$row["item_id"].'\')" type="checkbox">';
                 }
                     echo '<span class="slider round"></span>';
                 echo '</label>';

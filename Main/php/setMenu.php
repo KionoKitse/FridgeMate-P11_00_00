@@ -1,6 +1,6 @@
 <?php
     //Connect to database
-    require_once  '../../dbconnect.php';
+    require_once  '../dbconnect.php';
 
     //Get the response data
     $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);

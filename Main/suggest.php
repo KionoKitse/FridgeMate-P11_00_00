@@ -109,7 +109,7 @@
                     RemoveTile(TileId);
                 }
             };
-            xmlhttp.open("GET","php/direct/setMenu.php?id="+TileId+"&val=0",true);
+            xmlhttp.open("GET","php/setMenu.php?id="+TileId+"&val=0",true);
             xmlhttp.send();
         }
         //Add to menu display and add to menu in database
@@ -152,7 +152,7 @@
                     MenuTable.appendChild(Tile);
                 }
             };
-            xmlhttp.open("GET","php/direct/setMenu.php?id="+TileId+"&val=1",true);
+            xmlhttp.open("GET","php/setMenu.php?id="+TileId+"&val=1",true);
             xmlhttp.send();                
         }
     }

@@ -106,68 +106,16 @@
   </table>
 
   <table id="ResultTable" style="width: 100%; border-collapse:collapse; border-spacing:0;">
-    <tr>
-      <td  style="width: 8vw;">
-        <label class="switch">
-          <input id="Hello" onchange="changeStatus('Hello')" type="checkbox" checked>
-          <span class="slider round"></span>
-        </label>
-      </td>
-      <td>
-        <a class="ingLink" href="recipe.php?id=4">link text</a>
-      </td>
-      <td style="text-align: right">
-        2021-06-01
-      </td>
-
-      </td>
-    </tr>
-    <tr>
-      <th colspan="3" class="catHeader"> Hello </th>
-    </tr>
-    <tr>
-      <td  style="width: 8vw;">
-        <label class="switch">
-          <input type="checkbox" checked>
-          <span class="slider round"></span>
-        </label>
-      </td>
-      <td><a class="ingLink" href="recipe.php?id=4">link text</a></td>
-    </tr>
-
   </table>
   
 </div>
-<p>
-  > Display all ingredients
-  >> Name1,Name2,Name3
-  >> Status
-  ->> Buildable
-  >> Expires
-  ->> Date
-  ->> Category
-  ->> Group
-
-  > Sort
-  >> Alphabetically: SELECT * FROM fridgemate_db.pantry ORDER BY name1, name2, name3;
-  >> Category: SELECT * FROM fridgemate_db.pantry ORDER BY category,status DESC,name1,name2,name3;
-  >> Status: SELECT * FROM fridgemate_db.pantry ORDER BY status DESC,name1,name2,name3;
-  >> Age -> status: SELECT * FROM fridgemate_db.pantry order by status DESC, DATEDIFF(CURDATE(), purchase) DESC;
-
-  > Edit ingredients 
-  >> Edit names (advanced)
-  >> status: set status -> sets date to current automatically
-  >> Buildable (advanced)
-  >> expires: set expires (advanced)
-  >> Category: Change category (advanced)
-  >> Group: Add to group or create new (advanced)
-  >> remove: will need to check if a recipe uses first (advanced)
-</p>
-
-
 </body>
 </html>
+
 <script>
+  //First run display sort A-Z
+  SortType('A-Z');
+
   //Function update ingredient table
   function SortType(type){
     var xmlhttp = new XMLHttpRequest();
@@ -175,15 +123,13 @@
         if (this.readyState == 4 && this.status == 200) {
             //Add data for display
             document.getElementById("ResultTable").innerHTML = this.responseText;
-            //Reset the change list
-            ChangeList = [];
         }
     };
     xmlhttp.open("GET","php/ingSortType.php?type="+type,true);
     xmlhttp.send();
   }
 
-  //Function to sumbit changes
+  //Function to change status
   function changeStatus(id){
     //Get the new value
     var val = document.getElementById(id).checked ? 1 : 0;
@@ -196,6 +142,21 @@
         }
     };
     xmlhttp.open("GET","php/changeStatus.php?id="+id+"&val="+val,true);
+    xmlhttp.send();
+  }
+  //Function to change cart
+  function changeCart(id){
+    //Get the new value
+    var val = document.getElementById(id).checked ? 1 : 0;
+    
+    //Submit the changes
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("error").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET","php/changeCart.php?id="+id+"&val="+val,true);
     xmlhttp.send();
   }
 </script>
