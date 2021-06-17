@@ -9,6 +9,27 @@
     <script src="js/scripts.js"></script>
 </head>
 
+<style>
+    .bttnYellow {
+        background-color: #F2CC8F;
+        width:100%;
+        border-radius: 5px; 
+        border: 2px solid #FFE6A9; 
+    }
+    .bttnOrange {
+        background-color: #E07A5F;
+        width:100%;
+        border-radius: 5px; 
+        border: 2px solid #FA9479; 
+    }
+    .bttnGreen {
+        background-color: #81B29A;
+        width:100%;
+        border-radius: 5px; 
+        border: 2px solid #9BCCB4; 
+    }
+</style>
+
 <?php
     include 'php/genFunc.php';
 
@@ -41,15 +62,15 @@
 
     //Get the variables if an id has been provided
     if(isset($_GET['id']) && !empty($_GET['id']) && ctype_digit($_GET['id'])){  
-        $Id = $_GET['id'];
+        $RecipeId = $_GET['id'];
 
         //Get JSON data
-        $JsonData = ReadJSON($Id);
+        $JsonData = ReadJSON($RecipeId);
 
         //Get the ingredients values needed for the recipe
         $Query1 = "SELECT * FROM ingredient WHERE recipe_id = ?";
         $stmt = $connection->prepare($Query1);
-        $stmt->bind_param("i", $Id);
+        $stmt->bind_param("i", $RecipeId);
         $stmt->execute();
         $ResultSet1 = $stmt->get_result();
 
@@ -57,21 +78,21 @@
         $Query1 = "SELECT item_id FROM ingredient WHERE recipe_id = ?";
         $Query2 = "SELECT * FROM pantry WHERE item_id IN (" . $Query1 . ")";
         $stmt = $connection->prepare($Query2);
-        $stmt->bind_param("i", $Id);
+        $stmt->bind_param("i", $RecipeId);
         $stmt->execute();
         $ResultSet2 = $stmt->get_result();
 
         //Get the recipe information
         $Query1 = "SELECT * FROM recipe WHERE recipe_id = ?";
         $stmt = $connection->prepare($Query1);
-        $stmt->bind_param("i", $Id);
+        $stmt->bind_param("i", $RecipeId);
         $stmt->execute();
         $ResultSet3 = $stmt->get_result();
 
         //Get the recipe tags
         $Query1 = "SELECT tag FROM tags WHERE recipe_id = ?";
         $stmt = $connection->prepare($Query1);
-        $stmt->bind_param("i", $Id);
+        $stmt->bind_param("i", $RecipeId);
         $stmt->execute();
         $ResultSet4 = $stmt->get_result();
         while ($row = $ResultSet4->fetch_row()) {
@@ -407,11 +428,16 @@
                 }
             ?>
         </div>
+
+        <!-- Buttons section -->
         <div id="Buttons">
-            <tr>
-                <td><button onclick="window.location.reload();">Reset</button></td>
-                <td><button style="float: right;"onclick="Submit()">Save</button></td>
-            </tr>
+            <table style="Width:100%;">
+                <tr>
+                    <td style="Width:33%;"><button class="bttnOrange" onclick="window.location.reload();">Reset</button></td>
+                    <td style="Width:33%;"><button class="bttnGreen" onclick="location.href='recipe.php?id=<?php echo $RecipeId?>'">View</button></td>
+                    <td><button class="bttnYellow" onclick="Submit()">Save</button></td>
+                </tr>
+            </table>
         </div>
     </div>
 </body>

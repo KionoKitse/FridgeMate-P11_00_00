@@ -15,13 +15,13 @@
     include 'php/genFunc.php';
 
     //Get the requested id
-    $Id="";
+    $RecipeId="";
     if (ctype_digit($_GET['id'])) {
-        $Id = $_GET['id'];
+        $RecipeId = $_GET['id'];
     }    
 
     //Read the JSON data
-    $JsonData = ReadJSON($Id);
+    $JsonData = ReadJSON($RecipeId);
 
     //Parse time
     $Active = ParseTime($JsonData["ActiveTime"]);
@@ -41,7 +41,7 @@
     //Get the ingredients values needed for the recipe
     $Query1 = "SELECT * FROM ingredient WHERE recipe_id = ?";
     $stmt = $connection->prepare($Query1);
-    $stmt->bind_param("i", $Id);
+    $stmt->bind_param("i", $RecipeId);
     $stmt->execute();
     $ResultSet1 = $stmt->get_result();
 
@@ -49,21 +49,21 @@
     $Query1 = "SELECT item_id FROM ingredient WHERE recipe_id = ?";
     $Query2 = "SELECT * FROM pantry WHERE item_id IN (" . $Query1 . ")";
     $stmt = $connection->prepare($Query2);
-    $stmt->bind_param("i", $Id);
+    $stmt->bind_param("i", $RecipeId);
     $stmt->execute();
     $ResultSet2 = $stmt->get_result();
 
     //Get the ingredient information
     $Query1 = "SELECT * FROM recipe WHERE recipe_id = ?";
     $stmt = $connection->prepare($Query1);
-    $stmt->bind_param("i", $Id);
+    $stmt->bind_param("i", $RecipeId);
     $stmt->execute();
     $ResultSet3 = $stmt->get_result();
 
     //Get the recipe tags
     $Query1 = "SELECT tag FROM tags WHERE recipe_id = ?";
     $stmt = $connection->prepare($Query1);
-    $stmt->bind_param("i", $Id);
+    $stmt->bind_param("i", $RecipeId);
     $stmt->execute();
     $ResultSet4 = $stmt->get_result();
     while ($row = $ResultSet4->fetch_assoc()) {
@@ -167,6 +167,15 @@
     $stmt->close();
     db_disconnect($connection);
 ?>
+
+<style>
+    .bttnYellow {
+        background-color: #F2CC8F;
+        width:100%;
+        border-radius: 5px; 
+        border: 2px solid #FFE6A9; 
+    }
+</style>
 
 <body>
     <div class="center">
@@ -312,6 +321,9 @@
                 echo '<div class="break" style="clear: both;"></div>';
             }
         ?>
+
+        <!-- Edit recipe button -->
+        <button class="bttnYellow" onclick="location.href='editrecipe.php?id=<?php echo $RecipeId?>'">Edit Recipe</button>
     </div>
 </body>
 </html>
