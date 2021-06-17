@@ -87,6 +87,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2021-06-15 Edit recipe now adds Top1-Top6 and image to pantry table
 * 2021-06-16 Adding and removing recipes from the menu
 * 2021-06-16 Fixed Bug_2106141: All tags not showing on a new recipe
+* 2021-06-17 Finished ingredient section
 </details>
 
 ### Notebook

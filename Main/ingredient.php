@@ -73,7 +73,7 @@
 <!-- Style specific to this page -->
 <style>
   input{
-    width:100%;
+    width:97.5%;
     text-align: center; 
   }
   select{
@@ -180,7 +180,7 @@
         <td>
           <label class="switch">
             <?php
-              if($Ingredient["shopping"]=='1'){
+              if($Ingredient["cart"]=='1'){
                 echo '<input id="Status" type="checkbox" checked>';
               }
               else{
@@ -262,11 +262,11 @@
   function Submit(){
     //Get the tables
     var dataTable = document.getElementById("ingredient");
-    var groupTable = document.getElementById("GroupTable");
+    
     //Get updated pantry values
     var Item_id = dataTable.rows[0].cells[1].innerHTML;
     var Status = dataTable.rows[1].cells[1].children[0].children[0].checked ? 1: 0;
-    var Shopping = dataTable.rows[1].cells[3].children[0].children[0].checked ? 1: 0;
+    var Cart = dataTable.rows[1].cells[3].children[0].children[0].checked ? 1: 0;
     var Name1 = dataTable.rows[2].cells[1].children[0].value;
     var Name2 = dataTable.rows[2].cells[2].children[0].value;
     var Name3 = dataTable.rows[2].cells[3].children[0].value;
@@ -274,19 +274,23 @@
     var Purchase = dataTable.rows[4].cells[1].children[0].value;
     var Expires = dataTable.rows[5].cells[1].children[0].value;
     var Recipe_id = dataTable.rows[6].cells[1].children[0].value;
+    var GroupCt = document.getElementById("GroupCt").value;
+
 
     //Parse the data into a JSON so it may be passed to PHP
     var Results = new Object();
     Results.Item_id = Item_id;
     Results.Status = Status;
-    Results.Shopping = Shopping;
+    Results.Cart = Cart;
     Results.Name1 = Name1;
     Results.Name2 = Name2;
     Results.Name3 = Name3;
     Results.Category = Category;
     Results.Purchase = Purchase;
+    Results.Expires = Expires;
     Results.Recipe_id = Recipe_id;
     Results.ChangeList = ChangeList;
+    Results.GroupCt = GroupCt;
     var jsonResults= JSON.stringify(Results);
 
     //Submit the data to server for processing
@@ -305,6 +309,7 @@
   function CreateGroupTables($connection,$id){
     $left = true;
     $inGroup = false;
+    $GroupCt = 0;
     $GroupTable = '<table id="GroupTable" style="width: 100%; border-collapse:collapse; border: spacing 1px;">';
     $GroupTable .= '<tr><th colspan="4">Groups</td></tr>';
     
@@ -317,6 +322,9 @@
       $Query1 = "SELECT item_id FROM fridgemate_db.group WHERE group_id=".$group["group_id"];
       $Query2 = "SELECT item_id, name1, name2, name3 FROM pantry WHERE item_id IN (".$Query1.")";
       $ResultSet5 = $connection->query($Query2); 
+
+      //Update GroupCt
+      $GroupCt = $group["group_id"];
 
       //Print the left column
       if($left){
@@ -386,6 +394,7 @@
     }
 
     $GroupTable .= '</table>';
+    $GroupTable .= '<input type="hidden" id="GroupCt" value="'.$GroupCt.'">';
     return $GroupTable;
   }
   
