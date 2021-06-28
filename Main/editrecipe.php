@@ -34,6 +34,7 @@
     include 'php/genFunc.php';
 
     //Create variables for recipe
+    $RecipeId = 0;
     $Main = array();
     $Support = array();
     $Spices = array();
