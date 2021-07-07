@@ -121,10 +121,11 @@
                     break;
                 }
             }
+
             //Insert ingredients into table
-            $Query = "INSERT INTO ingredient (recipe_id, item_id, category, quantity, unit, step, prep) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $Query = "INSERT INTO ingredient (recipe_id, item_id, category, quantity, unit, step, prep, percent) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $connection->prepare($Query);
-            $stmt->bind_param("iiissii", $RecipeId, $Item_Id, $IngredientItem['Category'], $IngredientItem['Quantity'], $IngredientItem['Unit'], $IngredientItem['Step'], $IngredientItem['Prep']);
+            $stmt->bind_param("iiissiis", $RecipeId, $Item_Id, $IngredientItem['Category'], $IngredientItem['Quantity'], $IngredientItem['Unit'], $IngredientItem['Step'], $IngredientItem['Prep'], $IngredientItem['Percent']);
             $stmt->execute();
         }
     }

@@ -747,6 +747,10 @@
 
             //Get the data for the Ingredient table
             var IngredientTable = [];
+            var MainCt = 0;
+            var SupportCt = 0;
+            var SpicesCt = 0;
+            var GarnishCt = 0;
             //Get the ingredient information in each step
             for (var Step = 1; Step<Steps.Ids.length; Step++){
                 //For each ingredient in a step
@@ -761,12 +765,16 @@
 
                         if(ItemId.substring(0, 4) === 'Main'){
                             Category = 1;
+                            MainCt++;
                         } else if(ItemId.substring(0, 6) === 'Spices'){
                             Category = 3;
+                            SpicesCt++;
                         } else if(ItemId.substring(0, 7) === 'Support'){
                             Category = 2;
+                            SupportCt++;
                         } else {
                             Category = 4;
+                            GarnishCt++;
                         }
                         Quantity = document.getElementById(ItemId+"Quantity").value;
                         Unit = document.getElementById(ItemId+"Unit").value;
@@ -778,13 +786,57 @@
                         ParsedIngredient.Unit = Unit;
                         ParsedIngredient.Step = Step;
                         ParsedIngredient.Prep = 0;
+                        ParsedIngredient.Percent = 0;
                         IngredientTable.push(ParsedIngredient);
                     }
                     catch(err) {}
                 }
             }
 
-            //Mark the prep ingredients
+            //Calculate the contribution percentage
+            var MainPercent = 75;
+            var SupportPercent = 20;
+            var SpicesPercent = 3;
+            var GarnishPercent = 2;
+            //Check for a missing category
+            var TotalPoints = MainPercent*(MainCt>0)+SupportPercent*(SupportCt>0)+SpicesPercent*(SpicesCt>0)+GarnishPercent*(GarnishCt>0);
+            //Adjust the percentages if one category is not present
+            if(TotalPoints<100){
+                var ExtraPoints = 100-TotalPoints;
+                var ExtraPercent = ExtraPoints/TotalPoints;
+
+                if(MainCt>0) MainPercent = (MainPercent*ExtraPercent+MainPercent)/MainCt;
+                if(SupportCt>0) SupportPercent = (SupportPercent*ExtraPercent+SupportPercent)/SupportCt;
+                if(SpicesCt>0) SpicesPercent = (SpicesPercent*ExtraPercent+SpicesPercent)/SpicesCt;
+                if(GarnishCt>0) GarnishPercent = (GarnishPercent*ExtraPercent+GarnishPercent)/GarnishCt;
+            }
+            else{
+                MainPercent = MainPercent/MainCt;
+                SupportPercent = SupportPercent/SupportCt;
+                SpicesPercent = SpicesPercent/SpicesCt;
+                GarnishPercent = GarnishPercent/GarnishCt;
+            }
+            
+            //Update the percentage for each item
+            for (var i=0; i<IngredientTable.length; i++){
+                switch (IngredientTable[i].Category) {
+                    case 1:
+                        IngredientTable[i].Percent = MainPercent;
+                        break;
+                    case 2:
+                        IngredientTable[i].Percent = SupportPercent;
+                        break;
+                    case 3:
+                        IngredientTable[i].Percent = SpicesPercent;
+                        break;
+                    case 4:
+                        IngredientTable[i].Percent = GarnishPercent;
+                        break;    
+                }
+            }
+
+
+            //Mark the prep ingredients and update the percentage
             var PrepTable = document.getElementById("Step0");
             var NumRows = PrepTable.rows.length;
             for (var i=1; i<NumRows; i++){
@@ -837,7 +889,6 @@
             for (var i = 0; (i<6) && (i<PantryTable.length); i++){
                 TopList[i] = PantryTable[i].Name1+" "+PantryTable[i].Name2+" "+PantryTable[i].Name3;
             }
-
 
             //Get the id if there is one
             const queryString = window.location.search;

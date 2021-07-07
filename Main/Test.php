@@ -23,7 +23,7 @@
     require_once 'dbconnect.php';
     $RecipeId = 1;
 
-    $Query1 = "SELECT ingredient.item_id, ingredient.category, pantry.status, pantry.cart, pantry.recipe_id FROM ingredient
+    $Query1 = "SELECT ingredient.item_id, ingredient.percent, ingredient.category, pantry.status, pantry.cart, pantry.recipe_id FROM ingredient
     INNER JOIN pantry ON ingredient.item_id=pantry.item_id Where ingredient.recipe_id = ?";
     $stmt = $connection->prepare($Query1);
     $stmt->bind_param("i", $RecipeId);
@@ -55,51 +55,77 @@
     */
 
     //Check the status of each ingredient
-    $HaveMain=0;
+    $BuildabilityScore=0;
     $HaveSupport = 0;
     $HaveSpices = 0;
     $HaveGarnish = 0;
     while ($row = $ResultSet1->fetch_assoc()) {
         $Weight = 1;
-        echo $row["item_id"]." ".$row["category"]." ".$row["status"]." ".$row["cart"]." ".$row["recipe_id"]." ";
+        echo "item_id: ".$row["item_id"]."<br>";
+        echo "percent: ".$row["percent"]."<br>";
+        echo "category: ".$row["category"]."<br>";
+        echo "status: ".$row["status"]."<br>";
+        echo "cart: ".$row["cart"]."<br>";
+        echo "recipe_id: ".$row["recipe_id"]."<br>";
         
         //Ingredient is not availible or in the cart
         if(!$row["status"] && !$row["cart"]){
+            echo "Ingredient not availible <br>";
             $Weight = 0;
             //Check if it is buildable
             if($row["recipe_id"]){
+                echo "Possible to build - ";
                 $Query1 = "SELECT percent FROM recipe WHERE recipe_id = ?";
                 $stmt = $connection->prepare($Query1);
                 $stmt->bind_param("i", $row["recipe_id"]);
                 $stmt->execute();
                 $Result = $stmt->get_result()->fetch_assoc();
+                echo $Result["percent"]." - ";
                 //Ingredient is buildable
                 if ($Result["percent"]>90){
+                    echo "Use build <br>";
                     $Weight = 1;
                     goto SendResult;
                 }
+                echo "Build not high enough <br>";
             }
+           
+
             //Find if there are any substitute ingredients
+            echo "Checking subs<br>";
             $Query1 = "SELECT group_id FROM sets WHERE item_id = ?";
-            $Query2 = "SELECT item_id FROM sets WHERE group_id IN (" . $Query1 . ") AND item_id != ?";
-            $Query3 = "SELECT status, cart FROM pantry WHERE item_id IN (" . $Query2 . ")";
-            $stmt = $connection->prepare($Query2);
-            $stmt->bind_param("ii", $Ingredient["item_id"], $Ingredient["item_id"]);
+            $Query2 = "SELECT DISTINCT item_id FROM sets WHERE group_id IN (" . $Query1 . ") AND item_id != ?";
+            $Query3 = "SELECT item_id, status, cart FROM pantry WHERE item_id IN (" . $Query2 . ")";
+            $stmt = $connection->prepare($Query3);
+            $stmt->bind_param("ii", $row["item_id"], $row["item_id"]);
             $stmt->execute();
             $ResultSet2 = $stmt->get_result();
-            echo var_dump($ResultSet2);
 
-            if($ResultSet2){
+            
+            if($ResultSet2->num_rows > 0){
+            echo "Possible to sub <br>";
             //Check any of the items in the group are available
                 while ($row1 = $ResultSet2->fetch_assoc()) {
-                    echo ">>".$row["status"]." ".$row["cart"]." ";
+                    echo ">>".$row1["item_id"]." ".$row1["status"]." ".$row1["cart"]."<br>";
+                    if ($row1["status"] || $row1["cart"]){
+                        echo "Sub availible - exit<br>";
+                        $Weight = 0.5;
+                        goto SendResult;
+                    }
                 } 
             }
 
         }
         
+        
 
         SendResult:
+        echo "Weight: ".$Weight."<br>";
+
+        $Score = $row["percent"]*$Weight;
+        $BuildabilityScore += $Score;
+        echo "Score: ".$Score."<br>";
+        echo "BuildabilityScore: ".$BuildabilityScore."<br>";
         echo "<br>";
     }
 
