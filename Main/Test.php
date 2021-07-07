@@ -8,20 +8,22 @@
     <script src="js/mainstyle.js"></script>
 </head>
 <?php
-    //Variables
-    $MainPercent = 75;
-    $SupportPercent = 20;
-    $SpicesPercent = 3;
-    $GarnishPercent = 2;
+    include 'php/genFunc.php';
+    
 
-    //Create some arrays
-    $Main = array();
-    $Support = array();
-    $Spices = array();
-    $Garnish = array();
 
     require_once 'dbconnect.php';
+    
     $RecipeId = 1;
+    echo CalcBuildability($RecipeId,$connection);
+    $RecipeId = 2;
+    echo CalcBuildability($RecipeId,$connection);
+    $RecipeId = 3;
+    echo CalcBuildability($RecipeId,$connection);
+    $RecipeId = 4;
+    echo CalcBuildability($RecipeId,$connection);
+
+    
 
     $Query1 = "SELECT ingredient.item_id, ingredient.percent, ingredient.category, pantry.status, pantry.cart, pantry.recipe_id FROM ingredient
     INNER JOIN pantry ON ingredient.item_id=pantry.item_id Where ingredient.recipe_id = ?";
@@ -30,35 +32,8 @@
     $stmt->execute();
     $ResultSet1 = $stmt->get_result();
 
-    //Count number of ingredients in each category
-    /*
-    $MainCt = 0;
-    $SupportCt = 0;
-    $SpicesCt = 0;
-    $GarnishCt = 0;
-    while ($row = $ResultSet1->fetch_assoc()) {
-        switch ($row["category"]) {
-            case 1:
-                $MainCt++;
-                break;
-            case 2:
-                $SupportCt++;
-                break;
-            case 3:
-                $SpicesCt++;
-                break;
-            case 4:
-                $GarnishCt++;
-                break;    
-        }
-    }
-    */
-
     //Check the status of each ingredient
     $BuildabilityScore=0;
-    $HaveSupport = 0;
-    $HaveSpices = 0;
-    $HaveGarnish = 0;
     while ($row = $ResultSet1->fetch_assoc()) {
         $Weight = 1;
         echo "item_id: ".$row["item_id"]."<br>";
@@ -85,7 +60,7 @@
                 if ($Result["percent"]>90){
                     echo "Use build <br>";
                     $Weight = 1;
-                    goto SendResult;
+                    goto CalcScore;
                 }
                 echo "Build not high enough <br>";
             }
@@ -110,7 +85,7 @@
                     if ($row1["status"] || $row1["cart"]){
                         echo "Sub availible - exit<br>";
                         $Weight = 0.5;
-                        goto SendResult;
+                        goto CalcScore;
                     }
                 } 
             }
@@ -118,8 +93,8 @@
         }
         
         
-
-        SendResult:
+        //Calculate the score
+        CalcScore:
         echo "Weight: ".$Weight."<br>";
 
         $Score = $row["percent"]*$Weight;
@@ -128,6 +103,7 @@
         echo "BuildabilityScore: ".$BuildabilityScore."<br>";
         echo "<br>";
     }
+    //Update the buildability score
 
 
 
@@ -136,6 +112,7 @@
 
     $stmt->close();
     db_disconnect($connection);
+
 
     /*
     SELECT fridgemate_db.ingredient.item_id, fridgemate_db.ingredient.category, fridgemate_db.pantry.status, fridgemate_db.pantry.cart, fridgemate_db.pantry.recipe_id,

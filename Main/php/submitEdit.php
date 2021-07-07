@@ -1,5 +1,6 @@
 <?php
     //Includes
+    include 'genFunc.php';
     require_once '../dbconnect.php';
 
     //Get the response data
@@ -190,6 +191,7 @@
     if($Error){
         echo($Error);
     }else{
+        CalcBuildability($RecipeId, $connection);
         echo('Recipe updated');
     }
     
