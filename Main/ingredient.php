@@ -132,7 +132,7 @@
 </script>
 
 <body>
-
+<span id="error"></span>
   <!-- Lists used for the datalists -->
   <div id="Lists">
     <!-- All the categories -->
@@ -167,10 +167,10 @@
           <label class="switch">
             <?php
               if($Ingredient["status"]=='1'){
-                echo '<input id="Status" type="checkbox" checked>';
+                echo '<input id="Status'.$id.'" onchange="changeStatus(\'Status'.$id.'\')" type="checkbox" checked>';
               }
               else{
-                echo '<input id="Status" type="checkbox">';
+                echo '<input id="Status'.$id.'" onchange="changeStatus(\'Status'.$id.'\')" type="checkbox">';
               }
             ?>
             <span class="slider round"></span>
@@ -181,10 +181,10 @@
           <label class="switch">
             <?php
               if($Ingredient["cart"]=='1'){
-                echo '<input id="Status" type="checkbox" checked>';
+                echo '<input id="cart'.$id.'" onchange="changeCart(\'cart'.$id.'\')" type="checkbox" checked>';
               }
               else{
-                echo '<input id="Status" type="checkbox">';
+                echo '<input id="cart'.$id.'" onchange="changeCart(\'cart'.$id.'\')" type="checkbox">';
               }
             ?>
             <span class="slider round"></span>

@@ -12,6 +12,12 @@
     $stmt->bind_param("ii", $val, $id);
     $stmt->execute();
 
+    //Update status in sets
+    $Query = "UPDATE sets SET have=? WHERE item_id=?";
+    $stmt = $connection->prepare($Query);
+    $stmt->bind_param("ii", $val, $id);
+    $stmt->execute();
+
     //exit
     $stmt->close();
     db_disconnect($connection);

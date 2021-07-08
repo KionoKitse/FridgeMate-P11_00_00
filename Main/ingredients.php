@@ -3,6 +3,7 @@
 <head>
   <link href="css/mainstyle.css" rel="stylesheet" type="text/css">
   <script src="js/mainstyle.js"></script>
+  <script src="js/scripts.js"></script>
 </head>
 
 <!-- Style for this page -->
@@ -126,37 +127,6 @@
         }
     };
     xmlhttp.open("GET","php/ingSortType.php?type="+type,true);
-    xmlhttp.send();
-  }
-
-  //Function to change status
-  function changeStatus(id){
-    //Get the new value
-    var val = document.getElementById(id).checked ? 1 : 0;
-    
-    //Submit the changes
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("error").innerHTML = this.responseText;
-        }
-    };
-    xmlhttp.open("GET","php/changeStatus.php?id="+id+"&val="+val,true);
-    xmlhttp.send();
-  }
-  //Function to change cart
-  function changeCart(id){
-    //Get the new value
-    var val = document.getElementById(id).checked ? 1 : 0;
-    
-    //Submit the changes
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("error").innerHTML = this.responseText;
-        }
-    };
-    xmlhttp.open("GET","php/changeCart.php?id="+id+"&val="+val,true);
     xmlhttp.send();
   }
 </script>
