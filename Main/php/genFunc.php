@@ -164,7 +164,7 @@
             $stmt->close();
         }
 
-    }
+    }  
     //Function to update buildability from ItemId
     function UpdateScoreItem($ItemId,$Weight,$connection){
         //$Weight: 1:Full, 0.5:Half, -1:Remove 
@@ -172,21 +172,15 @@
         //Get the recipe_id and percents to update
         $Query1 = "SELECT ingredient.recipe_id, ingredient.percent, recipe.percent FROM ingredient
         INNER JOIN recipe ON ingredient.recipe_id=recipe.recipe_id 
-        Where ingredient.item_id = ?";
-        $stmt = $connection->prepare($Query1);
-        $stmt->bind_param("i", $ItemId);
-        $stmt->execute();
-        $ResultSet1 = $stmt->get_result(); 
-        
+        Where ingredient.item_id =".$ItemId;
+        $ResultSet1 = $connection->query($Query1);
+
         //Update the recipes
         while($row = $ResultSet1->fetch_row()){
             $NewPercent = $row[2]+$Weight*$row[1];
-            $Query1 = "UPDATE recipe SET percent=? WHERE recipe_id=?";
-            $stmt = $connection->prepare($Query1);
-            $stmt->bind_param("si", $NewPercent, $row[0]);
-            $stmt->execute();
+            $Query1 = "UPDATE recipe SET percent=".$NewPercent." WHERE recipe_id=".$row[0];
+            $connection->query($Query1);
         }
-        $stmt->close();
     }
     //Function to change the buildability score from adding or removing an item
     function UpdateScoreFromItem($ItemId,$Weight,$connection){
@@ -196,37 +190,25 @@
         //Update all of the sets status that have this ItemId
         $SetValue = 1;
         if($Weight<0) $SetValue = 0;
-        $Query1 = "UPDATE sets SET have=? WHERE item_id=?";
-        $stmt = $connection->prepare($Query1);
-        $stmt->bind_param("ii", $SetValue, $ItemId);
-        $stmt->execute();
+        $Query1 = "UPDATE sets SET have=".$SetValue." WHERE item_id=".$ItemId;
+        $connection->query($Query1);
 
-        //Get all the group_id that use the specific item_id
-        
-        $Query1 = "SELECT DISTINCT group_id FROM sets WHERE item_id = ?";
-        $stmt = $connection->prepare($Query1);
-        $stmt->bind_param("i", $ItemId);
-        $stmt->execute();
-        $ResultSet1 = $stmt->get_result();  
+        //Get all the group_id that use the specific item_id 
+        $Query1 = "SELECT DISTINCT group_id FROM sets WHERE item_id=".$ItemId;
+        $ResultSet1 = $connection->query($Query1);
 
         //For each group calculate if having this new item will activate the group
         while($row = $ResultSet1->fetch_assoc()){
-            $Query1 = "SELECT SUM(have) result FROM sets WHERE group_id = ?";
-            $stmt = $connection->prepare($Query1);
-            $stmt->bind_param("i", $row["group_id"]);
-            $stmt->execute();
-            $SetSum = $stmt->get_result()->fetch_assoc()["result"];
+            $Query1 = "SELECT SUM(have) result FROM sets WHERE group_id=".$row["group_id"];
+            $SetSum = $connection->query($Query1)->fetch_assoc()["result"];
 
             //If this item will activate the group
             echo "Set total: ".$SetSum."<br>"; 
-            if($SetSum > 1){
+            if($SetSum < 2){
                 echo "Set ".$row["group_id"]." now active <br>";
                 //Get all the items that are now partially active due to activating the group
-                $Query1 = "SELECT item_id FROM sets WHERE group_id = ? AND item_id != ?;";
-                $stmt = $connection->prepare($Query1);
-                $stmt->bind_param("ii", $row["group_id"], $ItemId);
-                $stmt->execute();
-                $ResultSet2 = $stmt->get_result();
+                $Query1 = "SELECT item_id FROM sets WHERE group_id = ".$row["group_id"]." AND item_id !=".$ItemId;
+                $ResultSet2 = $connection->query($Query1);
 
                 //Update the recipe buildability with half the percentage
                 while($row2 = $ResultSet2->fetch_assoc()){
@@ -236,88 +218,6 @@
             }
             echo "<br>";
         }
-        $stmt->close();
-
     }
 
-
-
-
-
-
-    /*
-    //Function to update buildability from ItemId
-    function UpdateScoreItem($ItemId,$Weight,$connection){
-        //$Weight: 1:Full, 0.5:Half, -1:Remove 
-
-        //Get the recipe_id and percents to update
-        $Query1 = "SELECT ingredient.recipe_id, ingredient.percent, recipe.percent FROM ingredient
-        INNER JOIN recipe ON ingredient.recipe_id=recipe.recipe_id 
-        Where ingredient.item_id = ?";
-        $stmt = $connection->prepare($Query1);
-        $stmt->bind_param("i", $ItemId);
-        $stmt->execute();
-        $ResultSet1 = $stmt->get_result(); 
-        
-        //Update the recipes
-        while($row = $ResultSet1->fetch_row()){
-            $NewPercent = $row[2]+$Weight*$row[1];
-            $Query1 = "UPDATE recipe SET percent=? WHERE recipe_id=?";
-            $stmt = $connection->prepare($Query1);
-            $stmt->bind_param("si", $NewPercent, $row[0]);
-            $stmt->execute();
-        }
-        $stmt->close();
-    }
-    //Function to change the buildability score from adding or removing an item
-    function UpdateScoreFromItem($ItemId,$Weight,$connection){
-        //Change the buildability scores for all recipes that use the item
-        UpdateScoreItem($ItemId,$Weight,$connection);
-
-        //Update all of the sets status that have this ItemId
-        $Query1 = "UPDATE sets SET have=1 WHERE item_id=?";
-        $stmt = $connection->prepare($Query1);
-        $stmt->bind_param("i", $ItemId);
-        $stmt->execute();
-
-        //Get all the group_id that use the specific item_id
-        $SetValue = 1;
-        if($Weight<0) $SetValue = 0;
-        $Query1 = "SELECT DISTINCT group_id FROM sets WHERE item_id = ?";
-        $stmt = $connection->prepare($Query1);
-        $stmt->bind_param("i", $SetValue);
-        $stmt->execute();
-        $ResultSet1 = $stmt->get_result();  
-
-        //For each group calculate if having this new item will activate the group
-        while($row = $ResultSet1->fetch_assoc()){
-            $Query1 = "SELECT SUM(have) result FROM sets WHERE group_id = ?";
-            $stmt = $connection->prepare($Query1);
-            $stmt->bind_param("i", $row["group_id"]);
-            $stmt->execute();
-            $SetSum = $stmt->get_result()->fetch_assoc()["result"];
-
-            //If this item will activate the group
-            echo "Set total: ".$SetSum."<br>"; 
-            if($SetSum > 1){
-                echo "Set ".$row["group_id"]." now active <br>";
-                //Get all the items that are now partially active due to activating the group
-                $Query1 = "SELECT item_id FROM sets WHERE group_id = ? AND item_id != ?;";
-                $stmt = $connection->prepare($Query1);
-                $stmt->bind_param("ii", $row["group_id"], $ItemId);
-                $stmt->execute();
-                $ResultSet2 = $stmt->get_result();
-
-                //Update the recipe buildability with half the percentage
-                while($row2 = $ResultSet2->fetch_assoc()){
-                    UpdateScoreItem($row2["item_id"],$Weight/2,$connection);
-                    echo ">>".$row2["item_id"]."<br>";
-                }
-            }
-            echo "<br>";
-        }
-        $stmt->close();
-
-    }
-    */
 ?>

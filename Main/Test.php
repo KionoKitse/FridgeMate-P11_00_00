@@ -21,7 +21,7 @@
     //UpdateScoreFromItem(7,1,$connection);
     $time_start = microtime(true);
 
-    UpdateScoreFromItem(7,-1,$connection);
+    UpdateScoreFromItem(7,1,$connection);
 
     $time_end = microtime(true);
     $execution_time = ($time_end - $time_start);
