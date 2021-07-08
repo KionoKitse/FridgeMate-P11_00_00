@@ -13,40 +13,26 @@
 
 
     require_once 'dbconnect.php';
-    $IngredientId = 1;
 
-    //Get the recipe_id and percents to update
-    $Query1 = "SELECT ingredient.recipe_id, ingredient.percent, recipe.percent FROM ingredient
-        INNER JOIN recipe ON ingredient.recipe_id=recipe.recipe_id 
-        Where ingredient.item_id = ?";
-    $stmt = $connection->prepare($Query1);
-    $stmt->bind_param("i", $IngredientId);
-    $stmt->execute();
-    $ResultSet1 = $stmt->get_result();  
+    //inputs
+    $ItemId = 7;
+    $Weight = 1;
 
-    //Update the recipes
-    $ResultArr = array();
-    while($row = $ResultSet1->fetch_row()){
-        $NewPercent = $row[1]+$row[2];
-        $Query1 = "UPDATE recipe SET percent=? WHERE recipe_id=?";
-        $stmt = $connection->prepare($Query1);
-        $stmt->bind_param("si", $NewPercent, $row[0]);
-        $stmt->execute();
-    }
+    //UpdateScoreFromItem(7,1,$connection);
+    $time_start = microtime(true);
 
+    UpdateScoreFromItem(7,-1,$connection);
 
-
-    //Calculate the new percentages
-    //$NewPercentages = array_column($ResultArr, 1)+array_column($ResultArr, 2);
-    //echo var_dump($NewPercentages); 
-
+    $time_end = microtime(true);
+    $execution_time = ($time_end - $time_start);
+    echo '<b>Total Execution Time:</b> '.$execution_time;
    
 
 
 
 
 
-    $stmt->close();
+    //$stmt->close();
     db_disconnect($connection);
 
 
