@@ -168,6 +168,7 @@
     //Function to update buildability from ItemId
     function UpdateScoreItem($ItemId,$Weight,$connection){
         //$Weight: 1:Full, 0.5:Half, -1:Remove 
+        echo "Update score ".$ItemId." ".$Weight."<br>";
 
         //Get the recipe_id and percents to update
         $Query1 = "SELECT ingredient.recipe_id, ingredient.percent, recipe.percent FROM ingredient
@@ -178,6 +179,7 @@
         //Update the recipes
         while($row = $ResultSet1->fetch_row()){
             $NewPercent = $row[2]+$Weight*$row[1];
+            echo ">> ".$row[0]." ".$NewPercent."<br>";
             $Query1 = "UPDATE recipe SET percent=".$NewPercent." WHERE recipe_id=".$row[0];
             $connection->query($Query1);
         }
@@ -186,12 +188,6 @@
     function UpdateScoreFromItem($ItemId,$Weight,$connection){
         //Change the buildability scores for all recipes that use the item
         UpdateScoreItem($ItemId,$Weight,$connection);
-
-        //Update all of the sets status that have this ItemId
-        $SetValue = 1;
-        if($Weight<0) $SetValue = 0;
-        $Query1 = "UPDATE sets SET have=".$SetValue." WHERE item_id=".$ItemId;
-        $connection->query($Query1);
 
         //Get all the group_id that use the specific item_id 
         $Query1 = "SELECT DISTINCT group_id FROM sets WHERE item_id=".$ItemId;
@@ -203,9 +199,7 @@
             $SetSum = $connection->query($Query1)->fetch_assoc()["result"];
 
             //If this item will activate the group
-            echo "Set total: ".$SetSum."<br>"; 
             if($SetSum < 2){
-                echo "Set ".$row["group_id"]." now active <br>";
                 //Get all the items that are now partially active due to activating the group
                 $Query1 = "SELECT item_id FROM sets WHERE group_id = ".$row["group_id"]." AND item_id !=".$ItemId;
                 $ResultSet2 = $connection->query($Query1);
@@ -213,7 +207,6 @@
                 //Update the recipe buildability with half the percentage
                 while($row2 = $ResultSet2->fetch_assoc()){
                     UpdateScoreItem($row2["item_id"],$Weight/2,$connection);
-                    echo ">>".$row2["item_id"]."<br>";
                 }
             }
             echo "<br>";
