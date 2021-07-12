@@ -105,20 +105,23 @@ function changeStatus(id) {
     //Get the new value
     var val = document.getElementById(id).checked ? 1 : 0;
 
-    //Submit the changes
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("error").innerHTML = this.responseText;
-        }
-    };
-    xmlhttp.open("GET", "php/changeStatus.php?id=" + id + "&val=" + val, true);
-    xmlhttp.send();
-}
-//Function to change cart
-function changeCart(id) {
-    //Get the new value
-    var val = document.getElementById(id).checked ? 1 : 0;
+    //Convert the id to a number
+    id = id.match(/\d+/)[0];
+
+    //Get the cart status
+    var cart = document.getElementById("Cart"+id).checked ? 1 : 0;
+
+    //If going from cart to have -> don't need to recalculate the buildability  
+    var calc = 1;
+    if(val && cart){
+        calc = 0;
+        //Change the cart value also
+        document.getElementById("Cart"+id).checked = false;
+    }
+    //If setting status 0 but item is in cart -> remove from cart
+    if(!val && cart){
+        document.getElementById("Cart"+id).checked = false;
+    }
 
     //Submit the changes
     var xmlhttp = new XMLHttpRequest();
@@ -127,6 +130,33 @@ function changeCart(id) {
             document.getElementById("error").innerHTML = this.responseText;
         }
     };
-    xmlhttp.open("GET", "php/changeCart.php?id=" + id + "&val=" + val, true);
+    xmlhttp.open("GET", "php/changeStatus.php?id=" + id + "&val=" + val + "&calc=" + calc, true);
+    xmlhttp.send();
+}
+//Function to change cart
+function changeCart(id) {
+    //Get the new value
+    var val = document.getElementById(id).checked ? 1 : 0;
+
+    //Convert the id to a number
+    id = id.match(/\d+/)[0];
+
+    //Get the cart status
+    var Status = document.getElementById("Status"+id).checked ? 1 : 0;
+
+    //If adding to cart but already have -> don't need to recalculate buildability
+    var calc = 1;
+    if(Status){
+        calc = 0;
+    }
+
+    //Submit the changes
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("error").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "php/changeCart.php?id=" + id + "&val=" + val + "&calc=" + calc, true);
     xmlhttp.send();
 }

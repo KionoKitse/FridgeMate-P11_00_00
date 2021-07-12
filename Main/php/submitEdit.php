@@ -191,7 +191,7 @@
     if($Error){
         echo($Error);
     }else{
-        CalcBuildability($RecipeId, $connection);
+        RecipeBuildability($RecipeId, $connection);
         echo('Recipe updated');
     }
     

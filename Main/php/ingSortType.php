@@ -45,10 +45,10 @@
                 echo '<label class="switch">';
                 //Print switch with current status
                 if($row["status"]=='1'){
-                    echo '<input id="'.$row["item_id"].'" onchange="changeStatus(\''.$row["item_id"].'\')" type="checkbox" checked>';
+                    echo '<input id="Status'.$row["item_id"].'" onchange="changeStatus(\'Status'.$row["item_id"].'\')" type="checkbox" checked>';
                 }
                 else{
-                    echo '<input id="'.$row["item_id"].'" onchange="changeStatus(\''.$row["item_id"].'\')" type="checkbox">';
+                    echo '<input id="Status'.$row["item_id"].'" onchange="changeStatus(\'Status'.$row["item_id"].'\')" type="checkbox">';
                 }
                     echo '<span class="slider round"></span>';
                 echo '</label>';

@@ -14,14 +14,14 @@
 
     require_once 'dbconnect.php';
 
-    //inputs
-    $ItemId = 7;
-    $Weight = 1;
 
     //UpdateScoreFromItem(7,1,$connection);
     $time_start = microtime(true);
 
-    UpdateScoreFromItem(7,1,$connection);
+    RecipeBuildability(1, $connection);
+    RecipeBuildability(2, $connection);
+    RecipeBuildability(3, $connection);
+    RecipeBuildability(4, $connection);
 
     $time_end = microtime(true);
     $execution_time = ($time_end - $time_start);

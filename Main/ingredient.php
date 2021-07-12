@@ -181,10 +181,10 @@
           <label class="switch">
             <?php
               if($Ingredient["cart"]=='1'){
-                echo '<input id="cart'.$id.'" onchange="changeCart(\'Cart'.$id.'\')" type="checkbox" checked>';
+                echo '<input id="Cart'.$id.'" onchange="changeCart(\'Cart'.$id.'\')" type="checkbox" checked>';
               }
               else{
-                echo '<input id="cart'.$id.'" onchange="changeCart(\'Cart'.$id.'\')" type="checkbox">';
+                echo '<input id="Cart'.$id.'" onchange="changeCart(\'Cart'.$id.'\')" type="checkbox">';
               }
             ?>
             <span class="slider round"></span>
