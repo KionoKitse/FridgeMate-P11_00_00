@@ -1,6 +1,6 @@
 <?php
     //Includes
-    include 'genFunc.php';
+    //include 'genFunc.php';
     require_once '../dbconnect.php';
 
     //Get the response data

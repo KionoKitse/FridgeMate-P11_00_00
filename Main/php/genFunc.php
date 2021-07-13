@@ -74,9 +74,10 @@
         }
     }
     //Function to do a full buildability score update on a recipe_id
-    function RecipeBuildability($RecipeId, $connection){
+    function RecipeBuildability($RecipeId, $connection, $debug){
         //Sanitize input
         $RecipeId = filter_var($RecipeId, FILTER_SANITIZE_NUMBER_INT);
+        if($debug) echo $RecipeId."<br>";
 
         $BuildabilityScore=0;
 
@@ -87,27 +88,30 @@
 
         //For each ingredient check if we have it or there is a substitute
         while ($row = $ResultSet1->fetch_assoc()) {
+            if($debug) echo ">>Item:".$row["item_id"]." Status:".$row["status"]." Cart:".$row["cart"]." Percent:".$row["percent"]."<br>";
             $Weight = 1;
             
             //Ingredient is not availible or in the cart
             if(!$row["status"] && !$row["cart"]){
                 //echo "Ingredient not availible <br>";
+                if($debug) echo ">>Ingredient not availible <br>";
+
                 $Weight = 0;
                 //Check if it is buildable
                 if($row["recipe_id"]){
-                    //echo "Possible to build - ";
                     $Query1 = "SELECT percent FROM recipe WHERE recipe_id=".$row["recipe_id"];
                     $Result = $connection->query($Query1)->fetch_assoc();
+                    if($debug) echo ">> >>Build recipe: ".$row["recipe_id"]." Percent:".$Result["percent"]." ->";
                     if ($Result["percent"]>90){
-                        //echo "Use build <br>";
+                        if($debug) echo "Yes<br>";
                         $Weight = 1;
                         goto CalcScore;
                     }
-                    //echo "Build not high enough <br>";
+                    if($debug) echo "No<br>";
                 }
                
                 //Find if there are any substitute ingredients
-                //echo "Checking subs<br>";
+                if($debug) echo ">>Checking subs<br>";
                 $Query1 = "SELECT group_id FROM sets WHERE item_id=".$row["item_id"];
                 $Query2 = "SELECT DISTINCT item_id FROM sets WHERE group_id IN (" . $Query1 . ") AND item_id !=".$row["item_id"];
                 $Query3 = "SELECT item_id, status, cart FROM pantry WHERE item_id IN (" . $Query2 . ")";
@@ -115,13 +119,15 @@
 
                 //If there are substitute ingredients
                 if($ResultSet2->num_rows > 0){
-                //Check any of the items in the group are available
+                    //Check any of the items in the group are available
                     while ($row1 = $ResultSet2->fetch_assoc()) {
+                        if($debug) echo ">> >>Item:".$row1["item_id"]." Status:".$row1["status"]." row1:".$row["cart"]." ->";
                         if ($row1["status"] || $row1["cart"]){
-                            //echo "Sub availible - exit<br>";
+                            if($debug) echo "Yes<br>";
                             $Weight = 0.5;
                             goto CalcScore;
                         }
+                        if($debug) echo "No<br>";
                     } 
                 }
     
@@ -131,11 +137,13 @@
             CalcScore:
             $Score = $row["percent"]*$Weight;
             $BuildabilityScore += $Score;
-
-            //Update
-            $Query1 = "UPDATE recipe SET percent=".$BuildabilityScore." WHERE recipe_id=".$RecipeId;
-            $connection->query($Query1);
+            if($debug) echo ">>".$row["percent"]."X".$Weight."=".$Score."<br>";
+            if($debug) echo ">>Sum: ".$BuildabilityScore."<br><br>";
         }
+        //Update
+        $Query1 = "UPDATE recipe SET percent=".$BuildabilityScore." WHERE recipe_id=".$RecipeId;
+        $connection->query($Query1);
+        if($debug) echo ">>Final Buildability: ".$BuildabilityScore."<br><br>";
 
     }
     /*
