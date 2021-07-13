@@ -91,6 +91,10 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2021-06-17 Add categories to pantry items
 * 2021-06-17 Add shopping cart to ingredients page
 * 2021-06-17 Change table from group to sets
+* 2021-07-17 Next: Add rebuild all to suggest.php
+* 2021-07-17 Next: Make shopping page
+* 2021-07-17 Next: Add rebuild to recipe.php?id
+* 2021-07-17 Next: Make recipes.php page
 </details>
 
 ### Notebook
