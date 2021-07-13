@@ -868,8 +868,8 @@
             var TagsTable = [];
             var table = document.getElementById("TagTable");
             for (var Id = 1; Id<table.rows.length; Id++){
-                var ValueA = table.rows[Id].cells[0].computedName;
-                var ValueB = table.rows[Id].cells[1].computedName;
+                var ValueA = table.rows[Id].cells[0].children[0].value;
+                var ValueB = table.rows[Id].cells[1].children[0].value;
                 if(ValueA != '') TagsTable.push(ValueA);
                 if(ValueB != '') TagsTable.push(ValueB);
             }
