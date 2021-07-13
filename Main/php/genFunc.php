@@ -137,8 +137,9 @@
             $connection->query($Query1);
         }
 
-    }  
-    //Function to update buildability from ItemId
+    }
+    /*
+    //Function to update buildability from ItemId (Decided not to update score from item. Complex to remove a substitute ingredient from buildability)
     function UpdateScoreItem($ItemId,$Weight,$connection){
         //$Weight: 1:Full, 0.5:Half, -1:Remove 
         //echo "Update score ".$ItemId." ".$Weight."<br>";
@@ -157,7 +158,7 @@
             $connection->query($Query1);
         }
     }
-    //Function to change the buildability score from adding or removing an item
+    //Function to change the buildability score from adding or removing an item (Decided not to update score from item. Complex to remove a substitute ingredient from buildability)
     function UpdateScoreFromItem($ItemId,$Weight,$connection){
         //Change the buildability scores for all recipes that use the item
         UpdateScoreItem($ItemId,$Weight,$connection);
@@ -185,5 +186,6 @@
             //echo "<br>";
         }
     }
+    */
 
 ?>

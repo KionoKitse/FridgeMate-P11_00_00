@@ -19,11 +19,11 @@
         $connection->query($Query1);
 
         //Convert the value to a weight
-        $Weight = 1;
-        if($val==0) $Weight = -1;
+        //$Weight = 1;
+        //if($val==0) $Weight = -1;
 
         //Update the buildability score for all recipes using this ingredient
-        UpdateScoreFromItem($id,$Weight,$connection);
+        //UpdateScoreFromItem($id,$Weight,$connection);
     }
 
     //exit

@@ -19,10 +19,10 @@
         $connection->query($Query1);
 
         //Convert the value to a weight, if removing also remove from cart
-        $Weight = 1;
+        //$Weight = 1;
         if($val==0){
             //Set the new weight
-            $Weight = -1;
+            //$Weight = -1;
 
             //Update the cart
             $Query = "UPDATE pantry SET cart=0 WHERE item_id=".$id;
@@ -30,7 +30,7 @@
         }
 
         //Update the buildability score for all recipes using this ingredient
-        UpdateScoreFromItem($id,$Weight,$connection);
+        //UpdateScoreFromItem($id,$Weight,$connection);
     }
     //Moving item from cart to status so don't need to recalculate
     else{
