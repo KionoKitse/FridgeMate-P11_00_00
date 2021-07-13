@@ -9,7 +9,7 @@
 
     //Print the ingredients for a datalist
     while ($row = $ResultSet1->fetch_assoc()) {
-        RecipeBuildability($row["recipe_id"], $connection,false);
+        RecipeBuildability($row["recipe_id"], $connection,true);
     }
 
     //Exit

@@ -47,18 +47,19 @@
 
     //Get the ingredient information
     $Query1 = "SELECT item_id FROM ingredient WHERE recipe_id = ?";
-    $Query2 = "SELECT * FROM pantry WHERE item_id IN (" . $Query1 . ")";
+    $Query2 = "SELECT item_id, name1, name2, name3, recipe_id, status, cart FROM pantry WHERE item_id IN (" . $Query1 . ")";
     $stmt = $connection->prepare($Query2);
     $stmt->bind_param("i", $RecipeId);
     $stmt->execute();
     $ResultSet2 = $stmt->get_result();
 
-    //Get the ingredient information
-    $Query1 = "SELECT * FROM recipe WHERE recipe_id = ?";
+    //Get the percent information
+    $Query1 = "SELECT percent FROM recipe WHERE recipe_id = ?";
     $stmt = $connection->prepare($Query1);
     $stmt->bind_param("i", $RecipeId);
     $stmt->execute();
-    $ResultSet3 = $stmt->get_result();
+    $Percent = $stmt->get_result()->fetch_assoc()["percent"];
+    $Percent = floatval($Percent);
 
     //Get the recipe tags
     $Query1 = "SELECT tag FROM tags WHERE recipe_id = ?";
@@ -70,33 +71,63 @@
         array_push($RecipeTags,$row["tag"]);
     }
 
-    //Get the recipe percent
-    while ($row = $ResultSet3->fetch_assoc()) {
-        $Percent = $row["percent"];
-    }
-    $Percent = floatval($Percent);
-
     //Build lists of ingredients
     while ($row = $ResultSet1->fetch_assoc()) {
         //Get the ingredient object
         $Ingredient = GetIngredient($row["item_id"], $ResultSet2);
         
         /*
-        * Status guide
-        * 0 = Don't have (MySQL)
+        * Status guide (in priority)
         * 1 = Have (MySQL)
         * 2 = Shopping list (MySQL)
         * 3 = Buildable
         * 4 = Substitute
+        * 0 = Don't have (MySQL)
         */
 
-        //Check the ingredient is not available
-        if ($Ingredient["status"] == 0){
-            $Ingredient = AltIngredient($Ingredient,$connection);
+        //Status: Have
+        if ($Ingredient["status"]) {
+            goto StatusSet;
         }
+        //Status: Cart
+        if ($Ingredient["cart"]){
+            $Ingredient["status"] = 2;
+            goto StatusSet;
+        }
+        //Status: Buildable
+        if ($Ingredient["recipe_id"]>0){
+            $Query1 = "SELECT percent FROM recipe WHERE recipe_id = ".$Ingredient["recipe_id"];
+            $PercentTemp = $connection->query($Query1)->fetch_assoc()["percent"];
+            if($PercentTemp>90){
+                $Ingredient["status"] = 3;
+                goto StatusSet;
+            }
+        }
+        //Status: Substitute
+        $Query1 = "SELECT group_id FROM sets WHERE item_id=".$Ingredient["item_id"];
+        $Query2 = "SELECT DISTINCT item_id FROM sets WHERE group_id IN (" . $Query1 . ") AND item_id !=".$Ingredient["item_id"];
+        $Query3 = "SELECT item_id, name1, name2, name3, recipe_id, status, cart FROM pantry WHERE item_id IN (" . $Query2 . ")";
+        $ResultSet3 = $connection->query($Query3);
+
+        //If there are substitute ingredients
+        if($ResultSet3->num_rows > 0){
+            //Check any of the items in the group are available
+            while ($row1 = $ResultSet3->fetch_assoc()) {
+                if ($row1["status"] || $row1["cart"]){
+                    $Ingredient["status"] = 4;
+                    $Ingredient["name1"] = $row1["name1"];
+                    $Ingredient["name2"] = $row1["name2"];
+                    $Ingredient["name3"] = $row1["name3"];
+                    goto StatusSet;
+                }
+            } 
+        }
+
+        StatusSet:
 
         //Create new ingredient object
         $Object = (object) [
+            'Id' => $Ingredient["item_id"],
             'Quantity' => $row["quantity"],
             'Unit' => $row["unit"],
             'Name1' => $Ingredient["name1"],
@@ -337,59 +368,5 @@
             $Min = $Time - 60 * $Hrs;
             return $Hrs . 'h ' . $Min . 'min';
         }
-    }
-    //Function to find a substitute ingredient
-    function AltIngredient($Ingredient,$connection){
-        $Result = $Ingredient;
-
-        //Check if ingredient is buildable
-        if($Ingredient["recipe_id"]>0){
-            //Check the buildability score for that ingredient
-            $Query1 = "SELECT percent FROM recipe WHERE recipe_id = '".$Ingredient["recipe_id"]."'";
-            $ResultSet4 = $connection->query($Query1);
-            while ($row1 = $ResultSet4->fetch_assoc()) {
-                if($row1["percent"] > 90){
-                    $Result["status"] = 3;
-                    goto SendResult;
-                }
-            }
-        }
-        
-        //Find if there are any substitute ingredients
-        $Query1 = "SELECT group_id FROM sets WHERE item_id = ?";
-        $Query2 = "SELECT item_id FROM sets WHERE group_id IN (" . $Query1 . ") AND item_id != ?";
-        $stmt = $connection->prepare($Query2);
-        $stmt->bind_param("ii", $Ingredient["item_id"], $Ingredient["item_id"]);
-        $stmt->execute();
-        $ResultSet5 = $stmt->get_result();
-
-        if($ResultSet5){
-           //Check any of the items in the group are available
-            while ($row1 = $ResultSet5->fetch_assoc()) {
-                $Query1 = "SELECT * FROM pantry WHERE item_id = ?";
-                $stmt = $connection->prepare($Query1);
-                $stmt->bind_param("i", $row1["item_id"]);
-                $stmt->execute();
-                $ResultSet6 = $stmt->get_result();
-
-                //Check if ingredient is available
-                while ($row2 = $ResultSet6->fetch_assoc()) {
-                    if($row2["status"] == 1){
-                        //Replace ingredient with substitute and mark as a sub
-                        $Result["item_id"] = $row2["item_id"];
-                        $Result["name1"] = $row2["name1"];
-                        $Result["name2"] = $row2["name2"];
-                        $Result["name3"] = $row2["name3"];
-                        $Result["status"] = 4;
-                        goto SendResult;
-                    }
-                }
-            } 
-        }
-            
-        
-        //Exit
-        SendResult:
-        return $Result;
     }
 ?>

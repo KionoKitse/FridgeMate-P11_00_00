@@ -25,6 +25,10 @@ Style guide
     margin: 5px 0 10px 0;
     width: 100%;
 }
+a { 
+    text-decoration: none; 
+    color: #3D405B;
+}
 p {
     font-size: 3.7vw;
     color: #3D405B;

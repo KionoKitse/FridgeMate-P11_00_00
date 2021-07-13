@@ -214,9 +214,13 @@
         <td colspan="3" style="padding-right: 0;">
           <select style="width:100%" id="Recipe" onchange="UpdateSelectOption('Recipe')">
             <option value="0"></option>
-              <?php
+              <?php 
                 while ($row = $ResultSet3->fetch_assoc()) {
-                  echo '<option value="'.$row["recipe_id"].'">'.$row["name"].'</option>';
+                  if($row["recipe_id"] == $Ingredient["recipe_id"]){
+                    echo '<option selected="selected" value="'.$row["recipe_id"].'">'.$row["name"].'</option>';
+                  }else{
+                    echo '<option value="'.$row["recipe_id"].'">'.$row["name"].'</option>';
+                  }
                 }
               ?>
           </select>

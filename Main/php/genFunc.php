@@ -39,36 +39,35 @@
                 echo '<tr>';
                 echo '<td style="width:15%;">'.$row->Quantity.'</td>';
                 echo '<td style="width:15%;">'.$row->Unit.'</td>';
-                echo '<td>'.$Name.'</td>';
+                echo '<td><a href="ingredient.php?id='.$row->Id.'">'.$Name.'</a></td>';
                 echo'</tr>';
             //Create table row for ingredient is in shopping list
             }elseif($row->Status == 2){
                 echo '<tr>';
                 echo '<td style="font-weight: bold; width:15%;">'.$row->Quantity.'</td>';
                 echo '<td style="font-weight: bold; width:15%;">'.$row->Unit.'</td>';
-                echo '<td style="font-weight: bold;">'.$Name.'</td>';
+                echo '<td style="font-weight: bold;"><a style="font-weight: bold;" href="ingredient.php?id='.$row->Id.'">'.$Name.'</a></td>';
                 echo'</tr>';
             //Create table row for ingredient is buildable
             }elseif($row->Status == 3){
-                
                 echo '<tr>';
                 echo '<td style="color: #F2CC8F; font-weight: bold; width:15%;">'.$row->Quantity.'</td>';
                 echo '<td style="color: #F2CC8F; font-weight: bold; width:15%;">'.$row->Unit.'</td>';
-                echo '<td style="color: #F2CC8F; font-weight: bold;"><a style="color: #F2CC8F;" href="recipe.php?id='.$row->AltRecipe.'">'.$Name.'</a></td>';
+                echo '<td style="color: #F2CC8F; font-weight: bold;"><a style="color: #F2CC8F; text-decoration: underline;" href="recipe.php?id='.$row->AltRecipe.'">'.$Name.'</a></td>';
                 echo'</tr>';
             //Create table row for ingredient is a substitute
             }elseif($row->Status == 4){
                 echo '<tr>';
                 echo '<td style="color: #81B29A; width:15%;">'.$row->Quantity.'</td>';
                 echo '<td style="color: #81B29A; width:15%;">'.$row->Unit.'</td>';
-                echo '<td style="color: #81B29A;">'.$Name.'*</td>';
+                echo '<td style="color: #81B29A;"><a style="color: #81B29A;" href="ingredient.php?id='.$row->Id.'">'.$Name.'*</a></td>';
                 echo'</tr>';
             //Create table row for don't have ingredient
             }else{
                 echo '<tr>';
                 echo '<td style="color: #E07A5F; width:15%;">'.$row->Quantity.'</td>';
                 echo '<td style="color: #E07A5F; width:15%;">'.$row->Unit.'</td>';
-                echo '<td style="color: #E07A5F;">'.$Name.'</td>';
+                echo '<td style="color: #E07A5F;"><a style="color: #E07A5F;" href="ingredient.php?id='.$row->Id.'">'.$Name.'</a></td>';
                 echo'</tr>';
             }
         }
