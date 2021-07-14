@@ -19,12 +19,21 @@
         height:20vw;
         border-radius: 5px; 
         border: 2px solid #FFE6A9; 
+        color: #3D405B;
     }
     .bttnWide {
         background-color: #81B29A;
         width:100%;
         border-radius: 5px; 
         border: 2px solid #9BCCB4; 
+        color: #3D405B;
+    }
+    .bttnYellow {
+        background-color: #F2CC8F;
+        width:100%;
+        border-radius: 5px; 
+        border: 2px solid #FFE6A9; 
+        color: #3D405B;
     }
 </style>
 
@@ -51,7 +60,7 @@
 ?>
 
 <body>
-    </div>
+    <span id="error"></span>
     <div class="center">
         <?php
             echo'<p style="text-align: center; font-size: 5vw; color: #81B29A; font-weight: bold;">Recipe Menu</p>';
@@ -61,6 +70,7 @@
             echo'<p style="text-align: center; font-size: 5vw; color: #81B29A; font-weight: bold;">Expiry Notice</p>';
             echo GetOlderItems($ResultSet4, $ResultSet3);
         ?>
+        <button class="bttnYellow" onclick="UpdateAllBuildability()">Update All Buildability</button>
     </div>
 </body>
 
@@ -203,6 +213,24 @@
         //Save displayed count
         document.getElementById(TableId+'Disp').value = i;
     }
+    //Function to call update all buildability scores
+    function UpdateAllBuildability(){
+        //Run the request
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var Result = this.responseText;
+                //Refresh page if no errors
+                if (Result.length < 5){
+                    location.reload(true);
+                }else{
+                    document.getElementById("error").innerHTML = Result;
+                }
+            }
+        };
+        xmlhttp.open("GET", "php/recalculateBuildability.php", true);
+        xmlhttp.send();
+    }
 </script>
 
 <?php
@@ -241,7 +269,7 @@
         }
 
         //Add the last row
-        $BuildTable .= '<tr><td colspan="3"><button id=BuildShow class="bttnWide"  onclick="ShowMoreLessTiles(\'Build\')"><span style="color: #3D405B;"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></span></button></td></tr>';
+        $BuildTable .= '<tr><td colspan="3"><button id=BuildShow class="bttnWide"  onclick="ShowMoreLessTiles(\'Build\')"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></button></td></tr>';
         $BuildTable .= '</table>';
         //Add a display counter
         $BuildTable .= '<input type="hidden" id="BuildDisp" value="'.$i.'">';
@@ -281,7 +309,7 @@
         }
 
         //Add the last row
-        $OlderTable .= '<tr><td colspan="3"><button id=OlderShow class="bttnWide"  onclick="ShowMoreLessTiles(\'Older\')"><span style="color: #3D405B;"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></span></button></td></tr>';
+        $OlderTable .= '<tr><td colspan="3"><button id=OlderShow class="bttnWide"  onclick="ShowMoreLessTiles(\'Older\')"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></button></td></tr>';
         $OlderTable .= '</table>';
         //Add a display counter
         $OlderTable .= '<input type="hidden" id="OlderDisp" value="'.$i.'">';

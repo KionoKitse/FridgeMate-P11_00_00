@@ -209,6 +209,7 @@
 </style>
 
 <body>
+    <span id="error"></span>
     <div class="center">
         <div id="Title">
             <p style="text-align: center; font-size: 5vw;">
@@ -227,7 +228,7 @@
             <tr>
                 <?php
                     echo '<th style="color: #E07A5F;">'.$JsonData["Rating"].'/5 <i style="color: #81B29A;" class="fa fa-star"></i></th>';
-                    echo '<th style="color: #E07A5F;">'.$Percent.'% <i style="color: #81B29A;" class="fas fa-clipboard-check"></i></th>';
+                    echo '<th style="color: #E07A5F;">'.$Percent.'% <i onclick="UpdateBuildability(\''.$RecipeId.'\')" style="color: #81B29A;" class="fas fa-clipboard-check"></i></th>';
                     echo '<th style="color: #E07A5F;">'.$Active.' <i style="color: #81B29A;" class="far fa-clock"></i></i></th>';
                     echo '<th style="color: #E07A5F;">'.$Passive.' <i style="color: #81B29A;" class="fa fa-clock"></i></th>';
                     echo '<th style="color: #E07A5F;">'.$JsonData["People"].' <i style="color: #81B29A;" class="fas fa-user-astronaut"></i></th>';
@@ -370,3 +371,22 @@
         }
     }
 ?>
+<script>
+    function UpdateBuildability(id){
+        //Run the request
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var Result = this.responseText;
+                //Refresh page if no errors
+                if (Result.length < 5){
+                    location.reload(true);
+                }else{
+                    document.getElementById("error").innerHTML = Result;
+                }
+            }
+        };
+        xmlhttp.open("GET", "php/updateBuildability.php?id=" + id, true);
+        xmlhttp.send();
+        }
+</script>

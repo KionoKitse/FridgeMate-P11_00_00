@@ -92,7 +92,6 @@
             
             //Ingredient is not availible or in the cart
             if(!$row["status"] && !$row["cart"]){
-                //echo "Ingredient not availible <br>";
                 if($debug) echo ">>Ingredient not availible <br>";
 
                 $Weight = 0;
