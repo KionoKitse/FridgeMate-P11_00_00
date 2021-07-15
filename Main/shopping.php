@@ -96,39 +96,96 @@
   }
 </style>
 
+<!-- Get the required information to render the page -->
+<?php
+  require_once 'dbconnect.php';
+
+  //Get all ingredients sorted by category
+  $Query1 = "SELECT pantry.item_id, pantry.name1, pantry.name2, pantry.name3, pantry.category, shopping.cart FROM shopping
+  INNER JOIN pantry ON shopping.item_id=pantry.item_id ORDER BY pantry.category";
+  $ResultSet1 = $connection->query($Query1);
+
+  //Get the shopping notes
+  $JsonPath = file_get_contents('json/ShoppingNotes.json');
+  $JsonNotes = json_decode($JsonPath, true);
+
+?>
+
 <body>
 <span id="error"></span>
 
 <div class="center">
     <p style="text-align: center; font-size: 5vw; color: #81B29A; font-weight: bold;">Shopping</p>
     <table style="width: 100%; border-collapse:collapse; border-spacing:0;">
-        <tr>
-            <td style="width: 50%;"><button class="bttnGreen" onclick="DispShopping()">Shopping List</button></td>
-            <td style="width: 50%;"><button class="bttnGreen" onclick="SortType('Cat')">Recommendations</button></td>
-        </tr>
+      <?php
+        $Category = 'Nothing Selected Yet';
+        while ($row = $ResultSet1->fetch_assoc()) {
+          //Print category header
+          if($row["category"] != $Category){
+            echo '<tr>';
+              echo '<th colspan="3" class="catHeader"> '.$row["category"].' </th>';
+            echo '</tr>';
+            $Category = $row["category"];
+          }
+
+          //Print ingredient information
+          echo '<tr>';
+            //Check box status
+            echo '<td style="width: 8vw;">';
+              echo '<label class="switch">';
+                //Item is in cart
+                if($row["cart"]){
+                  echo '<input id="'.$row["item_id"].'" onchange="updateCart('.$row["item_id"].')" type="checkbox" checked>';
+                }
+                //Item not in cart
+                else{
+                  echo '<input id="'.$row["item_id"].'" onchange="updateCart('.$row["item_id"].')" type="checkbox">';
+                }
+                echo '<span class="slider round"></span>';
+              echo '</label>';
+            echo '</td>';
+          
+            //Names
+            echo '<td style="white-space: nowrap">'.$row["name1"].' '.$row["name2"].' '.$row["name3"].'</td>';
+
+            //List with recipes
+            $Query2 = "SELECT name FROM recipe WHERE recipe_id 
+                IN (SELECT DISTINCT recipe_id FROM ingredient WHERE item_id = ".$row["item_id"].") 
+                ORDER BY rating DESC ";
+            $ResultSet2 = $connection->query($Query2);
+            echo '<td>';
+              echo '<select>';  
+              while ($row2 = $ResultSet2->fetch_assoc()) {
+                echo '<option>'.$row2["name"].'</option>'; 
+              }
+              echo '</select>';  
+            echo '</td>';
+          echo '</tr>';
+        }
+
+        //Print the shopping notes
+        echo '<tr>';
+          echo '<td style="vertical-align: middle;">';
+            echo '<button id="Notes" onclick="SaveNotes()" class="bttnTall">';
+              echo '<i style="color: #3D405B" class="fas fa-kiwi-bird"></i>';
+            echo '</button>';
+          echo '</td>';
+          echo '<td colspan="2"><textarea style="width:98%;" rows="5" id="NotesBox">'.$JsonNotes.'</textarea></td>';
+        echo  '</tr>';
+      ?>
+      <tr>
+        <td colspan="3">
+          <button class="bttnYellow" onclick="SubmitPurchase()">Purchase</button>
+        </td>
+      </tr>
+    
     </table>
     <table id="ResultTable" style="width: 100%; border-collapse:collapse; border-spacing:0;">
     </table>
 </div>
 </body>
 
-
 <Script>
-    
-    DispShopping();
-    function DispShopping(){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                //Add data for display
-                document.getElementById("ResultTable").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","php/shopping.php",true);
-        xmlhttp.send();
-    }
-    function DispRecomendation(){
-    }
     function updateCart(id){
         //Get the value
         var val = document.getElementById(id).checked ? 1 : 0;

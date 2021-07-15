@@ -72,8 +72,6 @@
     //Button for purchased
     $Result .= '<tr><td colspan="3"><button class="bttnYellow" onclick="SubmitPurchase()">Purchase</button></td></tr>';
     
-
-
     echo $Result;
 
 ?>

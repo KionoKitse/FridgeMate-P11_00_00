@@ -2,6 +2,7 @@
     //Includes
     include 'genFunc.php';
     require_once '../dbconnect.php';
+    
 
     //Get the response data
     $str_json = file_get_contents('php://input');
