@@ -14,7 +14,7 @@
     //Add/remove from shopping list
     if($val){
         //Add to shopping list
-        $Query = "INSERT INTO shopping (item_id, cart) VALUES (".$id.", 0)";
+        $Query = "UPDATE shopping SET cart=".$val." WHERE item_id=".$id;
         $connection->query($Query);
     } else {
         //Delete from shopping list

@@ -13,12 +13,14 @@
     width:100%;
     border-radius: 5px; 
     border: 2px solid #9BCCB4; 
+    color: #3D405B;
   }
   .bttnYellow {
     background-color: #F2CC8F;
     width:100%;
     border-radius: 5px; 
     border: 2px solid #FFE6A9; 
+    color: #3D405B;
   }
   .ingLink{
     color: #3D405B; 
@@ -95,7 +97,7 @@
 
 <body>
 <span id="error"></span>
-<div class="center">
+<div class="center"> 
   <p style="text-align: center; font-size: 5vw; color: #81B29A; font-weight: bold;">Ingredients</p>
   <table style="width: 100%; border-collapse:collapse; border-spacing:0;">
     <tr>
