@@ -144,6 +144,20 @@
         if($debug) echo ">>Final Buildability: ".$BuildabilityScore."<br><br>";
 
     }
+    //Function to set ingredient weights when recipes change
+    function IngredientWeight($connection){
+        //Get all item_id
+        $Query1 = "SELECT item_id FROM pantry";
+        $ResultSet1 = $connection->query($Query1);
+        while ($row = $ResultSet1->fetch_assoc()){
+            //Get the total contribution weight from each item
+            $Query2 = "SELECT SUM(percent) FROM ingredient WHERE item_id=".$row["item_id"];
+            $Weight = $connection->query($Query2)->fetch_assoc();
 
+            //Update the weight
+            $Query1 = "UPDATE pantry SET weight=".$Weight." WHERE item_id=".$row["item_id"];
+            $connection->query($Query1);
+        }
+    }
 
 ?>

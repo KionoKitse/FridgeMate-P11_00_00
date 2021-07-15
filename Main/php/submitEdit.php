@@ -191,7 +191,11 @@
     if($Error){
         echo($Error);
     }else{
+        //Update buildability score
         RecipeBuildability($RecipeId, $connection, false);
+        //Update all ingredient weights
+        IngredientWeight($connection);
+        //Done
         echo('Recipe updated');
     }
     
