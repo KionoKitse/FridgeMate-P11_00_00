@@ -1,7 +1,5 @@
-</div>
 <!DOCTYPE html>
 <html>
-
 <head>
     <link href="css/mainstyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -73,6 +71,7 @@
         <button class="bttnYellow" onclick="UpdateAllBuildability()">Update All Buildability</button>
     </div>
 </body>
+</html>
 
 <script>
     
