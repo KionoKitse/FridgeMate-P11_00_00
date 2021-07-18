@@ -229,6 +229,16 @@
                 //Display results
                 else{
                     document.getElementById("Result").innerHTML=Result;
+                    //Add event listeners to tiles
+                    var ClickList = document.getElementsByClassName("clickable");
+                    for (var i = 0; i < ClickList.length; i++) {
+                        ClickList[i].addEventListener('click', function() {
+                            var href = this.dataset.href;
+                            if (href) {
+                                window.location.assign(href);
+                            }
+                        })
+                    }
                 }
             }
         };
