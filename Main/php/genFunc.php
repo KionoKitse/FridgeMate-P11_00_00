@@ -158,5 +158,138 @@
             $connection->query($Query1);
         }
     }
+    
+    //Function to build the table of tiles from search
+    function GetSearchItems($ResultSet1){
+        //Create the Search table 
+        $SearchTable = '<table id="Search" style="width: 100%; border-collapse:collapse; border-spacing:0;">';
+        while ($row = $ResultSet1->fetch_assoc()) {
+            $NewTile = CreateTile($row,'Search');
+            
+            $SearchTable .= $NewTile;
+        }
+
+        //Set the first 2 tiles to active display
+        for($i = 0; $i < 2; $i++){
+            $pos = strpos($SearchTable, "display:none");
+            if ($pos !== false) {
+                $SearchTable = substr_replace($SearchTable, "display:table-row", $pos, strlen("display:none"));
+            }
+        }
+
+        //Add the last row
+        $SearchTable .= '<tr><td colspan="3"><button id=SearchShow class="bttnWide"  onclick="ShowMoreLessTiles(\'Search\')"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></button></td></tr>';
+        $SearchTable .= '</table>';
+        //Add a display counter
+        $SearchTable .= '<input type="hidden" id="SearchDisp" value="'.$i.'">';
+        return $SearchTable;
+    }
+    //Function to build the table of tiles for expiring ingredients
+    function GetOlderItems($ResultSet2,$ResultSet1){
+        //Count the number of older ingredients in each recipe
+        $OlderCt = [];
+        while ($row = $ResultSet1->fetch_assoc()) {
+            //echo var_dump($row);
+            array_push($OlderCt, $row["recipe_id"]);
+        }
+        $OlderCt = array_count_values($OlderCt);
+
+        //Create the older table 
+        $SearchTable = '<table id="Search" style="width: 100%; border-collapse:collapse; border-spacing:0;">';
+        while ($row = $ResultSet2->fetch_assoc()) {
+            $NewTile = CreateTile($row,'Search');
+
+            //Replace title with Tile: OlderCt
+            $Id = $row["recipe_id"];
+            $Search = $row["name"];
+            $Replace = $row["name"].': '.$OlderCt[$Id];
+            $NewTile = str_replace($Search, $Replace, $NewTile); //Search / Replace
+
+            
+            $SearchTable .= $NewTile;
+        }
+
+        //Set the first 2 tiles to active display
+        for($i = 0; $i < 2; $i++){
+            $pos = strpos($SearchTable, "display:none");
+            if ($pos !== false) {
+                $SearchTable = substr_replace($SearchTable, "display:table-row", $pos, strlen("display:none"));
+            }
+        }
+
+        //Add the last row
+        $SearchTable .= '<tr><td colspan="3"><button id=SearchShow class="bttnWide"  onclick="ShowMoreLessTiles(\'Search\')"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></button></td></tr>';
+        $SearchTable .= '</table>';
+        //Add a display counter
+        $SearchTable .= '<input type="hidden" id="SearchDisp" value="'.$i.'">';
+        return $SearchTable;
+    }
+    //Function to create a tile element
+    function CreateTile($RecipeObj,$Type){
+        $Id = $RecipeObj["recipe_id"];
+        $Image = $RecipeObj["image"];
+        $Name = $RecipeObj["name"];
+        $Rating = (int)$RecipeObj["rating"];
+        $Percent = (int)$RecipeObj["percent"];
+        $Active = (int)$RecipeObj["active"];
+        $Passive = (int)$RecipeObj["passive"];
+        $People = (int)$RecipeObj["people"];
+        $Top1 = $RecipeObj["top1"];
+        $Top2 = $RecipeObj["top2"];
+        $Top3 = $RecipeObj["top3"];
+        $Top4 = $RecipeObj["top4"];
+        $Top5 = $RecipeObj["top5"];
+        $Top6 = $RecipeObj["top6"];
+        $Menu = $RecipeObj["menu"];
+
+        $Result = <<<EOT
+            <!--New Item-->
+            <tr id ="$Type$Id" style="display:none">
+                <!--Image-->
+                <td style="width: 30%;" class="clickable" data-href="recipe.php?id=$Id">
+                    <img src="$Image" alt="recipe page" style="width: 100%">
+                </td>
+                <!--Text area-->
+                <td class="clickable" data-href="recipe.php?id=$Id">
+                    <table style="width: 100%;">
+                        <!--Title and stats-->
+                        <tr>
+                            <td colspan="5" style="color: #81B29A; font-weight: bold;">$Name</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #E07A5F;">$Rating/5 <i style="color: #81B29A;" class="fa fa-star"></i></td>
+                            <td style="color: #E07A5F;">$Percent% <i style="color: #81B29A;" class="fas fa-clipboard-check"></i></td>
+                            <td style="color: #E07A5F;">$Active <i style="color: #81B29A;" class="far fa-clock"></i></td>
+                            <td style="color: #E07A5F;">$Passive <i style="color: #81B29A;" class="fa fa-clock"></i></td>
+                            <td style="color: #E07A5F;">$People <i style="color: #81B29A;" class="fas fa-user-astronaut"></i></td>
+                            </tr>
+                    </table>
+                    <!--Ingredients-->
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>$Top1</td>
+                            <td>$Top4</td>
+                        </tr>
+                        <tr>
+                            <td>$Top2</td>
+                            <td>$Top5</td>
+                        </tr>
+                        <tr>
+                            <td>$Top3</td>
+                            <td>$Top6</td>
+                        </tr>
+                    </table>
+                </td>
+        EOT;
+
+        if($Menu){
+            $Result .= '<td style="vertical-align: middle;"><button id="Button'.$Type.$Id.'" onclick="ChangeTile(\''.$Type.$Id.'\')" value = "true" class="bttnTallOrange"><i style="color: #3D405B" class="fas fa-kiwi-bird fa-flip-horizontal"></i></button></td>';
+        }else{
+            $Result .= '<td style="vertical-align: middle;"><button id="Button'.$Type.$Id.'" onclick="ChangeTile(\''.$Type.$Id.'\')" value = "false" class="bttnTallYellow"><i style="color: #3D405B" class="fas fa-kiwi-bird fa-flip-horizontal"></i></button></td>';
+        }
+        $Result .= '</tr>';
+
+        return $Result;
+    }
 
 ?>

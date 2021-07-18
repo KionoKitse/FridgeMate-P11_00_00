@@ -344,6 +344,7 @@
                 echo '<div id="Step'.$i.'">';
                     echo '<table style="text-align: left;">';
                     echo '<tr><th colspan="3">Step '.$i.'</th></tr>';
+                    echo var_dump ($Steps);
                     IngredientRow($Steps[$i-1]);
                     echo '</table>';
                     echo '<p>';

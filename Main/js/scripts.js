@@ -144,3 +144,55 @@ function changeCart(id) {
     xmlhttp.open("GET", "php/changeCart.php?id=" + id + "&val=" + val, true);
     xmlhttp.send();
 }
+//Function to display tiles
+function ShowMoreLessTiles(TableId){
+    //Get the table and the number of entries displayed
+    var Table = document.getElementById(TableId);
+    var DispCt = Number(document.getElementById(TableId+'Disp').value);
+
+    //Variables
+    var i, NextCt;
+
+    //Display more tiles
+    if(DispCt<Table.rows.length-1){
+        //Decide the next count to go to
+        if(DispCt+2 > Table.rows.length-2){
+            NextCt = Table.rows.length-1;
+        } else {
+            NextCt = DispCt+2;
+        }
+
+        //Set the visability
+        for (i = DispCt; i < NextCt; i++) {
+            Table.rows[i].style.display = 'table-row';
+        }
+
+        //Change button if no more to display
+        if(i == Table.rows.length-1){
+            var Bttn = document.getElementById(TableId+'Show');
+            Bttn.style.backgroundColor = '#E07A5F';
+            Bttn.style.borderColor = '#FA9479';
+        }
+    }
+    //Display less tiles
+    else{
+        //Set the visability
+        for (i = 2; i < Table.rows.length-1; i++) {
+            Table.rows[i].style.display = 'none';
+        }
+
+        //Change button if no more to display
+        var Bttn = document.getElementById(TableId+'Show');
+        Bttn.style.backgroundColor = '#81B29A';
+        Bttn.style.borderColor = '#9BCCB4';
+        i=2;
+    } 
+
+    //Save displayed count
+    document.getElementById(TableId+'Disp').value = i;
+}
+//Function to remove a tile
+function RemoveTile(TileId){
+    var Tile = document.getElementById(TileId);
+    Tile.remove();
+}
