@@ -155,7 +155,11 @@
         }
     }
 
-    //Get the ingredients per step
+    //Get the ingredients per step (PROBLEM HERE)
+    SELECT * FROM ingredient WHERE recipe_id=7 and prep=1;
+ingredient.item_id, ingredient.quantity, ingredient.unit, 
+pantry.name1, pantry.name2, pantry.name3, pantry.status, pantry.status, pantry.cart
+    $Query1 = "SELECT tag FROM tags WHERE recipe_id = ?";
     $Index = 1;
     $Done = false;
     
@@ -339,12 +343,12 @@
 
         <!-- Print the other steps -->
         <?php
+            echo var_dump($Steps);
             for ($i = 1; $i < count($JsonData["Steps"]); $i++)  {
                 
                 echo '<div id="Step'.$i.'">';
                     echo '<table style="text-align: left;">';
                     echo '<tr><th colspan="3">Step '.$i.'</th></tr>';
-                    echo var_dump ($Steps);
                     IngredientRow($Steps[$i-1]);
                     echo '</table>';
                     echo '<p>';
