@@ -527,69 +527,50 @@
         cell2.style.width = '15%';
     }
     function BuildIngredientOptions(){
-        var TempOptionList=[];
         UnselectedOptions = '<option value=""></option>';
-        for (var Id = 1; Id <= MainId; Id++) {
-            var RowId = "Main"+Id;
-            try {
-                var Quantity = document.getElementById("Main"+Id+"Quantity").value;
-                var Unit = document.getElementById("Main"+Id+"Unit").value;
-                var Name1 = document.getElementById("Main"+Id+"Name1").value;
-                var Name2 = document.getElementById("Main"+Id+"Name2").value;
-                var Name3 = document.getElementById("Main"+Id+"Name3").value;
-                var RowName = Quantity+" "+Unit+" "+Name1+" "+Name2+" "+Name3;
-                var Row = [RowId,RowName];
-                TempOptionList.push(Row);
-                UnselectedOptions += '<option value="'+RowId+'">'+RowName+'</option>';
-            }
-            catch(err) {}
+
+        var Main = document.getElementById("Main");
+        var Support = document.getElementById("Support");
+        var Spices = document.getElementById("Spices");
+        var Garnish = document.getElementById("Garnish");
+
+        var AllIngredient = [];
+        for (var i = 1; i < Main.rows.length; i++) {
+            var Quantity = Main.rows[i].cells[0].children[0].value;
+            var Unit = Main.rows[i].cells[1].children[0].value;
+            var Name1 = Main.rows[i].cells[2].children[0].value;
+            var Name2 = Main.rows[i].cells[3].children[0].value;
+            var Name3 = Main.rows[i].cells[4].children[0].value;
+            var RowName = Quantity+" "+Unit+" "+Name1+" "+Name2+" "+Name3;
+            UnselectedOptions += '<option>'+RowName+'</option>';
         }
-        for (var Id = 1; Id <= SupportId; Id++) {
-            var RowId = "Support"+Id;
-            try {
-                var Quantity = document.getElementById("Support"+Id+"Quantity").value;
-                var Unit = document.getElementById("Support"+Id+"Unit").value;
-                var Name1 = document.getElementById("Support"+Id+"Name1").value;
-                var Name2 = document.getElementById("Support"+Id+"Name2").value;
-                var Name3 = document.getElementById("Support"+Id+"Name3").value;
-                var RowName = Quantity+" "+Unit+" "+Name1+" "+Name2+" "+Name3;
-                var Row = [RowId,RowName];
-                TempOptionList.push(Row);
-                UnselectedOptions += '<option value="'+RowId+'">'+RowName+'</option>';
-            }
-            catch(err) {}
+        for (var i = 1; i < Support.rows.length; i++) {
+            var Quantity = Support.rows[i].cells[0].children[0].value;
+            var Unit = Support.rows[i].cells[1].children[0].value;
+            var Name1 = Support.rows[i].cells[2].children[0].value;
+            var Name2 = Support.rows[i].cells[3].children[0].value;
+            var Name3 = Support.rows[i].cells[4].children[0].value;
+            var RowName = Quantity+" "+Unit+" "+Name1+" "+Name2+" "+Name3;
+            UnselectedOptions += '<option>'+RowName+'</option>';
         }
-        for (var Id = 1; Id <= SpicesId; Id++) {
-            var RowId = "Spices"+Id;
-            try {
-                var Quantity = document.getElementById("Spices"+Id+"Quantity").value;
-                var Unit = document.getElementById("Spices"+Id+"Unit").value;
-                var Name1 = document.getElementById("Spices"+Id+"Name1").value;
-                var Name2 = document.getElementById("Spices"+Id+"Name2").value;
-                var Name3 = document.getElementById("Spices"+Id+"Name3").value;
-                var RowName = Quantity+" "+Unit+" "+Name1+" "+Name2+" "+Name3;
-                var Row = [RowId,RowName];
-                TempOptionList.push(Row);
-                UnselectedOptions += '<option value="'+RowId+'">'+RowName+'</option>';
-            }
-            catch(err) {}
+        for (var i = 1; i < Spices.rows.length; i++) {
+            var Quantity = Spices.rows[i].cells[0].children[0].value;
+            var Unit = Spices.rows[i].cells[1].children[0].value;
+            var Name1 = Spices.rows[i].cells[2].children[0].value;
+            var Name2 = Spices.rows[i].cells[3].children[0].value;
+            var Name3 = Spices.rows[i].cells[4].children[0].value;
+            var RowName = Quantity+" "+Unit+" "+Name1+" "+Name2+" "+Name3;
+            UnselectedOptions += '<option>'+RowName+'</option>';
         }
-        for (var Id = 1; Id <= GarnishId; Id++) {
-            var RowId = "Garnish"+Id;
-            try {
-                var Quantity = document.getElementById("Garnish"+Id+"Quantity").value;
-                var Unit = document.getElementById("Garnish"+Id+"Unit").value;
-                var Name1 = document.getElementById("Garnish"+Id+"Name1").value;
-                var Name2 = document.getElementById("Garnish"+Id+"Name2").value;
-                var Name3 = document.getElementById("Garnish"+Id+"Name3").value;
-                var RowName = Quantity+" "+Unit+" "+Name1+" "+Name2+" "+Name3;
-                var Row = [RowId,RowName];
-                TempOptionList.push(Row);
-                UnselectedOptions += '<option value="'+RowId+'">'+RowName+'</option>';
-            }
-            catch(err) {}
+        for (var i = 1; i < Garnish.rows.length; i++) {
+            var Quantity = Garnish.rows[i].cells[0].children[0].value;
+            var Unit = Garnish.rows[i].cells[1].children[0].value;
+            var Name1 = Garnish.rows[i].cells[2].children[0].value;
+            var Name2 = Garnish.rows[i].cells[3].children[0].value;
+            var Name3 = Garnish.rows[i].cells[4].children[0].value;
+            var RowName = Quantity+" "+Unit+" "+Name1+" "+Name2+" "+Name3;
+            UnselectedOptions += '<option>'+RowName+'</option>';
         }
-        OptionList = TempOptionList;
     }
     function GetIdCounts(){
         MainId = document.getElementById("MainId").value;
@@ -743,7 +724,7 @@
             }
             //Mark prep ingredient
             for (var i = 1; i < Prep.rows.length; i++) {
-                var hello = Prep.rows[0];
+                var hello = Prep.rows[i].cells[0].children[0].value;
             }
 
 
