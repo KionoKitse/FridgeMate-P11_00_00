@@ -39,7 +39,7 @@
                 echo '<tr>';
                 echo '<td style="width:15%;">'.$row->Quantity.'</td>';
                 echo '<td style="width:15%;">'.$row->Unit.'</td>';
-                echo '<td><a href="ingredient.php?id='.$row->Id.'">'.$Name.'</a></td>';
+                echo '<td><a href="ingredient.php?id='.$row->Id.'" target="_blank">'.$Name.'</a></td>';
                 echo'</tr>';
             //Create table row for ingredient is in shopping list
             }elseif($row->Status == 2){

@@ -8,6 +8,15 @@
     <script src="js/mainstyle.js"></script>
 </head>
 
+<style>
+    .bttnYellow {
+        background-color: #F2CC8F;
+        width:100%;
+        border-radius: 5px; 
+        border: 2px solid #FFE6A9; 
+    }
+</style>
+
 <!-- Get the required information to render the page -->
 <?php
     
@@ -155,62 +164,34 @@
         }
     }
 
-    //Get the ingredients per step (PROBLEM HERE)
-    SELECT * FROM ingredient WHERE recipe_id=7 and prep=1;
-ingredient.item_id, ingredient.quantity, ingredient.unit, 
-pantry.name1, pantry.name2, pantry.name3, pantry.status, pantry.status, pantry.cart
-    $Query1 = "SELECT tag FROM tags WHERE recipe_id = ?";
-    $Index = 1;
-    $Done = false;
-    
-    while (!$Done) {
+    //Get the number of steps
+    $Query1 = "SELECT MAX(step) FROM ingredient WHERE recipe_id=?";
+    $stmt = $connection->prepare($Query1);
+    $stmt->bind_param("i", $RecipeId);
+    $stmt->execute();
+    $StepCt = $stmt->get_result()->fetch_assoc()["MAX(step)"];
+
+    //Create array of ingredients in each step
+    for ($Step = 1; $Step <= $StepCt; $Step++) {
         $temp = array();
-        $Add = false;
         foreach ($Main as $row) {
-            if($row->Step == $Index){
-                array_push($temp, $row);
-                $Add = true;
-            }
+            if($row->Step == $Step) array_push($temp, $row);
         }
         foreach ($Support as $row) {
-            if($row->Step == $Index){
-                array_push($temp, $row);
-                $Add = true;
-            }
+            if($row->Step == $Step) array_push($temp, $row);
         }
         foreach ($Spices as $row) {
-            if($row->Step == $Index){
-                array_push($temp, $row);
-                $Add = true;
-            }
+            if($row->Step == $Step) array_push($temp, $row);
         }
         foreach ($Garnish as $row) {
-            if($row->Step == $Index){
-                array_push($temp, $row);
-                $Add = true;
-            }
+            if($row->Step == $Step) array_push($temp, $row);
         }
-        if ($Add) {
-            array_push($Steps, $temp);
-            //mysqli_data_seek($ResultSet1, 0);
-            $Index = $Index + 1;
-        } else {
-            $Done = true;
-        }
+        array_push($Steps, $temp);
     }
     
     $stmt->close();
     db_disconnect($connection);
 ?>
-
-<style>
-    .bttnYellow {
-        background-color: #F2CC8F;
-        width:100%;
-        border-radius: 5px; 
-        border: 2px solid #FFE6A9; 
-    }
-</style>
 
 <body>
     <span id="error"></span>
@@ -343,7 +324,6 @@ pantry.name1, pantry.name2, pantry.name3, pantry.status, pantry.status, pantry.c
 
         <!-- Print the other steps -->
         <?php
-            echo var_dump($Steps);
             for ($i = 1; $i < count($JsonData["Steps"]); $i++)  {
                 
                 echo '<div id="Step'.$i.'">';

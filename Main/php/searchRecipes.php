@@ -114,7 +114,7 @@
             break;  
 
         case 'Old':
-            $Query1 = "SELECT item_id FROM pantry where DATEDIFF(CURDATE(), purchase) > expires AND status = '1'";
+            $Query1 = "SELECT item_id FROM pantry where DATEDIFF(CURDATE(), purchase) > expires AND status = '1' AND expires>0";
             $Query2 = "SELECT recipe_id FROM ingredient WHERE item_id IN (".$Query1.")";
             $ResultSet1 = $connection->query($Query2);
             $Query1 = "SELECT * FROM recipe where RECIPE_ID IN (".$Query2.") ORDER BY percent DESC"; 
