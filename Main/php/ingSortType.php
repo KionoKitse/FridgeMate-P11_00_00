@@ -70,7 +70,7 @@
 
             //Print name
             echo '<td>';
-                echo '<a class="ingLink" href="ingredient.php?id='.$row["item_id"].'">';
+                echo '<a class="ingLink" href="ingredient.php?id='.$row["item_id"].'" target="_blank">';
                     echo $row["name1"].' '.$row["name2"].' '.$row["name3"];
                 echo '</a>';
             echo '</td>';
