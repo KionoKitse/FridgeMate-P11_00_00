@@ -16,13 +16,24 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 
 ### Notes to user
  * Project documented at https://kionokitse.wordpress.com/FridgeMate/
+ 
+### Update procedure
+ * FileZilla upload all files to server/P11_00_00
+  	* Do not change .htaccess
+	* Do not change .htpasswd
+	* Do not change dbconnect
+ * Update database
+	* Login to hosting
+	* Websites
+	* MySQL Databases
+	* phpMyAdmin
+	* Import
 
 ### What's next
- * Format the README.md files for the tutorials 
- * Barcode reading tutorial with QuaggaJS
- * Try a shape detection API tutorial
- * Some way to check if a database exists else create it and add data
- * MySQL database backup
+ * Clean up code and add documentation
+ * Some way to create full backups server and files
+
+ 
  
 
 ### Folders
@@ -92,8 +103,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2021-06-17 Add shopping cart to ingredients page
 * 2021-06-17 Change table from group to sets
 * 2021-07-14 Finished buildability scores
-* 2021-07-17 Next: Make shopping page
-* 2021-07-17 Next: Make recipes.php page
+* 2021-07-21 Basically finished with this project
 </details>
 
 ### Notebook
