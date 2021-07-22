@@ -16,7 +16,19 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 
 ### Notes to user
  * Project documented at https://kionokitse.wordpress.com/FridgeMate/
- 
+
+### Notes 
+ * ingredient.php?id=70
+	* Category should be alphabetical
+ * pantry.php
+	* Should refresh cache when loading the page
+	* Should refresh cache when searching
+ * editrecipe.php
+	* Add a warning if the name, image, or link link is too long
+	* Increase number of people to 100
+	* Errors should be pop up not to console
+ * Display looks bad on mobile phone
+
 ### Update procedure
  * FileZilla upload all files to server/P11_00_00
   	* Do not change .htaccess
@@ -33,8 +45,7 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
  * Clean up code and add documentation
  * Some way to create full backups server and files
 
- 
- 
+  
 
 ### Folders
 <details>
