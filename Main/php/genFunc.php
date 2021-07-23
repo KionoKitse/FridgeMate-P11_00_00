@@ -178,7 +178,7 @@
         }
 
         //Add the last row
-        $SearchTable .= '<tr><td colspan="3"><button id=SearchShow class="bttnWide"  onclick="ShowMoreLessTiles(\'Search\')"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></button></td></tr>';
+        $SearchTable .= '<tr><td colspan="3"><button id=SearchShow class="bttnGreen"  onclick="ShowMoreLessTiles(\'Search\')"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></button></td></tr>';
         $SearchTable .= '</table>';
         //Add a display counter
         $SearchTable .= '<input type="hidden" id="SearchDisp" value="'.$i.'">';
@@ -218,7 +218,7 @@
         }
 
         //Add the last row
-        $SearchTable .= '<tr><td colspan="3"><button id=SearchShow class="bttnWide"  onclick="ShowMoreLessTiles(\'Search\')"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></button></td></tr>';
+        $SearchTable .= '<tr><td colspan="3"><button id=SearchShow class="bttnGreen"  onclick="ShowMoreLessTiles(\'Search\')"><i class="fas fa-chevron-down"></i> Show More <i class="fas fa-chevron-down"></i></button></td></tr>';
         $SearchTable .= '</table>';
         //Add a display counter
         $SearchTable .= '<input type="hidden" id="SearchDisp" value="'.$i.'">';
@@ -283,9 +283,9 @@
         EOT;
 
         if($Menu){
-            $Result .= '<td style="vertical-align: middle;"><button id="Button'.$Type.$Id.'" onclick="ChangeTile(\''.$Type.$Id.'\')" value = "true" class="bttnTallOrange"><i style="color: #3D405B" class="fas fa-kiwi-bird fa-flip-horizontal"></i></button></td>';
+            $Result .= '<td style="vertical-align: middle; border-bottom: 2pt solid #F2CC8F;"><button id="Button'.$Type.$Id.'" onclick="ChangeTile(\''.$Type.$Id.'\')" value = "true" class="bttnTallOrange"><i style="color: #3D405B" class="fas fa-kiwi-bird fa-flip-horizontal"></i></button></td>';
         }else{
-            $Result .= '<td style="vertical-align: middle;"><button id="Button'.$Type.$Id.'" onclick="ChangeTile(\''.$Type.$Id.'\')" value = "false" class="bttnTallYellow"><i style="color: #3D405B" class="fas fa-kiwi-bird fa-flip-horizontal"></i></button></td>';
+            $Result .= '<td style="vertical-align: middle; border-bottom: 2pt solid #F2CC8F; "><button id="Button'.$Type.$Id.'" onclick="ChangeTile(\''.$Type.$Id.'\')" value = "false" class="bttnTallYellow"><i style="color: #3D405B" class="fas fa-kiwi-bird fa-flip-horizontal"></i></button></td>';
         }
         $Result .= '</tr>';
 

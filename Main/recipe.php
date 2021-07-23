@@ -14,6 +14,18 @@
         width:100%;
         border-radius: 5px; 
         border: 2px solid #FFE6A9; 
+        color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
+    }
+    .bttnGreen {
+        background-color: #81B29A;
+        width:100%;
+        border-radius: 5px; 
+        border: 2px solid #9BCCB4; 
+		color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
     }
 </style>
 
@@ -341,6 +353,7 @@
 
         <!-- Edit recipe button -->
         <button class="bttnYellow" onclick="location.href='editrecipe.php?id=<?php echo $RecipeId?>'">Edit Recipe</button>
+        <button class="bttnGreen" onclick="location.href='./index.html'">Return Home</button>
     </div>
 </body>
 </html>

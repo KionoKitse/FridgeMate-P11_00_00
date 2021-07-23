@@ -15,18 +15,36 @@
         width:100%;
         border-radius: 5px; 
         border: 2px solid #FFE6A9; 
+        color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
     }
     .bttnOrange {
         background-color: #E07A5F;
         width:100%;
         border-radius: 5px; 
         border: 2px solid #FA9479; 
+        color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
     }
     .bttnGreen {
         background-color: #81B29A;
         width:100%;
         border-radius: 5px; 
         border: 2px solid #9BCCB4; 
+		color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
+    }
+    .iconClick {
+        color: #F2CC8F;
+        font-size: 4vw;
+        cursor: pointer;
+    }
+    select{
+    width: 100%;
+    font-size: 3.2vw;
     }
 </style>
 
@@ -280,7 +298,7 @@
             <tr>
                 <th colspan="4" style="text-align: left;">
                     Main 
-                    <i onclick="AddIngredient('Main')" style="color: #F2CC8F;" class="far fa-plus-square"></i>
+                    <i onclick="AddIngredient('Main')" class="far fa-plus-square iconClick"></i>
                 </th>
             </tr>
             <!-- Fill with data if availible --> 
@@ -292,7 +310,7 @@
         <table id="Support">
             <tr>
                 <th colspan="4" style="text-align: left;">
-                    Support <i onclick="AddIngredient('Support')" style="color: #F2CC8F;" class="far fa-plus-square"></i>
+                    Support <i onclick="AddIngredient('Support')" class="far fa-plus-square iconClick"></i>
                 </th>
             </tr>
             <!-- Fill with data if availible --> 
@@ -304,7 +322,7 @@
         <table id="Spices">
             <tr>
                 <th colspan="4" style="text-align: left;">
-                    Spices <i onclick="AddIngredient('Spices')" style="color: #F2CC8F;" class="far fa-plus-square"></i>
+                    Spices <i onclick="AddIngredient('Spices')" class="far fa-plus-square iconClick"></i>
                 </th>
             </tr>
             <!-- Fill with data if availible --> 
@@ -316,7 +334,7 @@
         <table id="Garnish">
             <tr>
                 <th colspan="4" style="text-align: left;">
-                    Garnish <i onclick="AddIngredient('Garnish')" style="color: #F2CC8F;" class="far fa-plus-square"></i>
+                    Garnish <i onclick="AddIngredient('Garnish')" class="far fa-plus-square iconClick"></i>
                 </th>
             </tr>
             <!-- Fill with data if availible --> 
@@ -327,7 +345,7 @@
         <div class="break" style="clear: both;"></div>
         <table class="fa-4x" id="SaveIngredients">
                 <th colspan="4" style="text-align: left;">
-                    Save Ingredients: <i onclick="BuildIngredientOptions()" style="color: #E07A5F;" class="fas fa-kiwi-bird fa-flip-horizontal"></i>
+                    Save Ingredients: <i onclick="BuildIngredientOptions()" style="color: #E07A5F; cursor: pointer;" class="fas fa-kiwi-bird fa-flip-horizontal"></i>
                 </th>
         </table>
         <div class="break" style="clear: both;"></div>
@@ -347,8 +365,8 @@
             <table style="text-align: left; width: 100%;" id="TagTable">
                 <tr>
                     <th>Tags 
-                        <i onclick="AddTags()" style="color: #F2CC8F;" class="far fa-plus-square"></i>
-                        <i onclick="RemoveTags()" style="color: #F2CC8F;" class="far fa-minus-square"></i>
+                        <i onclick="AddTags()" class="far fa-plus-square iconClick"></i>
+                        <i onclick="RemoveTags()" class="far fa-minus-square iconClick"></i>
                     </th>
                 </tr>
                 <?php
@@ -384,7 +402,7 @@
         <div id="DivStep0">
             <table style="text-align: left; width: 75%;" id="Step0">
                 <tr>
-                    <th>Prep <i onclick="AddIngredientLine(0)" style="color: #F2CC8F;" class="far fa-plus-square"></i></th>
+                    <th>Prep <i onclick="AddIngredientLine(0)" class="far fa-plus-square iconClick"></i></th>
                 </tr>
                 <!-- List of prep ingredients -->
                 <?php
@@ -401,8 +419,8 @@
         <div class="break"></div>
         <table id="AddNewStep">
             <th colspan="4" style="text-align: left;">
-                Add/Remove Step: <i onclick="AddStep()"style="color: #F2CC8F; font-size: 4vw;" class="far fa-plus-square"></i>
-                <i onclick="RemoveStep()" style="color: #F2CC8F; font-size: 4vw;" class="far fa-minus-square"></i>
+                Add/Remove Step: <i onclick="AddStep()" class="far fa-plus-square iconClick"></i>
+                <i onclick="RemoveStep()" class="far fa-minus-square iconClick"></i>
             </th>
         </table>
         <div class="break"></div>
@@ -416,7 +434,7 @@
                         echo '<div id="DivStep'.$Id.'">';
                             echo '<table style="text-align: left; width: 75%;" id="Step'.$Id.'">';
                                 echo '<tr>';
-                                    echo '<th>Step '.$Id.' <i onclick="AddIngredientLine('.$Id.')" style="color: #F2CC8F;" class="far fa-plus-square"></i></th>';
+                                    echo '<th>Step '.$Id.' <i onclick="AddIngredientLine('.$Id.')" class="far fa-plus-square iconClick"></i></th>';
                                 echo '</tr>';   
                                 PreSelectedDropDown($AllIngredinets,$Id,$OptionList);
                             echo '</table>';
@@ -518,7 +536,7 @@
         cell3.innerHTML = '<input onchange="GetName2(\''+RowId+'\')" type="text" id="'+RowId+'Name1" list="Name1All"/>';
         cell4.innerHTML = '<input onchange="GetName3(\''+RowId+'\')" type="text" id="'+RowId+'Name2" list="Name2'+RowId+'"/>';
         cell5.innerHTML = '<input type="text" id="'+RowId+'Name3" list="Name3'+RowId+'"/>';
-        cell6.innerHTML = '<i onclick="RemoveElement(\''+RowId+'\')" style="color: #F2CC8F; font-size: 5vw" class="far fa-minus-square"></i>';
+        cell6.innerHTML = '<i onclick="RemoveElement(\''+RowId+'\')" style="font-size: 5vw" class="far fa-minus-square iconClick"></i>';
         //Give row an id
         row.id = RowId;
         //Style
@@ -613,7 +631,7 @@
         var cell2 = row.insertCell(1);
         //Add items to cells
         cell1.innerHTML = '<select id="Select'+RowId+'" onchange="UpdateSelectOption(\'Select'+RowId+'\')">'+UnselectedOptions+'</select>';
-        cell2.innerHTML = '<i onclick="RemoveElement(\''+RowId+'\')" style="color: #F2CC8F; font-size: 5vw;" class="far fa-minus-square"></i>';
+        cell2.innerHTML = '<i onclick="RemoveElement(\''+RowId+'\')" style="font-size: 5vw;" class="far fa-minus-square iconClick"></i>';
         //Give row an id
         row.id = RowId;
         var hello = Steps.Ids[id];
@@ -628,7 +646,7 @@
         var NewStep = '<div id="DivStep'+StepId+'">';
         NewStep += '<table style="text-align: left; width: 75%;" id="Step'+StepId+'">'
         NewStep += '<tr>';
-        NewStep += '<th>Step '+StepId+' <i onclick="AddIngredientLine('+StepId+')" style="color: #F2CC8F;" class="far fa-plus-square"></i></th>';
+        NewStep += '<th>Step '+StepId+' <i onclick="AddIngredientLine('+StepId+')" class="far fa-plus-square iconClick"></i></th>';
         NewStep += '</tr>'; 
         //NewStep += PreSelectedDropDown($AllIngredinets,$Id,$OptionList);
         NewStep += '</table>';
@@ -973,7 +991,7 @@
                 echo '<td><input onchange="GetName3(\''.$RowId.'\')" type="text" value="'.$row->Name2.'" id="'.$RowId.'Name2" list="Name2'.$RowId.'"/></td>';
                 echo '<td><input type="text" value="'.$row->Name3.'" id="'.$RowId.'Name3" list="Name3'.$RowId.'"/></td>';
                 echo '<td>';
-                    echo '<i onclick="RemoveElement(\''.$RowId.'\')" style="color: #F2CC8F; font-size: 5vw" class="far fa-minus-square"></i>';
+                    echo '<i onclick="RemoveElement(\''.$RowId.'\')" style="font-size: 5vw" class="far fa-minus-square iconClick"></i>';
                 echo '</td>';
             echo '</tr>';
             $Id++;
@@ -1018,7 +1036,7 @@
                         echo '</select>';
                     echo '</td>';
                     echo '<td>';
-                        echo '<i onclick="RemoveElement(\''.$RowId.'\')" style="color: #F2CC8F; font-size: 5vw;" class="far fa-minus-square"></i>';
+                        echo '<i onclick="RemoveElement(\''.$RowId.'\')" style="font-size: 5vw;" class="far fa-minus-square iconClick"></i>';
                     echo '</td>';
                 echo '</tr>';
                 $Id++;

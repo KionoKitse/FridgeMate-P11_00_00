@@ -15,6 +15,8 @@
         border-radius: 5px; 
         border: 2px solid #9BCCB4; 
         color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
     }
     .bttnYellow {
         background-color: #F2CC8F;
@@ -22,6 +24,8 @@
         border-radius: 5px; 
         border: 2px solid #FFE6A9; 
         color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
     }
     .bttnOrange {
         background-color: #E07A5F;
@@ -29,6 +33,8 @@
         border-radius: 5px; 
         border: 2px solid #FA9479; 
         color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
     }
     .clickable {
         cursor: pointer;
@@ -36,24 +42,23 @@
     }
     .bttnTallYellow {
         background-color: #F2CC8F;
-        height:20vw;
+        width:100%;
         border-radius: 5px; 
         border: 2px solid #FFE6A9; 
         color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
+        height:20vw;
     }
     .bttnTallOrange{
         background-color: #E07A5F;
-        height:20vw;
+        width:100%;
         border-radius: 5px; 
         border: 2px solid #FA9479; 
         color: #3D405B;
-    }
-    .bttnWide {
-        background-color: #81B29A;
-        width:100%;
-        border-radius: 5px; 
-        border: 2px solid #9BCCB4; 
-        color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
+        height:20vw;
     }
 </style>
 
@@ -88,7 +93,7 @@
 
     $NameList = '<datalist id="SearchList">';
     while ($row = $ResultSet3->fetch_assoc()) {
-        $NameList .= '<option value="'.$row["name"].'"></option>';
+        $NameList .= '<option value="'.htmlspecialchars($row["name"], ENT_QUOTES).'"></option>';
     }
     $NameList .= '</datalist>';
 
@@ -138,6 +143,7 @@
             </tr>
         </table>
         <div id="Result"></div>
+        <button class="bttnGreen" onclick="location.href='./index.html'">Return Home</button>
     </div>
 </body>
 </html>

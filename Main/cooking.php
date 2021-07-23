@@ -5,7 +5,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <script src="js/mainstyle.js"></script>
     <script src="js/scripts.js"></script>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 </head>
+
 
 <!--Style specific to this page-->
 <style>
@@ -13,26 +18,14 @@
         cursor: pointer;
         border-bottom: 2pt solid #F2CC8F;
     }
-    .bttnTallYellow {
-        background-color: #F2CC8F;
-        height:20vw;
-        border-radius: 5px; 
-        border: 2px solid #FFE6A9; 
-        color: #3D405B;
-    }
     .bttnTallOrange{
         background-color: #E07A5F;
         height:20vw;
         border-radius: 5px; 
         border: 2px solid #FA9479; 
         color: #3D405B;
-    }
-    .bttnWide {
-        background-color: #81B29A;
-        width:100%;
-        border-radius: 5px; 
-        border: 2px solid #9BCCB4; 
-        color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
     }
     .bttnYellow {
         background-color: #F2CC8F;
@@ -40,6 +33,17 @@
         border-radius: 5px; 
         border: 2px solid #FFE6A9; 
         color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
+    }
+    .bttnGreen {
+        background-color: #81B29A;
+        width:100%;
+        border-radius: 5px; 
+        border: 2px solid #9BCCB4; 
+		color: #3D405B;
+        font-size: 3vw;
+        cursor: pointer;
     }
 </style>
 
@@ -66,6 +70,7 @@
             echo GetMenuItems($ResultSet1);
         ?>
         <button class="bttnYellow" onclick="UpdateAllBuildability()">Update All Buildability</button>
+        <button class="bttnGreen" onclick="location.href='./index.html'">Return Home</button>
     </div> 
 </body>
 </html>
@@ -90,7 +95,8 @@
 ?>
 
 <script>
-    
+
+    KeepItFresh();
     SetClickable();
     //Function to apply an event listener to all clickable elements
     function SetClickable(){
@@ -193,5 +199,20 @@
         xmlhttp.open("GET", "php/recalculateBuildability.php", true);
         xmlhttp.send();
     }
+    function KeepItFresh(){
+        // JavaScript anonymous function
+        (() => {
+            if (window.localStorage) {
+                if (!localStorage.getItem('reload')) {
+                    localStorage['reload'] = true;
+                    window.location.reload();
+                } else {
+  
+                    localStorage.removeItem('reload');
+                }
+            }
+        })(); 
+    }
+            
 </script>
 
