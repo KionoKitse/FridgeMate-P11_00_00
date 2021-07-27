@@ -101,9 +101,6 @@
   <p style="text-align: center; font-size: 5vw; color: #81B29A; font-weight: bold;">Ingredients</p>
   <table style="width: 100%; border-collapse:collapse; border-spacing:0;">
     <tr>
-      <td colspan="4"><button class="bttnYellow" onclick="RecalculateScores()">Recalculate Scores</button></td>
-    </tr>
-    <tr>
       <td style="width: 25%;"><button class="bttnGreen" onclick="SortType('A-Z')">A-Z</button></td>
       <td style="width: 25%;"><button class="bttnGreen" onclick="SortType('Cat')">Category</button></td>
       <td style="width: 25%;"><button class="bttnGreen" onclick="SortType('Stat')">Status</button></td>
@@ -132,18 +129,6 @@
         }
     };
     xmlhttp.open("GET","php/ingSortType.php?type="+type,true);
-    xmlhttp.send();
-  }
-
-  //Function to update the buildability score for every recipe
-  function RecalculateScores() {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("error").innerHTML = this.responseText;
-        }
-    };
-    xmlhttp.open("GET", "php/recalculateBuildability.php", true);
     xmlhttp.send();
   }
 </script>

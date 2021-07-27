@@ -23,12 +23,10 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
  * pantry.php
 	* Should refresh cache when loading the page
 	* Should refresh cache when searching
- * editrecipe.php
-	* Add a warning if the name, image, or link link is too long
-	* Increase number of people to 100
-	* Errors should be pop up not to console
  * Display looks bad on mobile phone
-
+ * http://www.kionokitse.com/P11_00_00/recipe.php?id=6 lots of doubles not sure how that happened
+ * Need to create a shopping recomendations page
+ 
 ### Update procedure
  * FileZilla upload all files to server/P11_00_00
   	* Do not change .htaccess

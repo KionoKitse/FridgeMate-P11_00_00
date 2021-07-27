@@ -269,8 +269,6 @@
     
     //Get updated pantry values
     var Item_id = dataTable.rows[0].cells[1].innerHTML;
-    var Status = dataTable.rows[1].cells[1].children[0].children[0].checked ? 1: 0;
-    var Cart = dataTable.rows[1].cells[3].children[0].children[0].checked ? 1: 0;
     var Name1 = dataTable.rows[2].cells[1].children[0].value;
     var Name2 = dataTable.rows[2].cells[2].children[0].value;
     var Name3 = dataTable.rows[2].cells[3].children[0].value;
@@ -284,8 +282,6 @@
     //Parse the data into a JSON so it may be passed to PHP
     var Results = new Object();
     Results.Item_id = Item_id;
-    Results.Status = Status;
-    Results.Cart = Cart;
     Results.Name1 = Name1;
     Results.Name2 = Name2;
     Results.Name3 = Name3;

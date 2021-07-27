@@ -6,8 +6,6 @@
     $str_json = file_get_contents('php://input');
     $response = json_decode($str_json, true);
     $Item_id = $response['Item_id']; 
-    $Status = $response['Status'];
-    $Cart = $response['Cart'];
     $Name1 = $response['Name1'];
     $Name2 = $response['Name2'];
     $Name3 = $response['Name3'];
@@ -20,11 +18,10 @@
 
 
     //Update the parameters for an existing recipe
-    $Query = "UPDATE pantry SET name1=?, name2=?, name3=?, status=?, recipe_id=?, expires=?, purchase=?, category=?, cart=? WHERE item_id=?";
+    $Query = "UPDATE pantry SET name1=?, name2=?, name3=?, recipe_id=?, expires=?, purchase=?, category=? WHERE item_id=?";
     $stmt = $connection->prepare($Query);
-    $stmt->bind_param("sssiiissii", $Name1, $Name2, $Name3, $Status, $Recipe_id, $Expires, $Purchase, $Category, $Cart, $Item_id);
+    $stmt->bind_param("sssiissi", $Name1, $Name2, $Name3, $Recipe_id, $Expires, $Purchase, $Category, $Item_id);
     $stmt->execute();
-    $result = $stmt->get_result();
 
     //Go through the ChangeList and update the groups
     foreach ($ChangeList as $row) {
