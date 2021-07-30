@@ -918,7 +918,6 @@
             if(!(ActiveTime >= 0 && ActiveTime <= 240)) throw "Submit Validation Failed: ActiveTime is not a number between 0-240";
             if(!(PassiveTime >= 0 && PassiveTime <= 10080)) throw "Submit Validation Failed: PassiveTime is not a number between 0-10080";
             if(!(People >= 0 && People <= 100)) throw "Submit Validation Failed: People is not a number between 0-100";
-            if(Name.length > 45) throw "Submit Validation Failed: Name is too long (max 45 char)";
             if(Image.length > 150) throw "Submit Validation Failed: Image link is too long (max 150 char)";
 
             //Parse the data into a JSON so it may be passed to PHP
