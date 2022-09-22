@@ -115,6 +115,11 @@ A useful tool for deciding what to cook next, what to buy and keeping track of w
 * 2021-07-21 Basically finished with this project
 </details>
 
+### Bug list
+* 2022-01-19 Did a build kiwi but for got to add garnish on new recipe. Added the granish section but when I created the recipe it didn't take the granish.
+* 2022-01-19 Remove item 175, 165
+* 
+
 ### Notebook
 <details>
 	<summary>Research relating to barcode scanning</summary>
